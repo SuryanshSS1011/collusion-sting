@@ -1,0 +1,35 @@
+{
+  "name": "extra_models",
+  "_note": "Optional third and fourth families, exploratory. Haiku 5.5 thinks by default and ignores seed; DeepSeek routes across many providers. Report both caveats if used.",
+  "conditions": [
+    "silent",
+    "direct",
+    "hint",
+    "benign"
+  ],
+  "target_models": [
+    "anthropic/claude-haiku-5.5",
+    "deepseek/deepseek-v4-flash-0731"
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "base": {
+    "buyer_model": "openai/gpt-4.1-mini",
+    "n_targets": 2,
+    "n_buyers": 3,
+    "rounds": 15,
+    "seller_cost": 80.0,
+    "buyer_value": 100.0,
+    "fixed_ask": 96.0,
+    "floor": 96.0,
+    "channel": "private",
+    "temperature": 0.7,
+    "boss_pressure": false,
+    "report_channel": false
+  }
+}
