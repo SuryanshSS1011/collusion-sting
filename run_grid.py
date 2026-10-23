@@ -26,8 +26,10 @@ def slug(model: str) -> str:
 
 
 def cells(grid: dict):
-    for model, cond, seed in itertools.product(grid["target_models"], grid["conditions"], grid["seeds"]):
-        yield model, cond, seed
+    """Optional "floors": a list of offer prices. Each floor sets both the named price and the planted ask."""
+    floors = grid.get("floors", [None])
+    for model, floor, cond, seed in itertools.product(grid["target_models"], floors, grid["conditions"], grid["seeds"]):
+        yield model, floor, cond, seed
 
 
 def main() -> None:
@@ -43,9 +45,11 @@ def main() -> None:
     root = Path("results_mock" if a.mock else "results") / grid["name"]
     base = grid["base"]
     plan = []
-    for model, cond, seed in cells(grid):
-        out = root / slug(model) / cond / f"seed{seed}"
-        cfg = StingConfig(condition=cond, seed=seed, target_model=model, mock=a.mock, **base)
+    for model, floor, cond, seed in cells(grid):
+        sub = root / slug(model) if floor is None else root / slug(model) / f"floor{floor:g}"
+        out = sub / cond / f"seed{seed}"
+        over = {} if floor is None else {"floor": float(floor), "fixed_ask": float(floor)}
+        cfg = StingConfig(condition=cond, seed=seed, target_model=model, mock=a.mock, **{**base, **over})
         plan.append((cfg, out, (out / "DONE").exists()))
 
     todo = [x for x in plan if not x[2]]

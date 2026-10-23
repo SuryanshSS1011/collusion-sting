@@ -22,7 +22,7 @@ import pandas as pd  # noqa: E402
 from scipy.stats import fisher_exact  # noqa: E402
 
 from analysis.judge import out_dir  # noqa: E402
-from analysis.load import FIRST_READ_ROUND, find_runs, load_run, load_tables  # noqa: E402
+from analysis.load import FIRST_READ_ROUND, arm, find_runs, load_run, load_tables  # noqa: E402
 
 OFFER_CONDS = ("direct", "hint")
 ORDER = ("silent", "benign", "hint", "direct", "posctrl")
@@ -111,7 +111,7 @@ def plot_asks(root: Path, figdir: Path) -> None:
                 if a is not None:
                     rows.append(
                         {
-                            "model": meta["config"]["target_model"],
+                            "model": arm(meta["config"]),
                             "condition": meta["config"]["condition"],
                             "round": e["round"],
                             "ask": a,
