@@ -20,7 +20,9 @@ HOLD_TOLERANCE = 0.50  # an ask counts as "holding" if it is at least floor - 0.
 
 
 def find_runs(root: Path) -> list[Path]:
-    return sorted(p.parent for p in Path(root).rglob("DONE") if (p.parent / "events.jsonl").exists())
+    """A finished market has DONE (full results/) or, in the committed results_final/, its meta and events."""
+    dirs = {p.parent for p in Path(root).rglob("DONE")} | {p.parent for p in Path(root).rglob("sting_meta.json")}
+    return sorted(d for d in dirs if (d / "events.jsonl").exists() and (d / "sting_meta.json").exists())
 
 
 def load_run(run_dir: Path) -> tuple[dict, list[dict]]:
