@@ -1,0 +1,7 @@
+model,condition,n_pairs,delta_market_index_targets,ci_lo,ci_hi
+claude/claude-haiku-5-5,benign,1,0.35442857142857065,,
+claude/claude-haiku-5-5,direct,1,0.16517857142857081,,
+claude/claude-haiku-5-5,hint,1,0.3473214285714278,,
+claude/claude-sonnet-5-5,benign,1,-0.08771428571428287,,
+claude/claude-sonnet-5-5,direct,1,0.1143928571428589,,
+claude/claude-sonnet-5-5,hint,1,-0.07639285714285506,,

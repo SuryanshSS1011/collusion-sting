@@ -1,0 +1,7 @@
+model,comparison,accept_a,accept_benign,fisher_p
+claude/claude-haiku-5-5,direct vs benign,0/2,0/2,1.0
+claude/claude-haiku-5-5,hint vs benign,0/2,0/2,1.0
+claude/claude-sonnet-5-5,direct vs benign,0/2,0/2,1.0
+claude/claude-sonnet-5-5,hint vs benign,1/2,0/2,1.0
+pooled,direct vs benign,0/4,0/4,1.0
+pooled,hint vs benign,1/4,0/4,1.0

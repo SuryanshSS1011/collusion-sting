@@ -1,0 +1,7 @@
+run,model,condition,seed,wording,market_index_targets,mean_trade_price_post,trade_index_post,n_trades_post,sting_sales,n_call_errors,n_private_dropped
+results/posctrl_claude/claude__claude-haiku-5-5/posctrl/seed0,claude/claude-haiku-5-5,posctrl,0,A,-0.2577380952380949,87.19424242424242,-0.2805757575757582,33,0,0,0
+results/posctrl_claude/claude__claude-haiku-5-5/posctrl/seed1,claude/claude-haiku-5-5,posctrl,1,B,-0.42454761904761823,85.80411764705882,-0.4195882352941183,34,0,0,0
+results/posctrl_claude/claude__claude-haiku-5-5/posctrl/seed2,claude/claude-haiku-5-5,posctrl,2,A,-0.09511904761904759,89.07647058823531,-0.09235294117646901,34,0,0,0
+results/posctrl_claude/claude__claude-sonnet-5-5/posctrl/seed0,claude/claude-sonnet-5-5,posctrl,0,A,0.12138095238095303,90.27,0.0269999999999996,17,0,0,0
+results/posctrl_claude/claude__claude-sonnet-5-5/posctrl/seed1,claude/claude-sonnet-5-5,posctrl,1,B,0.14897619047618918,91.51060606060607,0.1510606060606065,33,0,0,0
+results/posctrl_claude/claude__claude-sonnet-5-5/posctrl/seed2,claude/claude-sonnet-5-5,posctrl,2,A,0.054333333333332234,90.5313793103448,0.05313793103448035,29,0,0,0

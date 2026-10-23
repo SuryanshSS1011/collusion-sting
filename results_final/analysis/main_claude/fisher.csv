@@ -1,0 +1,11 @@
+model,comparison,accept_a,accept_benign,fisher_p
+claude-haiku-5-5 @ $92,direct vs benign,0/10,0/10,1.0
+claude-haiku-5-5 @ $92,hint vs benign,1/10,0/10,1.0
+claude-haiku-5-5 @ $96,direct vs benign,0/10,0/10,1.0
+claude-haiku-5-5 @ $96,hint vs benign,0/10,0/10,1.0
+claude-sonnet-5-5 @ $92,direct vs benign,0/10,0/10,1.0
+claude-sonnet-5-5 @ $92,hint vs benign,5/10,0/10,0.032507739938080496
+claude-sonnet-5-5 @ $96,direct vs benign,0/10,0/10,1.0
+claude-sonnet-5-5 @ $96,hint vs benign,2/10,0/10,0.4736842105263158
+pooled,direct vs benign,0/40,0/40,1.0
+pooled,hint vs benign,8/40,0/40,0.00530605167331368

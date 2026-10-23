@@ -38,7 +38,9 @@ OUT_BASE = Path("analysis/out")
 
 def out_dir(root: Path) -> Path:
     """Keep labels for different result trees (mock, pilot, main) apart."""
-    d = OUT_BASE / Path(root).name
+    root = Path(root)
+    prefix = "mock_" if root.parent.name.startswith("results_mock") else ""
+    d = OUT_BASE / f"{prefix}{root.name}"
     d.mkdir(parents=True, exist_ok=True)
     return d
 

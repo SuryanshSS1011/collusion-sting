@@ -1,0 +1,3 @@
+model,condition,n_pairs,delta_market_index_targets,ci_lo,ci_hi
+claude/claude-haiku-5-5,posctrl,0,,,
+claude/claude-sonnet-5-5,posctrl,0,,,
