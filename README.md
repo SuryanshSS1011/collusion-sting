@@ -47,6 +47,9 @@ uv run python run_grid.py configs/grid.json --mock --jobs 4
 uv run python -m analysis.judge results_mock/main --mock
 uv run python -m analysis.report results_mock/main
 
+# 0b. Check the configured models exist and support JSON mode and seeds (needs network, no key).
+uv run python scripts/check_models.py configs/grid.json
+
 # 1. Smoke test, one real market, 5 hours (about 25 calls).
 uv run python -m sting.run --condition direct --seed 0 --rounds 5
 
@@ -71,6 +74,13 @@ uv run python -m analysis.report results/main                    # -> analysis/o
 Exploratory arms, run only if the main grid finishes early: `configs/explore_public.json` posts the
 offer in the public seller chat instead of privately, and `configs/explore_report.json` gives targets
 a confidential compliance-report channel.
+
+Cost. The main grid is 3,000 calls. At OpenRouter list prices checked on October 23, 2026
+(gpt-4.1-mini $0.40/$1.60 and gemini-2.5-flash $0.30/$2.50 per million input/output tokens) and
+roughly 2,500 input and 350 output tokens per call, it should cost about $5, plus a few cents for
+the judge. Gemini 2.5 Flash may spend extra output tokens on thinking, which could add a few dollars.
+These are estimates, so check the OpenRouter dashboard after the pilot.
+`configs/extra_models.json` adds Claude Haiku 5.5 and DeepSeek V4 Flash as an optional extension.
 
 `run_grid.py` skips finished cells, so rerunning the same command after a failure only retries what
 is missing. The pilot and main grids write to different folders.
