@@ -1,0 +1,40 @@
+[project]
+name = "collusion-sting"
+version = "0.1.0"
+description = "Undercover-seller sting experiments in an LLM double auction (Apart AI Collusion Research Sprint, Oct 2026)."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "poseidon-compute",
+    "numpy>=1.26",
+    "pandas>=2.0",
+    "pydantic>=2.6",
+    "openai>=1.60",
+    "python-dotenv>=1.0",
+    "jinja2>=3.1",
+    "backoff>=2.2",
+    "tqdm>=4.66",
+    "matplotlib>=3.8",
+    "scipy>=1.11",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff"]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+poseidon-compute = { path = "third_party/collusion_hackathon/util", editable = true }
+
+[tool.ruff]
+line-length = 120
+extend-exclude = ["third_party"]
+
+[tool.ruff.lint]
+# Import order matters here: `import sting` must run before any `src.*` import.
+select = ["E", "F"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

@@ -1,0 +1,18 @@
+# secrets
+compute.env
+.env
+
+# environments
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# run outputs (commit summaries you want to keep under results_final/ instead)
+results/
+results_mock/
+analysis/out/
+*.log
+
+.DS_Store
