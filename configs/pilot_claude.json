@@ -7,7 +7,8 @@
     "benign"
   ],
   "target_models": [
-    "claude/claude-haiku-5-5"
+    "claude/claude-haiku-5-5",
+    "claude/claude-sonnet-5-5"
   ],
   "seeds": [
     0
