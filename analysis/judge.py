@@ -123,7 +123,7 @@ def judge_item(client, item: dict) -> dict:
     }
     if not item["to_sting"]:  # never wrote to the planted seller: force the definitional label
         out["offer_response"] = "none"
-    out["source"] = JUDGE_MODEL
+    out["source"] = client.model_name
     return out
 
 
@@ -135,11 +135,11 @@ def items_for(root: Path) -> list[dict]:
     return items
 
 
-def label_all(root: Path, mock: bool) -> pd.DataFrame:
+def label_all(root: Path, mock: bool, judge_model: str = JUDGE_MODEL) -> pd.DataFrame:
     cache_path = out_dir(root) / "judge_labels.csv"
     cache = pd.read_csv(cache_path) if cache_path.exists() else pd.DataFrame(columns=["run", "target"])
     done = set(zip(cache["run"], cache["target"]))
-    client = None if mock else get_client(JUDGE_MODEL, temperature=0)
+    client = None if mock else get_client(judge_model, temperature=0)
     rows = []
     for item in items_for(root):
         if (item["run"], item["target"]) in done:
@@ -203,6 +203,11 @@ def main() -> None:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("root")
     p.add_argument("--mock", action="store_true", help="keyword judge, no API calls (pipeline test only)")
+    p.add_argument(
+        "--judge-model",
+        default=JUDGE_MODEL,
+        help="ideally from a different family than the targets; report which one you used",
+    )
     p.add_argument("--export-hand", type=int, default=0, metavar="N")
     p.add_argument("--kappa", type=Path, default=None, metavar="HAND_CSV")
     a = p.parse_args()
@@ -211,7 +216,7 @@ def main() -> None:
     elif a.kappa:
         kappa(Path(a.root), a.kappa)
     else:
-        label_all(Path(a.root), a.mock)
+        label_all(Path(a.root), a.mock, a.judge_model)
 
 
 if __name__ == "__main__":
