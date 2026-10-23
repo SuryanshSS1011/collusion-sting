@@ -54,7 +54,10 @@ class ClaudeClient(ModelWrapper):
             raise RuntimeError("ANTHROPIC_API_KEY is not set. Put it in compute.env.")
         from anthropic import Anthropic
 
-        self.client = Anthropic(timeout=120, max_retries=0)
+        # Pin the public endpoint. Some environments export ANTHROPIC_BASE_URL for their own tooling,
+        # and the SDK would silently follow it.
+        base_url = os.environ.get("STING_ANTHROPIC_BASE_URL", "https://api.anthropic.com")
+        self.client = Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"], base_url=base_url, timeout=120, max_retries=0)
         self.effort = effort
 
     def generate(self, messages: list[Message]) -> Optional[str]:
