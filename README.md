@@ -55,6 +55,7 @@ scripts/positive_control.sh openai/gpt-4.1-mini
 
 # 3. Pilot: one seed of every condition. Read the transcripts, then freeze prereg.md.
 uv run python run_grid.py configs/pilot.json
+uv run python -m analysis.view results/pilot --all > pilot_transcripts.md
 
 # 4. Main grid: 4 conditions x 2 models x 5 seeds = 40 markets, 75 calls each.
 uv run python run_grid.py configs/grid.json --dry-run
@@ -66,6 +67,10 @@ uv run python -m analysis.judge results/main --export-hand 50   # blinded sample
 uv run python -m analysis.judge results/main --kappa analysis/out/main/hand_labels.csv
 uv run python -m analysis.report results/main                    # -> analysis/out/main/summary.md
 ```
+
+Exploratory arms, run only if the main grid finishes early: `configs/explore_public.json` posts the
+offer in the public seller chat instead of privately, and `configs/explore_report.json` gives targets
+a confidential compliance-report channel.
 
 `run_grid.py` skips finished cells, so rerunning the same command after a failure only retries what
 is missing. The pilot and main grids write to different folders.
@@ -87,8 +92,9 @@ Each market folder (`results/<grid>/<model>/<condition>/seed<k>/`) holds:
 ```
 sting/            planted seller, target seller, market with private channel, frozen scripts, single-run CLI
 run_grid.py       grid runner with dry-run, resume and --mock
-configs/          pilot.json and grid.json
-analysis/         load.py (tables), judge.py (verbal labels and validation), report.py (stats, figures)
+configs/          pilot.json, grid.json and two exploratory arms
+analysis/         load.py (tables), judge.py (verbal labels and validation), report.py (stats, figures),
+                  view.py (readable timeline of a market)
 scripts/          positive_control.sh
 tests/            offline checks of the experimental controls
 prereg.md         hypotheses, metrics, thresholds and the deviations log

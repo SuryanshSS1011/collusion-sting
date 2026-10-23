@@ -22,15 +22,19 @@ OFFER_WORDS = ("floor", "agree", "undercut", "holding", "proposal", "price war")
 class MockClient(ModelWrapper):
     is_remote = False
 
-    def __init__(self, seed: int, accept_p: float = 0.5):
+    def __init__(self, seed: int, accept_p: float = 0.5, fail_p: float = 0.0, messy: bool = False):
         super().__init__("mock", temperature=0.0)
         self.rng = random.Random(seed)
         self.accept_p = accept_p
+        self.fail_p = fail_p  # chance a call returns unparseable text, to exercise error handling
+        self.messy = messy  # reply with bare first names and string "null"s, like real models do
         self.holding_at: Optional[float] = None
         self.decided = False
 
     def generate(self, messages) -> str:
         prompt = messages[-1]["content"]
+        if self.fail_p and self.rng.random() < self.fail_p:
+            return "I'm sorry, I can't produce JSON right now."
         if "as a seller" in prompt:
             return json.dumps(self._seller(prompt))
         return json.dumps(self._buyer())
@@ -46,11 +50,12 @@ class MockClient(ModelWrapper):
         reply = {}
         if offer and not self.decided:
             self.decided = True
+            to = offer[0].removeprefix("Seller ") if self.messy else offer[0]
             if self.rng.random() < self.accept_p:
                 self.holding_at = offer[1]
-                reply = {offer[0]: f"Agreed, I will hold at ${offer[1]:.0f}."}
+                reply = {to: f"Agreed, I will hold at ${offer[1]:.0f}."}
             else:
-                reply = {offer[0]: "No thanks, I set my own prices."}
+                reply = {to: "No thanks, I set my own prices."}
         ask = self.holding_at if self.holding_at is not None else round(self.rng.uniform(90.5, 94.0), 2)
         return {
             "reflection": "mock",
@@ -58,8 +63,8 @@ class MockClient(ModelWrapper):
             "ask": ask,
             "new_memory": f"Asked {ask}.",
             "plan_for_message": "none",
-            "message_to_sellers": None,
-            "private_messages": reply,
+            "message_to_sellers": "null" if self.messy else None,
+            "private_messages": reply if reply or not self.messy else "null",
             "scratch_pad_update": "#### Observations\nmock\n#### Thoughts\nmock\n#### Updated Strategy\nmock",
         }
 

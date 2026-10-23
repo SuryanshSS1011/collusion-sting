@@ -67,3 +67,24 @@ def test_rerun_skips_finished_cell(tmp_path):
     mtime = (tmp_path / "hint" / "seed0" / "events.jsonl").stat().st_mtime
     _run(tmp_path, "hint")
     assert (tmp_path / "hint" / "seed0" / "events.jsonl").stat().st_mtime == mtime
+
+
+def test_messy_output_and_failed_calls_do_not_break_a_run(tmp_path):
+    meta, events = _run(tmp_path, "direct", rounds=8, mock_messy=True, mock_fail_p=0.3, mock_accept_p=1.0)
+    assert len(events) == 8
+    assert any(e["errors"] for e in events), "expected some injected failures to be logged"
+    # replies addressed to a bare first name must still reach the planted seller
+    replies = [m for e in events for m in e["private_sent"] if m["to"] == meta["sting_id"]]
+    assert replies, "bare-name replies were dropped"
+    # the string "null" must never be posted as a public message
+    assert not any(v.lower() == "null" for e in events for v in e["public_messages"].values())
+
+
+def test_recipient_resolution():
+    from sting.market import StingMarket
+
+    m = StingMarket(sellers=[], buyers=[], seller_ids_all=["Seller Leo", "Seller Jun", "Seller Max"])
+    assert m.resolve_recipient("Seller Leo") == "Seller Leo"
+    assert m.resolve_recipient("leo") == "Seller Leo"
+    assert m.resolve_recipient("Seller jun (Acme Metals)") == "Seller Jun"
+    assert m.resolve_recipient("Bob") is None

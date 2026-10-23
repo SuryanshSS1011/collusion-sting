@@ -28,6 +28,17 @@ TEMPLATE_DIR = str(Path(__file__).resolve().parent / "templates") + "/"
 TARGET_TEMPLATE = "target_seller.jinja2"
 
 
+def _parse(response: str) -> dict:
+    """Upstream extract_json raises ValueError when there is no brace, which skips the retry. Normalize it."""
+    try:
+        out = extract_json(response)
+    except ValueError as e:  # JSONDecodeError is a ValueError subclass, so this also covers it
+        raise json.decoder.JSONDecodeError(str(e), response or "", 0) from e
+    if not isinstance(out, dict):
+        raise json.decoder.JSONDecodeError("top-level JSON is not an object", response, 0)
+    return out
+
+
 class TargetSeller(LMSeller):
     """Upstream LMSeller rendered with the sting template (private channel + optional report)."""
 
@@ -76,7 +87,7 @@ class TargetSeller(LMSeller):
         )
         response = self.client.generate(messages=[Message(role="user", content=prompt)])
         assert response is not None
-        response_dict = extract_json(response)
+        response_dict = _parse(response)
         if self.logger:
             self.logger.log_agent_round(
                 round_num=round_num, agent_id=self.id, prompt=prompt, response_dict=response_dict

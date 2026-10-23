@@ -201,6 +201,9 @@ def main() -> None:
     parts = [
         f"# Results for {root}\n",
         f"{n_runs} markets, {len(targets)} target agents. Post window starts at hour {FIRST_READ_ROUND}.\n",
+        f"Data quality: {int(markets.n_call_errors.sum())} failed model calls and "
+        f"{int(markets.n_private_dropped.sum())} private messages with an unresolvable recipient "
+        "across all markets (see markets.csv for where).\n",
         "## By condition\n",
         md_table(by_cond),
         "\nmean_ask_pre should match across conditions for the same seeds, because hour-1 prompts are identical.\n",
