@@ -1,0 +1,14 @@
+{
+  "claude-haiku-5-5": {
+    "calls": 45,
+    "input_tokens": 109412,
+    "output_tokens": 36350,
+    "usd_list_price": 0.0291
+  },
+  "claude-sonnet-5-5": {
+    "calls": 30,
+    "input_tokens": 87915,
+    "output_tokens": 22302,
+    "usd_list_price": 0.3988
+  }
+}
