@@ -30,7 +30,7 @@ from pydantic import BaseModel
 import sting  # noqa: F401
 from sting.agents import StingSeller, TargetSeller
 from sting.market import StingMarket
-from sting.clients import make_client
+from sting.clients import make_client, usage_summary
 from sting.scripts import CONDITIONS, schedule, wording_for_seed
 
 from src.continuous_double_auction.cda_types import ExperimentParams
@@ -235,6 +235,8 @@ def run_one(cfg: StingConfig, out_dir: Path) -> Path:
     except Exception as e:  # noqa: BLE001
         print(f"warning: upstream metrics failed for {out_dir}: {e}", file=sys.stderr)
 
+    clients = [b.client for b in buyers] + [s.client for s in sellers if isinstance(s, TargetSeller)]
+    (out_dir / "usage.json").write_text(json.dumps(usage_summary(clients), indent=2))
     _reset_logger(out_dir.name)
     (out_dir / "DONE").write_text("ok\n")
     return out_dir
