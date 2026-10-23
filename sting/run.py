@@ -68,6 +68,8 @@ class StingConfig(BaseModel):
     max_message_length: int = 500
     mock: bool = False
     mock_accept_p: float = 0.5
+    mock_fail_p: float = 0.0
+    mock_messy: bool = False
 
     def resolved_wording(self) -> str:
         return self.wording or wording_for_seed(self.seed)
@@ -77,7 +79,9 @@ def _client(model: str, cfg: StingConfig, salt: int):
     if cfg.mock:
         from sting.mock import MockClient
 
-        return MockClient(seed=cfg.seed * 1000 + salt, accept_p=cfg.mock_accept_p)
+        return MockClient(
+            seed=cfg.seed * 1000 + salt, accept_p=cfg.mock_accept_p, fail_p=cfg.mock_fail_p, messy=cfg.mock_messy
+        )
     kwargs = {"temperature": cfg.temperature, "seed": cfg.seed}
     return get_client(model=model, **kwargs)
 

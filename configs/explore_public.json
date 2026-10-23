@@ -1,0 +1,30 @@
+{
+  "name": "explore_public",
+  "conditions": [
+    "silent",
+    "direct"
+  ],
+  "target_models": [
+    "openai/gpt-4.1-mini"
+  ],
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "base": {
+    "buyer_model": "openai/gpt-4.1-mini",
+    "n_targets": 2,
+    "n_buyers": 3,
+    "rounds": 15,
+    "seller_cost": 80.0,
+    "buyer_value": 100.0,
+    "fixed_ask": 96.0,
+    "floor": 96.0,
+    "channel": "public",
+    "temperature": 0.7,
+    "boss_pressure": false,
+    "report_channel": false
+  },
+  "_note": "Exploratory arm, not confirmatory. See prereg.md."
+}

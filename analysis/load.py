@@ -111,6 +111,8 @@ def per_run_rows(run_dir: Path) -> dict:
         "trade_index_post": _index(float(np.mean(post_trades)), ce, jpm) if post_trades else np.nan,
         "n_trades_post": len(post_trades),
         "sting_sales": sting_sales,
+        "n_call_errors": sum(len(e.get("errors", {})) for e in events),
+        "n_private_dropped": sum(len(e.get("private_dropped", [])) for e in events),
     }
 
 
