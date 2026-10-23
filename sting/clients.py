@@ -31,6 +31,9 @@ log = logging.getLogger(__name__)
 # Lowest thinking setting each model accepts (Anthropic effort docs, checked 2026-10-23).
 # Haiku 5.5 accepts {"type": "disabled"} at high effort or below. Sonnet 5.5 rejects "disabled";
 # {"type": "between_tools"} is its lowest setting. Opus 5.5 always thinks, so the field is omitted.
+# List prices in USD per million tokens (input, output), platform.claude.com pricing page, 2026-10-23.
+CLAUDE_PRICES = {"claude-haiku-5-5": (0.10, 0.50), "claude-sonnet-5-5": (2.0, 10.0)}
+
 THINKING_FLOOR = {
     "claude-haiku-5-5": {"type": "disabled"},
     "claude-sonnet-5-5": {"type": "between_tools"},
@@ -57,8 +60,19 @@ class ClaudeClient(ModelWrapper):
         # Pin the public endpoint. Some environments export ANTHROPIC_BASE_URL for their own tooling,
         # and the SDK would silently follow it.
         base_url = os.environ.get("STING_ANTHROPIC_BASE_URL", "https://api.anthropic.com")
-        self.client = Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"], base_url=base_url, timeout=120, max_retries=0)
+        # Personal keys that are not scoped to one workspace must name a workspace on every request.
+        headers = {}
+        if os.environ.get("ANTHROPIC_WORKSPACE_ID"):
+            headers["anthropic-workspace-id"] = os.environ["ANTHROPIC_WORKSPACE_ID"]
+        self.client = Anthropic(
+            api_key=os.environ["ANTHROPIC_API_KEY"],
+            base_url=base_url,
+            default_headers=headers or None,
+            timeout=120,
+            max_retries=0,
+        )
         self.effort = effort
+        self.usage = {"calls": 0, "input_tokens": 0, "output_tokens": 0}
 
     def generate(self, messages: list[Message]) -> Optional[str]:
         from anthropic import APIConnectionError, APIStatusError, RateLimitError
@@ -79,6 +93,10 @@ class ClaudeClient(ModelWrapper):
         for attempt in range(6):
             try:
                 resp = self.client.messages.create(**params)
+                u = getattr(resp, "usage", None)
+                self.usage["calls"] += 1
+                self.usage["input_tokens"] += int(getattr(u, "input_tokens", 0) or 0)
+                self.usage["output_tokens"] += int(getattr(u, "output_tokens", 0) or 0)
                 return "".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
             except RateLimitError as e:
                 log.warning(f"{self.model_name} rate limited (attempt {attempt + 1}): {e}")
@@ -99,3 +117,18 @@ def make_client(model: str, temperature: float, seed: Optional[int] = None) -> M
     if seed is not None:
         kwargs["seed"] = seed
     return upstream_get_client(model=model, **kwargs)
+
+
+def usage_summary(clients) -> dict:
+    """Token use and list-price cost for the Claude clients among `clients`, keyed by model."""
+    out: dict[str, dict] = {}
+    for c in clients:
+        if not isinstance(c, ClaudeClient):
+            continue
+        row = out.setdefault(c.model_name, {"calls": 0, "input_tokens": 0, "output_tokens": 0})
+        for k in row:
+            row[k] += c.usage[k]
+    for model, row in out.items():
+        pin, pout = CLAUDE_PRICES.get(model, (float("nan"), float("nan")))
+        row["usd_list_price"] = round(row["input_tokens"] / 1e6 * pin + row["output_tokens"] / 1e6 * pout, 4)
+    return out

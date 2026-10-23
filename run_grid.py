@@ -83,6 +83,18 @@ def main() -> None:
             except Exception:  # noqa: BLE001
                 failures.append(out)
                 print(f"[{i}/{len(todo)}] FAIL {out}\n{traceback.format_exc()}")
+    total = {}
+    for _, out, _ in plan:
+        f = out / "usage.json"
+        if f.exists():
+            for model, row in json.loads(f.read_text()).items():
+                t = total.setdefault(model, {"calls": 0, "input_tokens": 0, "output_tokens": 0, "usd_list_price": 0.0})
+                for k in t:
+                    t[k] += row.get(k, 0)
+    if total:
+        (root / "usage_total.json").write_text(json.dumps(total, indent=2))
+        spend = sum(t["usd_list_price"] for t in total.values())
+        print(f"Claude usage for this grid so far: ~${spend:.2f} at list price -> {root / 'usage_total.json'}")
     if failures:
         print(f"{len(failures)} cells failed; rerun the same command to retry only those.")
         sys.exit(1)
