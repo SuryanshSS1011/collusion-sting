@@ -9,7 +9,7 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 
-# run outputs (commit summaries you want to keep under results_final/ instead)
+# full run outputs; the compact record that gets committed lives in results_final/
 results/
 results_mock/
 analysis/out/
