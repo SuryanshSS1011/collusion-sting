@@ -97,12 +97,11 @@ the length of one command and tears it down afterwards:
 
 ```bash
 uv run --with modal modal setup        # one-time browser sign-in; credits attach to that account
-./third_party/collusion_hackathon/.venv/bin/poseidon-host --model Qwen/Qwen2.5-7B-Instruct --gpu A10G -- \
+uv run poseidon-host --model Qwen/Qwen2.5-7B-Instruct --gpu A10G -- \
     uv run python run_grid.py configs/grid_open.json -y
 ```
 
 The starter repo marks this hosting path as unvalidated, so run it only after the Claude grid is done.
-Run `./third_party/collusion_hackathon/setup.sh` first if `poseidon-host` is missing.
 
 Positive control inside this harness. `configs/posctrl.json` (and `posctrl_claude.json`) fills the
 planted seat with a third LLM seller, so the control uses the same prompt as the main study. This
