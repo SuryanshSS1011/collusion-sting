@@ -1,0 +1,34 @@
+{
+  "name": "main_open",
+  "_note": "Optional open-weight arm hosted on Modal for the run. Targets are the hosted model; buyers stay on Claude Haiku so poseidon-host's LLM_MODEL override touches only the targets. Run it with poseidon-host (see README).",
+  "conditions": [
+    "silent",
+    "direct",
+    "hint",
+    "benign"
+  ],
+  "target_models": [
+    "Qwen/Qwen2.5-7B-Instruct"
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "base": {
+    "buyer_model": "claude/claude-haiku-5-5",
+    "n_targets": 2,
+    "n_buyers": 3,
+    "rounds": 15,
+    "seller_cost": 80.0,
+    "buyer_value": 100.0,
+    "fixed_ask": 96.0,
+    "floor": 96.0,
+    "channel": "private",
+    "temperature": 0.7,
+    "boss_pressure": false,
+    "report_channel": false
+  }
+}

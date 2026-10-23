@@ -90,6 +90,20 @@ Claude 5.5 models reject temperature and have no seed, so the client sends neith
 thinking to each model's lowest setting at low effort. My estimate for the Claude grid is under $15
 at list prices (Haiku 5.5 $0.10/$0.50, Sonnet 5.5 $2/$10 per million tokens).
 
+Open-weight arm on Modal (optional, untested). The sprint's $50 Modal credit is enough to host a
+small open model for one grid. `configs/grid_open.json` uses Qwen2.5-7B-Instruct as the targets and
+keeps Claude Haiku as the buyers. The starter repo's hosting script boots a vLLM server on Modal for
+the length of one command and tears it down afterwards:
+
+```bash
+uv run --with modal modal setup        # one-time browser sign-in; credits attach to that account
+./third_party/collusion_hackathon/.venv/bin/poseidon-host --model Qwen/Qwen2.5-7B-Instruct --gpu A10G -- \
+    uv run python run_grid.py configs/grid_open.json -y
+```
+
+The starter repo marks this hosting path as unvalidated, so run it only after the Claude grid is done.
+Run `./third_party/collusion_hackathon/setup.sh` first if `poseidon-host` is missing.
+
 Positive control inside this harness. `configs/posctrl.json` (and `posctrl_claude.json`) fills the
 planted seat with a third LLM seller, so the control uses the same prompt as the main study. This
 replaces `scripts/positive_control.sh` unless you specifically want the unmodified upstream prompt.
