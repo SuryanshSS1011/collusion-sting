@@ -30,6 +30,7 @@ from pydantic import BaseModel
 import sting  # noqa: F401
 from sting.agents import StingSeller, TargetSeller
 from sting.market import StingMarket
+from sting.clients import make_client
 from sting.scripts import CONDITIONS, schedule, wording_for_seed
 
 from src.continuous_double_auction.cda_types import ExperimentParams
@@ -40,9 +41,11 @@ from src.continuous_double_auction.identities import (
 )
 from src.continuous_double_auction.market.agents import LMBuyer
 from src.continuous_double_auction.util.logging_util import ExperimentLogger
-from src.continuous_double_auction.util.misc import get_client, initialize_market
+from src.continuous_double_auction.util.misc import initialize_market
 
 SCRIPTED = "scripted-sting"
+POSCTRL = "posctrl"
+ALL_CONDITIONS = (*CONDITIONS, POSCTRL)
 # Setup draws names, seat order and opening orders from the global RNGs. Hold a lock while doing it so
 # concurrent markets (run_grid --jobs) stay reproducible per seed.
 _SETUP_LOCK = threading.Lock()
@@ -82,13 +85,13 @@ def _client(model: str, cfg: StingConfig, salt: int):
         return MockClient(
             seed=cfg.seed * 1000 + salt, accept_p=cfg.mock_accept_p, fail_p=cfg.mock_fail_p, messy=cfg.mock_messy
         )
-    kwargs = {"temperature": cfg.temperature, "seed": cfg.seed}
-    return get_client(model=model, **kwargs)
+    return make_client(model, temperature=cfg.temperature, seed=cfg.seed)
 
 
 def run_one(cfg: StingConfig, out_dir: Path) -> Path:
-    if cfg.condition not in CONDITIONS:
-        raise ValueError(f"condition must be one of {CONDITIONS}")
+    if cfg.condition not in ALL_CONDITIONS:
+        raise ValueError(f"condition must be one of {ALL_CONDITIONS}")
+    posctrl = cfg.condition == POSCTRL
     out_dir = Path(out_dir)
     if (out_dir / "DONE").exists():
         return out_dir
@@ -104,7 +107,8 @@ def run_one(cfg: StingConfig, out_dir: Path) -> Path:
         n_sellers = cfg.n_targets + 1
         sting_index = random.Random(10_000 + cfg.seed).randrange(n_sellers)
         seller_models = [cfg.target_model] * n_sellers
-        seller_models[sting_index] = SCRIPTED
+        if not posctrl:
+            seller_models[sting_index] = SCRIPTED
         params = ExperimentParams(
             seller_valuations=[cfg.seller_cost] * n_sellers,
             buyer_valuations=[cfg.buyer_value] * cfg.n_buyers,
@@ -129,7 +133,8 @@ def run_one(cfg: StingConfig, out_dir: Path) -> Path:
         buyer_cos = get_random_buyer_company_names(cfg.n_buyers)
         seller_cos = get_random_seller_company_names(n_sellers)
         seller_ids = [f"Seller {n}" for n in seller_names]
-        sting_id = seller_ids[sting_index]
+        # Positive control: the planted seat is filled by one more LLM target, so every seller is an LLM.
+        sting_id = "" if posctrl else seller_ids[sting_index]
         target_ids = [s for s in seller_ids if s != sting_id]
 
         buyers = [
@@ -146,7 +151,7 @@ def run_one(cfg: StingConfig, out_dir: Path) -> Path:
         wording = cfg.resolved_wording()
         sellers = []
         for i, sid in enumerate(seller_ids):
-            if i == sting_index:
+            if i == sting_index and not posctrl:
                 sellers.append(
                     StingSeller(
                         id=sid,
@@ -192,7 +197,8 @@ def run_one(cfg: StingConfig, out_dir: Path) -> Path:
                 buyer_bid_center=params.initial_buyer_bid_center,
                 buyer_bid_spread=params.initial_buyer_bid_spread,
             )
-            asks[sting_index] = cfg.fixed_ask
+            if not posctrl:
+                asks[sting_index] = cfg.fixed_ask
             market.set_initial_orders(
                 [(asks[i], s.id) for i, s in enumerate(sellers)],
                 [(bids[i], b.id) for i, b in enumerate(buyers)],
@@ -207,7 +213,7 @@ def run_one(cfg: StingConfig, out_dir: Path) -> Path:
         "buyer_ids": [b.id for b in buyers],
         "competitive_price": (cfg.seller_cost + cfg.buyer_value) / 2,
         "cartel_price": cfg.buyer_value,
-        "script": schedule(cfg.condition, wording, cfg.floor),
+        "script": {} if posctrl else schedule(cfg.condition, wording, cfg.floor),
     }
     (out_dir / "sting_meta.json").write_text(json.dumps(meta, indent=2))
     logger.metadata["buyer_ids"] = meta["buyer_ids"]
@@ -245,7 +251,7 @@ def _reset_logger(name: str) -> None:
 
 def main(argv=None) -> None:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--condition", required=True, choices=CONDITIONS)
+    p.add_argument("--condition", required=True, choices=ALL_CONDITIONS)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--target_model", default="openai/gpt-4.1-mini")
     p.add_argument("--buyer_model", default="openai/gpt-4.1-mini")

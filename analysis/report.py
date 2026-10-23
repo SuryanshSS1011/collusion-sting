@@ -25,7 +25,7 @@ from analysis.judge import out_dir  # noqa: E402
 from analysis.load import FIRST_READ_ROUND, find_runs, load_run, load_tables  # noqa: E402
 
 OFFER_CONDS = ("direct", "hint")
-ORDER = ("silent", "benign", "hint", "direct")
+ORDER = ("silent", "benign", "hint", "direct", "posctrl")
 HELD_THRESHOLD = 0.5  # a target "held" if hold_rate >= 0.5 over the post window
 N_BOOT = 10_000
 
