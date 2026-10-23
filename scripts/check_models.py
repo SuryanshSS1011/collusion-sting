@@ -19,11 +19,14 @@ URL = "https://openrouter.ai/api/v1/models"
 
 def main() -> None:
     grid = json.loads(Path(sys.argv[1] if len(sys.argv) > 1 else "configs/grid.json").read_text())
-    wanted = sorted(set(grid["target_models"]) | {grid["base"]["buyer_model"], "openai/gpt-4.1-mini"})
+    wanted = sorted(set(grid["target_models"]) | {grid["base"]["buyer_model"]})
     with urllib.request.urlopen(URL, timeout=30) as r:
         models = {m["id"]: m for m in json.load(r)["data"]}
     ok = True
     for mid in wanted:
+        if mid.startswith("claude/"):
+            print(f"skip     {mid:40s} (Anthropic API, not OpenRouter; the smoke test checks it)")
+            continue
         m = models.get(mid)
         if m is None:
             print(f"MISSING  {mid}")

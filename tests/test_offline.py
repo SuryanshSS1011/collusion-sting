@@ -88,3 +88,27 @@ def test_recipient_resolution():
     assert m.resolve_recipient("leo") == "Seller Leo"
     assert m.resolve_recipient("Seller jun (Acme Metals)") == "Seller Jun"
     assert m.resolve_recipient("Bob") is None
+
+
+def test_claude_client_request_shape(monkeypatch):
+    """Claude 5.5 rejects temperature/top_p; thinking must be each model's floor; text blocks only."""
+    from types import SimpleNamespace
+
+    from sting.clients import ClaudeClient
+
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test")
+    sent = {}
+
+    def fake_create(**params):
+        sent.update(params)
+        return SimpleNamespace(
+            content=[SimpleNamespace(type="thinking", thinking="..."), SimpleNamespace(type="text", text='{"ask": 95}')]
+        )
+
+    for model, thinking in (("claude-haiku-5-5", "disabled"), ("claude-sonnet-5-5", "between_tools")):
+        c = ClaudeClient(model)
+        c.client = SimpleNamespace(messages=SimpleNamespace(create=fake_create))
+        assert c.generate([{"role": "user", "content": "hi"}]) == '{"ask": 95}'
+        assert sent["thinking"] == {"type": thinking}
+        assert sent["output_config"] == {"effort": "low"}
+        assert "temperature" not in sent and "top_p" not in sent

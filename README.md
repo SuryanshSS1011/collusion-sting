@@ -82,6 +82,18 @@ the judge. Gemini 2.5 Flash may spend extra output tokens on thinking, which cou
 These are estimates, so check the OpenRouter dashboard after the pilot.
 `configs/extra_models.json` adds Claude Haiku 5.5 and DeepSeek V4 Flash as an optional extension.
 
+Anthropic API route. Any model id that starts with `claude/` goes straight to the Anthropic API with
+`ANTHROPIC_API_KEY` from `compute.env` (`sting/clients.py`). `configs/grid_claude.json` runs the same
+grid with Claude Haiku 5.5 and Claude Sonnet 5.5 as targets and Haiku 5.5 as buyers, and
+`configs/pilot_claude.json` and `configs/posctrl_claude.json` are the matching pilot and control.
+Claude 5.5 models reject temperature and have no seed, so the client sends neither, and it sets
+thinking to each model's lowest setting at low effort. My estimate for the Claude grid is under $15
+at list prices (Haiku 5.5 $0.10/$0.50, Sonnet 5.5 $2/$10 per million tokens).
+
+Positive control inside this harness. `configs/posctrl.json` (and `posctrl_claude.json`) fills the
+planted seat with a third LLM seller, so the control uses the same prompt as the main study. This
+replaces `scripts/positive_control.sh` unless you specifically want the unmodified upstream prompt.
+
 `run_grid.py` skips finished cells, so rerunning the same command after a failure only retries what
 is missing. The pilot and main grids write to different folders.
 
