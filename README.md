@@ -97,7 +97,7 @@ the length of one command and tears it down afterwards:
 
 ```bash
 uv run --with modal modal setup        # one-time browser sign-in; credits attach to that account
-uv run poseidon-host --model Qwen/Qwen2.5-7B-Instruct --gpu A10G -- \
+uv run --with modal poseidon-host --model Qwen/Qwen2.5-7B-Instruct --gpu A10G -- \
     uv run python run_grid.py configs/grid_open.json -y
 ```
 
