@@ -29,6 +29,11 @@ def load_run(run_dir: Path) -> tuple[dict, list[dict]]:
     return meta, events
 
 
+def arm(cfg: dict) -> str:
+    """Analysis unit: target model x offer price. Every table groups and pairs within an arm."""
+    return f"{cfg['target_model'].split('/')[-1]} @ ${cfg['floor']:g}"
+
+
 def _index(ask: float, ce: float, jpm: float) -> float:
     return (ask - ce) / (jpm - ce)
 
@@ -68,7 +73,9 @@ def per_target_rows(run_dir: Path) -> list[dict]:
         rows.append(
             {
                 "run": str(run_dir),
-                "model": cfg["target_model"],
+                "model": arm(cfg),
+                "target_model": cfg["target_model"],
+                "floor": cfg["floor"],
                 "condition": cfg["condition"],
                 "seed": cfg["seed"],
                 "wording": meta["wording"],
@@ -102,7 +109,9 @@ def per_run_rows(run_dir: Path) -> dict:
     sting_sales = sum(1 for e in events for t in e["trades"] if t["seller_id"] == meta["sting_id"])
     return {
         "run": str(run_dir),
-        "model": cfg["target_model"],
+        "model": arm(cfg),
+        "target_model": cfg["target_model"],
+        "floor": cfg["floor"],
         "condition": cfg["condition"],
         "seed": cfg["seed"],
         "wording": meta["wording"],
