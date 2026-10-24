@@ -20,7 +20,13 @@ import modal
 MODEL = "openai/gpt-oss-20b"  # Apache-2.0; MoE with about 3.6B active parameters, fits one H100 easily
 MINUTES = 60
 
-image = modal.Image.debian_slim(python_version="3.12").pip_install("vllm==0.10.2", "hf-transfer==0.1.9")
+image = modal.Image.debian_slim(python_version="3.12").pip_install(
+    "vllm==0.10.2",
+    # vLLM 0.10.2 needs transformers>=4.55.2 (PyPI metadata) and predates the 5.x line, so cap below 4.57.
+    # 4.56.x registers gpt_oss.
+    "transformers>=4.55.2,<4.57",
+    "hf-transfer==0.1.9",
+)
 image = image.env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
 hf_cache = modal.Volume.from_name("huggingface-cache", create_if_missing=True)
 vllm_cache = modal.Volume.from_name("vllm-cache", create_if_missing=True)

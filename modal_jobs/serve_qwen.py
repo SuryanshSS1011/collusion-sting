@@ -19,7 +19,13 @@ import modal
 MODEL = "Qwen/Qwen3-32B-FP8"  # Apache-2.0, ungated; FP8 weights fit one H100 with room for the KV cache
 MINUTES = 60
 
-image = modal.Image.debian_slim(python_version="3.12").pip_install("vllm==0.9.2", "hf-transfer==0.1.9")
+image = modal.Image.debian_slim(python_version="3.12").pip_install(
+    "vllm==0.9.2",
+    # vLLM 0.9.2 registers its own "aimv2" config, which transformers added in 4.54 (checked against
+    # 4.53.3, 4.54.1 and later): an unpinned transformers crashes vLLM on import. 4.53.x has Qwen3.
+    "transformers>=4.53.2,<4.54",
+    "hf-transfer==0.1.9",
+)
 image = image.env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
 hf_cache = modal.Volume.from_name("huggingface-cache", create_if_missing=True)
 vllm_cache = modal.Volume.from_name("vllm-cache", create_if_missing=True)
