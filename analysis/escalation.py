@@ -31,7 +31,10 @@ def model_short(name: str) -> str:
     m = re.search(r"claude-(\w+)-5-5", name)
     if m:
         return m.group(1)
-    return "qwen" if "qwen" in name.lower() else name.split("/")[-1].lower()
+    low = name.lower()
+    if "gpt-oss" in low:
+        return "gptoss"
+    return "qwen" if "qwen" in low else name.split("/")[-1].lower()
 
 
 def arm_of(run: str) -> tuple[str, str]:

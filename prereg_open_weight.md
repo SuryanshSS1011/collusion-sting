@@ -68,4 +68,4 @@ that script have no arms here and are not reported.
 
 | When (ET) | What changed | Why | Seen results first? |
 |---|---|---|---|
-| | | | |
+| Oct 24, 13:12 | Added a second open-weight seller model, gpt-oss-20b (OpenAI open weights, reasoning effort low), on the core arms only (silent_none, direct_none, peer_none, peer_independent, silent_independent; seeds 30 to 49; `configs/open_weight_gptoss.json`). The same hypotheses Q1 to Q5 apply, tested separately per model with `--model gptoss`. Escalation and the pressure check stay Qwen-only. | A second lab's model makes the cross-family claim stronger than one open model can, and Agrawal et al. found GPT-family sellers colluded most. | No. No open-weight market had run. |
