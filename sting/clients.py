@@ -125,15 +125,21 @@ class VLLMClient(ModelWrapper):
     def __init__(self, model_name: str, temperature: float = 0.7, max_tokens: int = 2000, **kwargs):
         super().__init__(model_name, max_tokens=max_tokens, **kwargs)
         _load_keys()
-        if not os.environ.get("VLLM_BASE_URL"):
-            raise RuntimeError("VLLM_BASE_URL is not set. Put it in compute.env (see paper/modal_runbook.md).")
+        # One server per model: gpt-oss reads VLLM_BASE_URL_GPTOSS, every other model reads VLLM_BASE_URL.
+        url_var = "VLLM_BASE_URL_GPTOSS" if "gpt-oss" in model_name else "VLLM_BASE_URL"
+        if not os.environ.get(url_var):
+            raise RuntimeError(f"{url_var} is not set. Put it in compute.env (see paper/modal_runbook.md).")
         from openai import OpenAI
 
-        self.client = OpenAI(
-            base_url=os.environ["VLLM_BASE_URL"], api_key=os.environ.get("VLLM_API_KEY", "EMPTY"), timeout=300
-        )
+        self.client = OpenAI(base_url=os.environ[url_var], api_key=os.environ.get("VLLM_API_KEY", "EMPTY"), timeout=300)
         self.temperature = temperature
         self.usage = {"calls": 0, "input_tokens": 0, "output_tokens": 0}
+
+    def _reasoning_args(self) -> dict:
+        """Lowest reasoning each open model allows, like the Claude agents: Qwen3 thinking off, gpt-oss effort low."""
+        if "gpt-oss" in self.model_name:
+            return {"reasoning_effort": "low", "max_tokens": max(self.max_tokens, 4000)}
+        return {"extra_body": {"chat_template_kwargs": {"enable_thinking": False}}}
 
     def generate(self, messages: list[Message]) -> Optional[str]:
         for attempt in range(6):
@@ -142,8 +148,7 @@ class VLLMClient(ModelWrapper):
                     model=self.model_name,
                     messages=messages,
                     temperature=self.temperature,
-                    max_tokens=self.max_tokens,
-                    extra_body={"chat_template_kwargs": {"enable_thinking": False}},
+                    **({"max_tokens": self.max_tokens} | self._reasoning_args()),
                 )
                 u = getattr(resp, "usage", None)
                 self.usage["calls"] += 1

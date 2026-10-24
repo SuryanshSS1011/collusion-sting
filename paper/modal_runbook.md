@@ -1,6 +1,7 @@
 # Running the open-weight model on Modal (laptop runbook)
 
-This adds a non-Claude model, Qwen3-32B (FP8, Apache-2.0), in two roles.
+This adds non-Claude models. Qwen3-32B (FP8, Apache-2.0) plays two roles, and gpt-oss-20b (OpenAI open
+weights, Apache-2.0) is a second seller model on the core arms.
 
 1. **A judge.** It relabels every Claude transcript and reruns the disclaimer monitor test, using 1,396
    prompts or more.
@@ -86,11 +87,26 @@ uv run python run_grid.py configs/open_weight_qwen.json -y --jobs 8
 
 The run can be resumed, because finished markets are skipped. If you see many failures, lower `--jobs` to 4.
 
+## 4b. Second model: gpt-oss-20b (about 30 to 60 minutes, can run alongside step 4)
+
+This uses the same secret, a second server and a cheaper load, because it is a mixture-of-experts model with
+about 3.6B active parameters.
+
+```bash
+modal deploy modal_jobs/serve_gptoss.py
+echo "VLLM_BASE_URL_GPTOSS=https://<you>--collusion-sting-gptoss-serve.modal.run/v1" >> compute.env
+curl -s https://<you>--collusion-sting-gptoss-serve.modal.run/v1/models -H "Authorization: Bearer $VLLM_KEY"
+uv run python run_grid.py configs/open_weight_gptoss.json -y --jobs 8
+```
+
+If gpt-oss markets fail with JSON errors, paste one traceback to Claude before rerunning. Its answers come
+through vLLM's reasoning parser, so the final message should be plain JSON.
+
 ## 5. Hand the data back
 
 ```bash
-uv run python scripts/compact_results.py open_weight_qwen open_weight_pilot
-git add results_final/open_weight_qwen results_final/open_weight_pilot paper/modal/qwen_outputs.jsonl.gz
+uv run python scripts/compact_results.py open_weight_qwen open_weight_gptoss open_weight_pilot
+git add results_final/open_weight_qwen results_final/open_weight_gptoss results_final/open_weight_pilot paper/modal/qwen_outputs.jsonl.gz
 git commit -m "Open-weight judge outputs and Qwen3-32B markets"
 git push
 ```
@@ -102,6 +118,7 @@ monitor test. It will also label the Qwen markets and run the same tests as the 
 
 ```bash
 modal app stop collusion-sting-qwen
+modal app stop collusion-sting-gptoss
 ```
 
 The server also scales to zero after 10 idle minutes.

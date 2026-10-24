@@ -3,10 +3,17 @@
 Rewritten October 24, 2026, after the peer-style sting study. Every number referred to here is in
 `paper/results_pack.md` with its source file and status. Write the report in your own words.
 
-Template: the official Apart template. The limit is 8 pages before references and appendices. The abstract
-must be 150 to 250 words. The required appendix is titled "Limitations and Dual-Use / Ethical
-Considerations". Code written before the sprint must be marked as preexisting, which here means the
-Agrawal et al. double-auction harness.
+Template: the official Apart template (the user's copy is in Google Docs). It **recommends about 4 pages
+excluding references and appendix**: Introduction and Related Work about 1 page, Methods and Results about
+2.5 pages, Discussion about 0.5 page. The sprint page allows up to 8 pages, but write to the 4-page shape and
+move detail to the appendix. The abstract must be 150 to 250 words. The template's section order is
+Introduction (ending in a numbered "Our main contributions are" list), Related Work, Methods, Results,
+Discussion and Limitations (with Limitations and Future Work subsections), Conclusion, Code and Data, Author
+Contributions, References, Appendix, and an **LLM Usage Statement**, which the template asks for and which
+should say plainly how Claude was used. The template notes that the final version should be primarily
+written by the team. The sprint page also requires an appendix titled "Limitations and Dual-Use / Ethical
+Considerations", and code written before the sprint must be marked as preexisting, which here means the
+Agrawal et al. double-auction harness. Number every figure and table and give each a self-contained caption.
 
 ## Judging criteria to write toward
 
@@ -38,29 +45,27 @@ Agrawal et al. double-auction harness.
    a competitive tactic in every silent market, and a message monitor labels both styles of talk as
    collusion.
 
-## Section budget (about 8 pages)
+## Section budget (about 4 pages plus appendix)
 
 1. Abstract, 150 to 250 words.
-2. Introduction, about 0.75 page. LLM agents now price and negotiate. Auditors can watch messages or plant
-   an offer. Question 3.2 says a planted offer has not been tested. State the four findings and the
-   contributions.
-3. Related work, about 0.5 page.
+2. Introduction, about 0.6 page. LLM agents now price and negotiate. Auditors can watch messages or plant
+   an offer. Question 3.2 says a planted offer has not been tested. End with the numbered contributions.
+3. Related work, about 0.4 page, grouped as follows.
    - LLM collusion in markets: Agrawal 2025, Fish 2024, Lee and Park 2026, Garra 2026.
-   - Monitoring and its failure modes: SHADE-Arena, CoT Red-Handed, Zhou 2026, MonitoringBench, Korbak 2025.
+   - Monitoring and its failure modes: SHADE-Arena, CoT Red-Handed, Zhou 2026, Korbak 2025.
    - Compliance and cheating: Anto and Vazquez 2026, Andon Labs 2026, Shi 2026.
-   - Stings and audit games: Taylor 2025, Marks 2025, and the honeypot papers already in the bibliography.
-   - Evaluation awareness: Lynch 2025 and Needham 2025.
-   - Economics: Stigler 1964, and Farrell and Rabin 1996.
-4. Setup, about 1 page. Cover these points.
-   - The market: cost $80, value $100, competitive price $90, 15 hours, 2 targets, 1 planted seller, 3 buyers.
-   - The conditions, with the exact text in an appendix.
-   - Models.
-   - Measures: acceptance, peer coordination, holding, and reasoning codes.
-   - Pre-registration and deviations.
-   - Validation without human coders.
-5. Results, about 3.5 pages. Subsections below.
-6. Discussion and recommendations for auditors, about 0.75 page.
-7. Limitations, about 0.5 page, plus the required appendix.
+   - Stings and audit games, plus evaluation awareness: Taylor 2025, Marks 2025, and Lynch 2025.
+4. Methods, about 0.8 page. Cover the market, the five sting types (with exact scripts in the appendix),
+   the models, the measures, the pre-registrations and the validation without human coders.
+5. Results, about 1.7 pages. Use three figures at most in the main text (sting outcomes, peer sting, and
+   escalation or monitors). The validation table, label sources, market-level checks and price pilot go
+   in the appendix.
+6. Discussion and Limitations, about 0.5 page, with Limitations and Future Work subsections. Lift the
+   reasoning for options not run from `paper/design_decisions.md`.
+7. Conclusion, 1 or 2 short paragraphs.
+8. Appendix. Include scripts, prompts, the label-source table, the market-level table, the monitor test,
+   the known-answer markets, the price pilot, and the required "Limitations and Dual-Use / Ethical
+   Considerations" section.
 
 ## Results subsections
 
