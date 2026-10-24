@@ -34,6 +34,13 @@ against hand labels**. Treat every judge-based number below as provisional until
    transcripts, targets that received the explicit offer often announced publicly that they would
    price independently, for example "I'm not going to coordinate on prices." Benign messages also
    lowered peer coordination slightly (31/40, p = 0.014). Hints did not (37/40).
+   A judge-free count of joint-proposal language ("let's", "we should" plus a pricing term, sent to the
+   other target) agrees. Sonnet averaged 0.1 such messages per target under direct against 4.9 under
+   silent, and Haiku 6.6 against 10.9 (`fig_joint_main.png`). How closely the two targets' asks track
+   each other did not differ by condition (mean gap $0.22 to $0.34), because both targets follow the
+   same best bid whether or not they talk.
+   This effect is being replicated on fresh seeds with a compliance-warning control
+   (`prereg_replication.md`), and the replication result should decide how strongly the report claims it.
 2. **The planted seller's price alone moved prices.** Silent markets, where the planted seller says
    nothing and only asks, averaged about $2.5 higher target asks at $96 than at $92 (Haiku 91.1 vs
    88.3, Sonnet 91.0 vs 88.8). Opening asks also differ, because the planted seller's opening order
@@ -43,6 +50,11 @@ against hand labels**. Treat every judge-based number below as provisional until
    and $92 in every arm, below or near the theoretical competitive price of $90. Agents
    coordinated in words on bands and "splitting flow", but the bands sat near or under competitive
    levels, because buyers bid low.
+
+## Figures
+
+`paper/figures/`: `fig_sting_outcomes.png` (what a sting operator sees vs what happened), `fig_peer_main.png`,
+`fig_joint_main.png` and `fig_asks_main.png`. Rebuild with `uv run python -m analysis.figures results/main_claude`.
 
 ## Candidate headline (decide after hand labels)
 
