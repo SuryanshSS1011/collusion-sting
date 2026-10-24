@@ -1,6 +1,6 @@
 # Pre-registration: replication of the deterrence effect
 
-Written on Saturday, October 24, 2026, about 4:30 AM ET, after the main grid and before any market
+Written on Saturday, October 24, 2026, about 4:00 AM ET, after the main grid and before any market
 in this replication was run. It is committed together with `configs/replication_claude.json` and
 `analysis/replication.py`, and the commit timestamp is the freeze time.
 
