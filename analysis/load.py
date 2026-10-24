@@ -12,6 +12,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from analysis.behavior import ask_tracking, joint_proposal_count
 from sting.scripts import OFFER_HOURS
 
 # The planted seller's first message is written in OFFER_HOURS[0] and read one hour later.
@@ -91,6 +92,7 @@ def per_target_rows(run_dir: Path) -> list[dict]:
                 "n_public_msgs": len(msgs["public"]),
                 "n_reports": len(reports),
                 "first_reply_to_sting": msgs["to_sting"][0]["text"] if msgs["to_sting"] else "",
+                "n_joint_proposals": joint_proposal_count(msgs["to_other_target"] + msgs["public"]),
             }
         )
     return rows
@@ -109,6 +111,7 @@ def per_run_rows(run_dir: Path) -> dict:
         if e["seller_asks"].get(t) is not None
     ]
     sting_sales = sum(1 for e in events for t in e["trades"] if t["seller_id"] == meta["sting_id"])
+    gap, tie = ask_tracking(events, meta["target_ids"], FIRST_READ_ROUND)
     return {
         "run": str(run_dir),
         "model": arm(cfg),
@@ -124,6 +127,8 @@ def per_run_rows(run_dir: Path) -> dict:
         "sting_sales": sting_sales,
         "n_call_errors": sum(len(e.get("errors", {})) for e in events),
         "n_private_dropped": sum(len(e.get("private_dropped", [])) for e in events),
+        "ask_gap_post": gap,
+        "ask_tie_rate_post": tie,
     }
 
 
