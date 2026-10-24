@@ -268,19 +268,22 @@ def figure(t: pd.DataFrame, path: Path) -> None:
     ax = axes[2]
     xs = []
     for x, m in enumerate(("haiku", "sonnet")):
+        if "deceptive_intent" not in t:
+            break
         acc = t[(t.m == m) & (t.sting == "peer") & (t.instruction == "none") & t.accept]
-        if "deceptive_intent" in acc:
-            dot(ax, x - 0.12, int((acc.deceptive_intent == "yes").sum()), len(acc), "#52514e", True)
-        dot(ax, x + 0.12, int(acc.held.sum()), len(acc), "#1baf7a", True)
+        sil = t[(t.m == m) & (t.sting == "silent") & (t.instruction == "none")]
+        dot(ax, x - 0.14, int((sil.deceptive_intent == "yes").sum()), len(sil), color["silent"], True)
+        dot(ax, x + 0.14, int((acc.deceptive_intent == "yes").sum()), len(acc), color["peer"], True)
         xs.append(x)
-    ax.set_xticks(xs, ["Haiku\nacceptors", "Sonnet\nacceptors"], fontsize=7)
-    ax.set_title("What agreeing meant", loc="left")
+    ax.set_xticks(xs, ["Haiku", "Sonnet"][: len(xs)], fontsize=8)
+    ax.set_xlim(-0.6, 1.6)
+    ax.set_title("Notes urge restraint while undercutting", loc="left")
     ax.legend(
         handles=[
-            plt.Line2D([], [], marker="o", ls="", color="#52514e", label="notes plan to undercut"),
-            plt.Line2D([], [], marker="o", ls="", color="#1baf7a", label="held the named level"),
+            plt.Line2D([], [], marker="o", ls="", color=color["silent"], label="all agents, silent markets"),
+            plt.Line2D([], [], marker="o", ls="", color=color["peer"], label="agents that agreed to the peer sting"),
         ],
-        loc="upper left",
+        loc="lower center",
         fontsize=7,
     )
     for ax in axes:

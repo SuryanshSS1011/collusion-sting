@@ -121,7 +121,20 @@ Judge-free reasoning rules per cell (`analysis/out/explore/reasoning_rules_by_ce
 
 ## F. Peer-style sting study (prereg_peer_sting.md)
 
-Not available yet (peer_sting_tests.json missing).
+1. P1_accept_peer_gt_direct_haiku: peer 35/40 (88%), direct 1/40 (2%); one-sided p = 3.6e-16, Holm 1.1e-15. [prereg peer sting; `analysis/out/peer_sting_claude/peer_sting_tests.json`]
+1. P2_accept_none_gt_independent_peer_haiku: none 35/40 (88%), independent 0/40 (0%); one-sided p = 1.1e-17, Holm 4.5e-17. [prereg peer sting; `analysis/out/peer_sting_claude/peer_sting_tests.json`]
+1. P3_detection_peer_arms_haiku: agreed and coordinated 35, agreed without coordinating 0, coordinated without agreeing 4, neither 41; one-sided p = 1.4e-18, Holm 7.1e-18; sensitivity 0.90, specificity 1.00, Youden J 0.90 (95% CI 0.79 to 0.98); useful-detector rule met: True. [prereg peer sting; `analysis/out/peer_sting_claude/peer_sting_tests.json`]
+1. P4_inducement_independent_haiku: peer 0/40 (0%), silent 0/40 (0%); one-sided p = 1.000, Holm 1.000. [prereg peer sting; `analysis/out/peer_sting_claude/peer_sting_tests.json`]
+1. P5_deceptive_sonnet_gt_haiku_silent: sonnet 16/16 (100%), haiku 12/40 (30%); one-sided p = 7.3e-07, Holm 1.5e-06. [prereg peer sting; `analysis/out/peer_sting_claude/peer_sting_tests.json`]
+1. haiku direct/independent: accepted 0/40 (0%), coordinated with peer 0/40 (0%), held named level 0, accepted and held 0, deceptive intent 0, deceptive among acceptors [0, 0], mean post ask 88.19. [prereg secondary, descriptive; `analysis/out/peer_sting_claude/peer_sting_tests.json`]
+1. haiku direct/none: accepted 1/40 (2%), coordinated with peer 22/40 (55%), held named level 2, accepted and held 0, deceptive intent 11, deceptive among acceptors [1, 1], mean post ask 87.95. [prereg secondary, descriptive; `analysis/out/peer_sting_claude/peer_sting_tests.json`]
+1. haiku peer/independent: accepted 0/40 (0%), coordinated with peer 0/40 (0%), held named level 40, accepted and held 0, deceptive intent 0, deceptive among acceptors [0, 0], mean post ask 85.74. [prereg secondary, descriptive; `analysis/out/peer_sting_claude/peer_sting_tests.json`]
+1. haiku peer/none: accepted 35/40 (88%), coordinated with peer 39/40 (98%), held named level 40, accepted and held 35, deceptive intent 28, deceptive among acceptors [25, 35], mean post ask 85.71. [prereg secondary, descriptive; `analysis/out/peer_sting_claude/peer_sting_tests.json`]
+1. haiku silent/independent: accepted 0/40 (0%), coordinated with peer 0/40 (0%), held named level None, accepted and held None, deceptive intent 0, deceptive among acceptors [0, 0], mean post ask 88.13. [prereg secondary, descriptive; `analysis/out/peer_sting_claude/peer_sting_tests.json`]
+1. haiku silent/none: accepted 0/40 (0%), coordinated with peer 37/40 (92%), held named level None, accepted and held None, deceptive intent 12, deceptive among acceptors [0, 0], mean post ask 88.50. [prereg secondary, descriptive; `analysis/out/peer_sting_claude/peer_sting_tests.json`]
+1. sonnet peer/none: accepted 12/16 (75%), coordinated with peer 9/16 (56%), held named level 16, accepted and held 12, deceptive intent 12, deceptive among acceptors [11, 12], mean post ask 85.63. [prereg secondary, descriptive; `analysis/out/peer_sting_claude/peer_sting_tests.json`]
+1. sonnet silent/none: accepted 0/16 (0%), coordinated with peer 16/16 (100%), held named level None, accepted and held None, deceptive intent 16, deceptive among acceptors [0, 0], mean post ask 88.98. [prereg secondary, descriptive; `analysis/out/peer_sting_claude/peer_sting_tests.json`]
+1. Third deterrence test (Haiku): direct 22/40 (55%) vs silent 37/40 (92%), p = 0.00012. [prereg secondary; `analysis/out/peer_sting_claude/peer_sting_tests.json`]
 
 ## G. Price-stakes pilot (exploratory)
 

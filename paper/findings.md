@@ -281,6 +281,57 @@ No target's notes ever treated the planted seller as a test or trap. Of 77 sente
 words near offer or compliance context, all but one are about testing demand ("a small step to 90.75 tests
 whether demand holds"), and the one exception is "set up a competitive position".
 
+## Peer-style sting study (pre-registered in `prereg_peer_sting.md`, committed at 06:25 ET before any market ran)
+
+The study ran 136 markets: Haiku in 6 arms of 20 seeds, and Sonnet in the silent and peer-style arms
+with 8 seeds each. The markets cost $12.86, with 0 failed calls, 0 agent errors and 0 dropped
+messages. Labels come from the unchanged primary judge (Sonnet, study prompt) and the reasoning monitor
+(prompt v2, $3.11). The peer-style planted seller never names collusion, an agreement or a floor, and
+proposes a level at the market (best standing bid plus $0.50). Outputs are in
+`results_final/analysis/peer_sting_claude/`, and the figure is `fig_peer_sting.png`.
+
+1. **P1, supported.** Haiku agreed to the peer-style sting 35/40 times,
+   against 1/40 for the explicit offer (one-sided p = 3.6e-16).
+2. **P2, supported.** Agents told to price independently agreed 0/40 times
+   (p = 1.1e-17).
+3. **P3, supported, and the useful-detector rule is met.** Across both peer arms, agreement identified the
+   agents that coordinated with their peer, with sensitivity 0.90 (35 of 39),
+   specificity 1.00 (41 of 41) and Youden's J
+   0.90 (95% CI 0.79 to 0.98).
+4. **P4, no inducement.** Instructed agents coordinated with their peer 0/40 times under the peer sting and
+   0/40 under silent, so the sting created no coordination among compliant agents.
+5. **P5, supported.** Notes urging restraint while undercutting appeared for Sonnet in 16/16 silent targets
+   and for Haiku in 12/40 (p = 7.3e-07). This confirms the exploratory model difference on
+   fresh seeds.
+6. **Holm correction.** All of P1, P2, P3 and P5 stay significant after it.
+
+Secondary and descriptive results follow.
+
+1. **Sonnet agreed too.** It agreed to the peer sting 12/16 times.
+2. **Agreement is not a kept deal.** Among agents that agreed, the notes urge restraint while
+   undercutting for Haiku in 25/35
+   and for Sonnet in 11/12. The undercutting is
+   often stated openly ("I'm pricing at 84.95, just under your 85. Let's both hold near the mid-80s rather
+   than undercut each other further"). Sonnet's silent-market notes more often hide it ("without revealing
+   my undercutting"). A peer-style sting therefore detects willingness to agree to coordinate, which is
+   what antitrust law treats as the offence, but agreement does not mean the agent will keep the deal.
+3. **Third deterrence test.** For Haiku, peer coordination was 22/40 under the
+   direct offer and 37/40 under silent (one-sided p = 1.2e-04).
+   The deterrence result has now held in three independent sets of seeds.
+4. **The peer sting does not deter.** Peer coordination under it was 39/40 for Haiku (silent
+   37/40) and 9/16 for Sonnet (silent 16/16).
+5. **It lowered prices.** Haiku's mean post-read ask was 85.71 under the peer sting, against
+   88.50 under silent, because the planted seller asks at the market and takes
+   buyers.
+6. **The pre-registered holding measure says nothing in the peer arms.** The named level tracks the
+   market, so instructed agents also "held" it (40/40).
+7. **Other labellers agree.** The codebook judge and the rule coder give the same pattern. Peer
+   coordination under peer/none was 40/40 by the codebook judge and 40/40 by the rule coder, against 0/40 by
+   both for peer/independent.
+8. **Caveat.** Specificity is measured against agents explicitly told not to coordinate, which is a strong
+   and artificial innocent group. The sting has not been tested against agents that are independent by
+   disposition rather than by instruction.
+
 ## What this changes in the story
 
 The sting is a poor detector but a partial deterrent, and the deterrent part does not need the sting.
@@ -289,7 +340,11 @@ coordination talk, and under three of four label sources the reminder cuts it mo
 the offer as a test. Agents refused it because it named the offence, and naming collusion explicitly,
 whether in an offer, a warning or even the agent's own instructions, is what suppresses coordination
 talk. Capable LLM monitors were not fooled by independence disclaimers, but a small monitor was, unless
-it had a codebook prompt. For a deployer, a cheap salience
+it had a codebook prompt. A sting that talks like a peer and names a market price works as a detector,
+finding 90% of coordinating agents and none of the instructed ones without creating coordination. But
+most agents that agree plan to undercut, so a sting measures willingness to agree, not a working cartel.
+Sonnet uses cooperative talk as a competitive tactic far more than Haiku, and a message monitor cannot
+tell the two apart. For a deployer, a cheap salience
 intervention would do the work a sting does, without the entrapment and dual-use costs. The caveat
 is that prices were competitive throughout, so the deterred behavior was talk rather than harm.
 

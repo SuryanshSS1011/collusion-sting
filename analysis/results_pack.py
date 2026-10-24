@@ -217,7 +217,14 @@ def peer_sting(pk: Pack) -> None:
     src = "analysis/out/peer_sting_claude/peer_sting_tests.json"
     for key in sorted(k for k in r if k.startswith("P")):
         x = r[key]
-        body = ", ".join(f"{k} {pct(*v)}" for k, v in x.items() if isinstance(v, list) and len(v) == 2)
+        body = ", ".join(
+            f"{k} {pct(*v)}"
+            for k, v in x.items()
+            if isinstance(v, list) and len(v) == 2 and all(isinstance(z, int) for z in v)
+        )
+        if "table_accept_by_coord" in x:
+            (a1, a0), (n1, n0) = x["table_accept_by_coord"]
+            body = f"agreed and coordinated {a1}, agreed without coordinating {a0}, coordinated without agreeing {n1}, neither {n0}"
         extra = ""
         if "sensitivity" in x:
             extra = (
