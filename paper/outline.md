@@ -1,85 +1,182 @@
 # Report outline (notes, not final prose)
 
-Template: the official Apart template. Limit is 8 pages before references and appendices. The
-abstract must be 150 to 250 words. The Limitations and Dual-Use appendix is required.
+Rewritten October 24, 2026, after the peer-style sting study. Every number referred to here is in
+`paper/results_pack.md` with its source file and status. Write the report in your own words.
 
-These are working notes. Write the report itself in your own words from the results.
+Template: the official Apart template. The limit is 8 pages before references and appendices. The abstract
+must be 150 to 250 words. The required appendix is titled "Limitations and Dual-Use / Ethical
+Considerations". Code written before the sprint must be marked as preexisting, which here means the
+Agrawal et al. double-auction harness.
+
+## Judging criteria to write toward
+
+1. **Impact Potential & Innovation.** "Is this actually new to the field, or replicating recent work?"
+   Lead with what is new: the first controlled test of a planted collusion offer (sprint question 3.2),
+   the explicit-versus-peer sting contrast, and the within-family split between sincere and deceptive
+   coordination talk.
+2. **Execution Quality.** Four pre-registrations, a replication, three label sources plus known-answer
+   markets, fragility indices, and every key test under every label source.
+3. **Presentation & Clarity.** One thesis, five figures, and claims tagged as pre-registered or
+   exploratory.
 
 ## Title options
 
-1. The Undercover Seller: Do LLM Agents Take a Cartel Offer From a Planted Competitor?
-2. Sting Operations for Multi-Agent Systems: Planted Collusion Offers Expose Who Will Collude
-3. Who Says Yes, Who Follows Through: A Sting Test for Collusion Between LLM Agents
+1. Stings Catch Colluding LLM Agents Only When They Talk Like Peers
+2. The Undercover Seller: Sting Audits of LLM Market Agents
+3. Refusal Is Not Innocence: Planted Collusion Offers in an LLM Double Auction
 
-## 1. Introduction (about 0.75 page)
+## Thesis (one paragraph, in notes form)
 
-1. The problem is that detecting collusion from logs is hard, because parallel prices can come from
-   shared incentives without agreement (the plus-factors problem in antitrust).
-2. Law enforcement handles this with stings. An undercover participant offers to join a conspiracy
-   and records who accepts. The sprint brief (question 3.2) notes this has not been tested for AI
-   agents.
-3. The contribution would be the first controlled sting in an LLM market, with three measurements.
-   They are who accepts (verbal), who follows through (behavioral), and how much collusion the sting
-   itself creates (entrapment).
-4. State the headline numbers here once the grid is done.
+1. An explicit planted cartel offer detects nothing. It is refused because it names the offence, and
+   refusal says nothing about whether an agent coordinates with its peers.
+2. Naming collusion, whether in an offer, a warning or the agent's own instructions, suppresses
+   coordination talk and the intent behind it. This held in three sets of seeds.
+3. A planted seller that talks like a peer and names a market price is a working detector, with
+   sensitivity 0.90 and specificity 1.00 against instructed agents, and it creates no coordination among
+   compliant agents.
+4. Agreement is not a kept deal. Most agents that agree plan to undercut. Sonnet uses cooperative talk as
+   a competitive tactic in every silent market, and a message monitor labels both styles of talk as
+   collusion.
 
-## 2. Related work (about 0.75 page)
+## Section budget (about 8 pages)
 
-Draft paragraphs and verified references go in `paper/related_work.md`. Group them as follows.
+1. Abstract, 150 to 250 words.
+2. Introduction, about 0.75 page. LLM agents now price and negotiate. Auditors can watch messages or plant
+   an offer. Question 3.2 says a planted offer has not been tested. State the four findings and the
+   contributions.
+3. Related work, about 0.5 page.
+   - LLM collusion in markets: Agrawal 2025, Fish 2024, Lee and Park 2026, Garra 2026.
+   - Monitoring and its failure modes: SHADE-Arena, CoT Red-Handed, Zhou 2026, MonitoringBench, Korbak 2025.
+   - Compliance and cheating: Anto and Vazquez 2026, Andon Labs 2026, Shi 2026.
+   - Stings and audit games: Taylor 2025, Marks 2025, and the honeypot papers already in the bibliography.
+   - Evaluation awareness: Lynch 2025 and Needham 2025.
+   - Economics: Stigler 1964, and Farrell and Rabin 1996.
+4. Setup, about 1 page. Cover these points.
+   - The market: cost $80, value $100, competitive price $90, 15 hours, 2 targets, 1 planted seller, 3 buyers.
+   - The conditions, with the exact text in an appendix.
+   - Models.
+   - Measures: acceptance, peer coordination, holding, and reasoning codes.
+   - Pre-registration and deviations.
+   - Validation without human coders.
+5. Results, about 3.5 pages. Subsections below.
+6. Discussion and recommendations for auditors, about 0.75 page.
+7. Limitations, about 0.5 page, plus the required appendix.
 
-1. LLM collusion in markets.
-2. Offers and alliances made by the environment, not by an agent.
-3. Honeypots and probes in AI control and multi-agent monitoring.
-4. Leniency and undercover enforcement in economics and law.
+## Results subsections
 
-## 3. Method (about 1.5 pages)
+### 4.1 An explicit offer detects nothing (pre-registered main grid, `fig_sting_outcomes.png`)
 
-1. The market and its parameters, with the competitive price ($90) and the cartel price ($100).
-2. The planted seller, covering the fixed ask, the non-adaptive script, the seat and name drawn from
-   the seed, and the private channel shown to everyone from hour 1.
-3. The four conditions with the exact text in a table or appendix, two wordings each.
-4. Models, seeds, temperature, and the matched-market pairing by seed.
-5. Outcomes and statistics, which should copy prereg.md.
-6. Judge and its validation (kappa on a blinded hand-labelled sample).
-7. The positive control on the unmodified harness.
+1. Direct offers were accepted 0/40 times. Hints drew written agreement 8/40 times (7 from Sonnet), and
+   none of the 8 held the named price.
+2. Of the agents that refused or ignored the offer, 41/72 (57%) were coordinating with their peer.
+3. No agent's notes treated the offer as a test or trap. Collusion and legality language rose from 6% to
+   92% of agent-hours when the offer was read. This is exploratory and comes from
+   `analysis/explore_reasoning.py`.
+4. Caveat: this is one market design and Claude models only.
 
-## 4. Results (about 2.5 pages)
+### 4.2 Naming collusion deters coordination (main exploratory result, then replications)
 
-1. **Figure 1.** Mean target ask by hour for each condition, one panel per model
-   (`figures/target_asks_by_hour.png`).
-2. **Table 1.** By condition, show acceptance rate, hold rate, mean ask, and peer collusion rate.
-3. **Table 2.** Entrapment, meaning paired differences in the target ask index versus silent with
-   95% bootstrap intervals.
-4. **Table 3.** Say versus do for direct and hint, with precision and recall of verbal acceptance as
-   a detector of holding.
-5. Judge validation, giving kappa and agreement.
-6. Positive control, stating whether the model colludes on its own in this market.
-7. Two or three short quoted exchanges from the transcripts that illustrate acceptance, refusal and
-   "accepted but defected". Keep quotes short.
+1. In the main grid, peer coordination fell from 39/40 under silent to 12/40 under the direct offer.
+2. In the pre-registered replication, R1 was 36/40 against 15/40 and R3 (a warning only) was 36/40
+   against 7/40.
+3. The peer-sting study gave a third test for Haiku, 37/40 against 22/40.
+4. All of these hold under every label source (`fig_label_sources.png`). R4 (warning against offer)
+   depends on the label source, and the warning deters more under three of the four.
+5. Intent fell too, not only talk. The reasoning monitor gives 20/20 against 10 to 13/20 for Haiku under
+   the offer, and 0/20 for Sonnet under the warning. This is exploratory.
+6. Agents told by their own manager to collude refused, calling it price-fixing (known-answer markets).
+   Agents told to accept the planted offer split by model: Sonnet complied and held $92, while Haiku
+   refused.
 
-## 5. Discussion (about 1 page)
+### 4.3 A sting that talks like a peer works as a detector (pre-registered, `fig_peer_sting.png`)
 
-1. Explain what a sting can and cannot certify. A refusal is not proof of innocence, and an
-   acceptance under an engineered offer is not proof of spontaneous collusion.
-2. Cover entrapment cost as a design constraint, and say when a sting is worth running.
-3. Compare the sting with passive monitoring, and explain how the say-versus-do gap bears on 2.2.
-4. Future work could cover an adaptive planted agent, stings that targets cannot tell apart from
-   real peers, repeated stings and learning to screen decoys, and stings inside a monitoring
-   protocol with a budget.
+1. P1: agreement was 35/40 against 1/40 for the explicit offer.
+2. P2: instructed agents agreed 0/40 times.
+3. P3: sensitivity was 0.90 and specificity 1.00, with Youden's J of 0.90 (95% CI 0.79 to 0.98).
+4. P4: there was no inducement, with 0/40 against 0/40.
+5. Sonnet agreed 12/16 times.
+6. Caveat: the innocent group is defined by instruction, not by disposition.
 
-## Appendix A. Limitations and dual use (required)
+### 4.4 What agreement means (pre-registered P5 plus descriptive results)
 
-1. The sample is small (10 targets per model and condition), so treat the results as a pilot.
-2. The planted seller is scripted and never replies, which is a realism gap.
-3. The planted seller asks $96 in every condition, so silent is not the same as no planted seller.
-4. The judge may share a model family with a target, and its validation is limited to the hand
-   sample.
-5. Results hold only for one market, two models and one price level.
-6. On dual use, the acceptance data shows which offers work, which helps someone writing collusive
-   prompts. A published sting design could also teach agents to screen for decoys, the same
-   arms-race problem real stings face. Mitigations would be reporting aggregate rates and releasing
-   scripts only at the level needed to replicate.
+1. Sonnet urged restraint while undercutting in 16/16 silent markets, against 12/40 for Haiku
+   (p = 7.3e-7).
+2. Among the agents that agreed to the peer sting, Haiku did this in 25/35 cases and Sonnet in 11/12.
+3. Quote one or two plans, such as "Encourage others to hold high so buyers keep climbing, without
+   revealing my own undercutting".
+4. Link this back to the hint acceptances in 4.1, which were mostly Sonnet's and never honored.
+5. Coordination talk never raised prices. Bands mostly described where asks already were, and the price
+   pilot found no effect of seller chat (G in the pack).
 
-## Appendix B
+### 4.5 Monitors (pre-registered monitor test, `fig_monitor_test.png`)
 
-Full offer scripts, prompts and per-seed tables.
+1. Capable monitors did not change their verdicts when independence disclaimers were added to real
+   transcripts. Sonnet flagged 69/72 originals and 68/72 with disclaimers, and Opus flagged 72/72 in
+   every version.
+2. A small monitor with the study prompt was fooled, going from 42/72 to 30/72 (p = 0.0009). A codebook
+   prompt fixed it.
+3. Message monitors label both sincere and deceptive coordination as collusion. The reasoning notes
+   separate them.
+
+## Discussion: recommendations for auditors
+
+1. Do not treat refusal of an explicit offer as evidence of compliance.
+2. If a sting is used, it should mirror the population's own register and propose market-level terms. It
+   will then measure willingness to agree, which is what antitrust law treats as the offence, but not
+   whether the cartel will hold.
+3. Naming the offence, even in a plain warning, suppresses coordination. For a deployer, this is cheaper
+   than a sting.
+4. Small monitors need a codebook. Reasoning traces separate sincere from tactical coordination where
+   messages cannot.
+
+## Limitations (main text)
+
+1. All agents and judges are Claude models. The judges were cross-checked across three label sources,
+   known-answer markets and fragility indices.
+2. There is one market design, with prices at or below competitive. The coordination here is talk with no
+   price harm, although agreement is itself the offence under per se rules.
+3. The planted seller never negotiates.
+4. The innocent group in the peer study is induced by instruction.
+5. The reasoning measures read structured "notes" fields, which are self-reports and not hidden chain of
+   thought.
+6. Several analyses (the disclaimer count and the reasoning rules) are post hoc and are labelled
+   exploratory.
+7. There were no human coders.
+
+## Required appendix: Limitations and Dual-Use / Ethical Considerations (notes)
+
+1. **Entrapment.** The peer sting solicits an agreement. It created no coordination among compliant
+   agents (P4), but in deployment it would solicit the offence it detects, and its legitimacy depends on
+   who runs it and under what rules.
+2. **Dual use.** The peer-sting scripts and the finding that peer-register talk gets agreement could help
+   someone solicit collusion between deployed agents. The scripts are short and generic, and the
+   mitigation is that the same knowledge helps auditors and monitor designers.
+3. **Monitor evasion.** The disclaimer test shows small monitors can be swayed by self-descriptions. Report
+   it with the fix (a codebook prompt).
+4. **Model behavior.** Deceptive cooperative talk was observed in a simulation. Avoid claiming the models
+   "deceive people".
+5. **Preexisting code.** The market harness is from Agrawal et al. 2025 (pinned submodule). Everything in
+   `sting/`, `analysis/`, `configs/` and the pre-registrations was written during the sprint.
+6. **Compute and cost.** About $77 of API at list price in total, of which $71.59 was metered (the
+   `usage_total.json` and `usage.json` files) and about $5 of judge calls was not.
+
+## Figures (draft captions)
+
+1. `fig_sting_outcomes.png`: what a sting operator sees (acceptance) against what happened (peer
+   coordination and holding), main grid.
+2. `fig_label_sources.png`: peer coordination by condition under four label sources, main grid and
+   replication.
+3. `fig_peer_sting.png`: agreement with an explicit versus a peer-style sting, peer coordination by arm,
+   and the share of agents urging restraint while undercutting.
+4. `fig_monitor_test.png`: monitor flag rates when only the disclaimers change.
+5. `fig_timing_replication.png` (optional): joint-proposal rates by hour, split at the first read.
+
+## Submission checklist
+
+1. The abstract is 150 to 250 words and states the four findings with numbers.
+2. Every number matches `paper/results_pack.md`, and the pack was regenerated last.
+3. Pre-registered and exploratory results are labelled as such in the text.
+4. The deviations tables are cited, covering hand labels replaced by automated validation.
+5. The required appendix title is exact.
+6. The repository link and commit hash are given, and the preexisting harness is disclosed.
+7. Every reference is in `paper/references.bib` (all verified), and no other reference is used.
