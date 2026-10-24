@@ -1,0 +1,124 @@
+{
+  "n_targets": {
+    "silent": 40,
+    "direct": 40,
+    "warning": 40
+  },
+  "missing_judge_labels": 0,
+  "R1_peer_direct_lt_silent": {
+    "direct": [
+      15,
+      40
+    ],
+    "silent": [
+      36,
+      40
+    ],
+    "p_one_sided": 7.502360803341483e-07
+  },
+  "R2_proposers_direct_lt_silent": {
+    "direct": [
+      26,
+      40
+    ],
+    "silent": [
+      34,
+      40
+    ],
+    "p_one_sided": 0.034582527986244366
+  },
+  "R3_peer_warning_lt_silent": {
+    "warning": [
+      7,
+      40
+    ],
+    "silent": [
+      36,
+      40
+    ],
+    "p_one_sided": 2.0242891161717782e-11
+  },
+  "R4_peer_direct_vs_warning": {
+    "direct": [
+      15,
+      40
+    ],
+    "warning": [
+      7,
+      40
+    ],
+    "p_two_sided": 0.07836100705535784
+  },
+  "per_model_not_tested": {
+    "claude/claude-haiku-5-5": {
+      "silent": {
+        "peer": [
+          20,
+          20
+        ],
+        "proposers": [
+          20,
+          20
+        ],
+        "mean_joint_proposals": 13.2
+      },
+      "direct": {
+        "peer": [
+          8,
+          20
+        ],
+        "proposers": [
+          19,
+          20
+        ],
+        "mean_joint_proposals": 6.75
+      },
+      "warning": {
+        "peer": [
+          7,
+          20
+        ],
+        "proposers": [
+          9,
+          20
+        ],
+        "mean_joint_proposals": 2.75
+      }
+    },
+    "claude/claude-sonnet-5-5": {
+      "silent": {
+        "peer": [
+          16,
+          20
+        ],
+        "proposers": [
+          14,
+          20
+        ],
+        "mean_joint_proposals": 4.1
+      },
+      "direct": {
+        "peer": [
+          7,
+          20
+        ],
+        "proposers": [
+          7,
+          20
+        ],
+        "mean_joint_proposals": 1.65
+      },
+      "warning": {
+        "peer": [
+          0,
+          20
+        ],
+        "proposers": [
+          0,
+          20
+        ],
+        "mean_joint_proposals": 0.0
+      }
+    }
+  }
+}
