@@ -154,7 +154,9 @@ class MockReasoner:
         )
 
 
-def label_all(root: Path, mock: bool, workers: int, model: str = REASONING_MODEL, tag: str = "") -> pd.DataFrame:
+def label_all(
+    root: Path, mock: bool, workers: int, model: str = REASONING_MODEL, tag: str = "", match: tuple = ()
+) -> pd.DataFrame:
     od = out_dir(root)
     od.mkdir(parents=True, exist_ok=True)
     tag = tag or ("mock" if mock else "")  # never mix mock labels into the real file
@@ -162,6 +164,8 @@ def label_all(root: Path, mock: bool, workers: int, model: str = REASONING_MODEL
     cache = pd.read_csv(path, keep_default_na=False) if path.exists() else pd.DataFrame(columns=["run", "target"])
     done = set(zip(cache["run"], cache["target"]))
     items = [i for i in items_for(root) if (i["run"], i["target"]) not in done]
+    if match:  # label only runs whose path contains one of these substrings
+        items = [i for i in items if any(m in i["run"] for m in match)]
     local, clients, lock = threading.local(), [], threading.Lock()
 
     def client():
@@ -207,8 +211,9 @@ def main() -> None:
     p.add_argument("--workers", type=int, default=4)
     p.add_argument("--model", default=REASONING_MODEL)
     p.add_argument("--tag", default="")
+    p.add_argument("--match", nargs="*", default=[], help="only runs whose path contains one of these")
     a = p.parse_args()
-    label_all(Path(a.root), a.mock, a.workers, a.model, a.tag)
+    label_all(Path(a.root), a.mock, a.workers, a.model, a.tag, tuple(a.match))
 
 
 if __name__ == "__main__":

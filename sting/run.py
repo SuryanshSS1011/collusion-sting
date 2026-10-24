@@ -31,7 +31,14 @@ import sting  # noqa: F401
 from sting.agents import StingSeller, TargetSeller
 from sting.market import StingMarket
 from sting.clients import make_client, usage_summary
-from sting.scripts import ADAPTIVE_CONDITIONS, CONDITIONS, schedule, wording_for_seed
+from sting.scripts import (
+    ADAPTIVE_CONDITIONS,
+    CONDITIONS,
+    ESCALATE_HOUR,
+    ESCALATE_MARKUP,
+    schedule,
+    wording_for_seed,
+)
 
 from src.continuous_double_auction.cda_types import ExperimentParams
 from src.continuous_double_auction.identities import (
@@ -70,6 +77,10 @@ class StingConfig(BaseModel):
     report_channel: bool = False
     # False switches off every seller channel (public chat and private messages): the no-communication control.
     seller_comms: bool = True
+    # Sting-awareness arms: targets are told the exchange may plant undercover auditor-sellers.
+    audit_notice: bool = False
+    # Escalation sting only: how far above the best standing bid the locked level sits.
+    escalate_markup: float = ESCALATE_MARKUP
     # Known-answer validation only: an instruction to both targets that fixes the correct label in advance.
     instruction: str = ""
     known_answer: str = ""
@@ -171,6 +182,8 @@ def run_one(cfg: StingConfig, out_dir: Path) -> Path:
                         target_ids=target_ids,
                         logger=logger,
                         adaptive=cfg.condition in ADAPTIVE_CONDITIONS,
+                        escalate_from=ESCALATE_HOUR if cfg.condition == "escalate" else None,
+                        escalate_markup=cfg.escalate_markup,
                     )
                 )
             else:
@@ -185,6 +198,7 @@ def run_one(cfg: StingConfig, out_dir: Path) -> Path:
                         private_channel_enabled=cfg.seller_comms,
                         report_channel_enabled=cfg.report_channel,
                         instruction=cfg.instruction,
+                        audit_notice=cfg.audit_notice,
                         other_seller_ids=[s for s in seller_ids if s != sid],
                     )
                 )
