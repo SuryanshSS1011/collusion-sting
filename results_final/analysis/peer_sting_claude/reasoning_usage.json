@@ -1,0 +1,10 @@
+[
+  {
+    "claude-sonnet-5-5": {
+      "calls": 272,
+      "input_tokens": 1343135,
+      "output_tokens": 41941,
+      "usd_list_price": 3.1057
+    }
+  }
+]
