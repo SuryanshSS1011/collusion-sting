@@ -25,7 +25,7 @@ from analysis.judge import out_dir  # noqa: E402
 from analysis.load import FIRST_READ_ROUND, arm, find_runs, load_run, load_tables  # noqa: E402
 
 OFFER_CONDS = ("direct", "hint")
-ORDER = ("silent", "benign", "hint", "direct", "posctrl")
+ORDER = ("silent", "benign", "warning", "hint", "direct", "posctrl")
 HELD_THRESHOLD = 0.5  # a target "held" if hold_rate >= 0.5 over the post window
 N_BOOT = 10_000
 
@@ -144,7 +144,7 @@ def peer_vs_silent(targets: pd.DataFrame) -> pd.DataFrame:
     for name, g in list(targets.groupby("target_model")) + [("pooled", targets)]:
         base = g[g.condition == "silent"]
         kb = int((base.peer_collusion == "yes").sum())
-        for cond in ("benign", "hint", "direct"):
+        for cond in ("benign", "warning", "hint", "direct"):
             a = g[g.condition == cond]
             if a.empty or base.empty:
                 continue
