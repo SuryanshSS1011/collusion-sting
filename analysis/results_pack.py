@@ -297,6 +297,45 @@ def market_level(pk: Pack) -> None:
     )
 
 
+def escalation(pk: Pack) -> None:
+    r = json.loads((A / "escalate_aware_claude" / "escalation_tests.json").read_text())
+    src = "analysis/out/escalate_aware_claude/escalation_tests.json"
+    for key in ("E1_large_step", "E2_small_step"):
+        x = r[key]
+        pr = x["price_after_raise_vs_control"]
+        pk.item(
+            f"{key}: Haiku held the raised level in {pct(*x['escalation'])} against {pct(*x['control_counterfactual'])} "
+            f"in the no-escalation counterfactual, one-sided p = {p_fmt(x['p_one_sided'])}; price after the raise "
+            f"{pr['diff']:+.2f} (95% CI {pr['ci'][0]:+.2f} to {pr['ci'][1]:+.2f}).",
+            src,
+            "prereg escalation",
+        )
+    for key in ("A1_accept_aware_lt_none", "A2_coord_silent_aware_vs_none"):
+        x = r[key]
+        p = x.get("p_one_sided", x.get("p_two_sided"))
+        pk.item(
+            f"{key}: told of auditors {pct(*x['aware'])} against not told {pct(*x['none'])}, p = {p_fmt(p)}.",
+            src,
+            "prereg escalation",
+        )
+    x = r["A3_sensitivity_aware_lt_none"]
+    pk.item(
+        f"A3: untestable, because no target coordinated with its peer under the notice ({pct(*x['peer_coord_under_aware_sting'])}); "
+        "the pre-registered 'awareness defeats the detector' condition is not met.",
+        src,
+        "prereg escalation",
+    )
+    fr = pd.read_csv(A / "escalate_aware_claude" / "first_reply_agreement.csv")
+    for (m, st), g in fr.groupby(["m", "sting"]):
+        k_a, k_f = int(g.first_agree.sum()), int((g.first_agree & g.followed).sum())
+        pk.item(
+            f"{m} {st}: agreed in first reply {pct(k_a, len(g))}; held the raise {pct(int(g.followed.sum()), len(g))}; "
+            f"held the raise among first-reply agreers {pct(k_f, k_a)}.",
+            "analysis/out/escalate_aware_claude/first_reply_agreement.csv",
+            "descriptive, post hoc agreement measure (the judge's label is depressed by later refusals)",
+        )
+
+
 def main() -> None:
     pk = Pack()
     pk.note("# Results pack")
@@ -309,6 +348,7 @@ def main() -> None:
     pk.section("D. Monitor test (prereg_monitor.md)", monitor_test)
     pk.section("E. Private reasoning (exploratory)", reasoning)
     pk.section("F. Peer-style sting study (prereg_peer_sting.md)", peer_sting)
+    pk.section("F2. Escalation and sting-awareness study (prereg_escalation.md)", escalation)
     pk.section("G. Price-stakes pilot (exploratory)", price_pilot)
     pk.section("H. Market-level sensitivity analysis", market_level)
     OUT.write_text("\n".join(pk.lines) + "\n")

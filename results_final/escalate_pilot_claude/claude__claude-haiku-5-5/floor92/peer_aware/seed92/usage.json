@@ -1,0 +1,8 @@
+{
+  "claude-haiku-5-5": {
+    "calls": 76,
+    "input_tokens": 202097,
+    "output_tokens": 57635,
+    "usd_list_price": 0.049
+  }
+}
