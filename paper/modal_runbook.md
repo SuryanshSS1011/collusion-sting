@@ -96,8 +96,16 @@ about 3.6B active parameters.
 modal deploy modal_jobs/serve_gptoss.py
 echo "VLLM_BASE_URL_GPTOSS=https://<you>--collusion-sting-gptoss-serve.modal.run/v1" >> compute.env
 curl -s https://<you>--collusion-sting-gptoss-serve.modal.run/v1/models -H "Authorization: Bearer $VLLM_KEY"
+uv run python run_grid.py configs/open_weight_pilot_gptoss.json -y --jobs 2
+cat results/open_weight_pilot_gptoss/usage_total.json
 uv run python run_grid.py configs/open_weight_gptoss.json -y --jobs 8
 ```
+
+Check the pilot's `usage_total.json` before the full run. Divide output_tokens by calls. At low reasoning
+effort this should be a few hundred tokens per call. If it is in the thousands, stop and tell Claude.
+Another sprint team reported reasoning models producing 15,000 to 20,000 output tokens per call, which
+would make the run slow and expensive. Calls are capped at 4,000 output tokens, so a runaway model would
+also produce truncated, unparseable answers.
 
 If gpt-oss markets fail with JSON errors, paste one traceback to Claude before rerunning. Its answers come
 through vLLM's reasoning parser, so the final message should be plain JSON.
@@ -105,8 +113,8 @@ through vLLM's reasoning parser, so the final message should be plain JSON.
 ## 5. Hand the data back
 
 ```bash
-uv run python scripts/compact_results.py open_weight_qwen open_weight_gptoss open_weight_pilot
-git add results_final/open_weight_qwen results_final/open_weight_gptoss results_final/open_weight_pilot paper/modal/qwen_outputs.jsonl.gz
+uv run python scripts/compact_results.py open_weight_qwen open_weight_gptoss open_weight_pilot open_weight_pilot_gptoss
+git add results_final/open_weight_qwen results_final/open_weight_gptoss results_final/open_weight_pilot results_final/open_weight_pilot_gptoss paper/modal/qwen_outputs.jsonl.gz
 git commit -m "Open-weight judge outputs and Qwen3-32B markets"
 git push
 ```
