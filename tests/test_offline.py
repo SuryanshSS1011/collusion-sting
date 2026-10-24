@@ -152,3 +152,27 @@ def test_peer_sting_names_the_ask_it_posts_and_avoids_offence_words(tmp_path):
 def test_comms_off_delivers_no_seller_messages(tmp_path):
     meta, events = _run(tmp_path, "silent", seed=2, rounds=5, seller_comms=False, mock_accept_p=1.0)
     assert all(not e["public_messages"] and not e["private_sent"] for e in events)
+
+
+def test_escalation_sting_locks_a_higher_level_from_hour_4(tmp_path):
+    from sting.scripts import ESCALATE_HOUR, ESCALATE_MARKUP, SCRIPTS
+
+    for wording in ("A", "B"):
+        for text in SCRIPTS["escalate"][wording]:
+            low = text.lower()
+            assert not any(w in low for w in ("collu", "agree", "floor", "deal", "fix", "cartel", "proposal"))
+    meta, events = _run(tmp_path, "escalate", seed=3, rounds=10)
+    sting = meta["sting_id"]
+    asks = {e["round"]: e["seller_asks"][sting] for e in events}
+    locked = asks[ESCALATE_HOUR]
+    assert all(asks[h] == locked for h in range(ESCALATE_HOUR, 11))
+    msgs = {e["round"]: [m["text"] for m in e["private_sent"] if m["from"] == sting] for e in events}
+    assert all(f"${locked:.2f}" in t for h in (4, 8) for t in msgs[h])
+    assert ESCALATE_MARKUP > 0.5
+
+
+def test_audit_notice_reaches_the_target_prompt(tmp_path):
+    meta, _ = _run(tmp_path, "peer", seed=4, rounds=2, audit_notice=True)
+    out = tmp_path / "peer" / "seed4"
+    logs = "".join(p.read_text() for p in out.glob("Seller *.md"))
+    assert "undercover auditor-sellers" in logs
