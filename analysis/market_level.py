@@ -64,6 +64,7 @@ def main() -> None:
     r = labels("results/replication_claude")
     r["cond"] = r.run.map(lambda x: Path(x).parent.name)
     ps = labels("results/peer_sting_claude", "reasoning_labels.csv")
+    es = labels("results/escalate_aware_claude")
     res = {
         "main_direct_vs_silent_coord (two-sided)": test(m, "coord", {"arm": "direct"}, {"arm": "silent"}, "two-sided"),
         "main_hint_vs_benign_accept (two-sided)": test(m, "accept", {"arm": "hint"}, {"arm": "benign"}, "two-sided"),
@@ -89,6 +90,16 @@ def main() -> None:
         ),
         "Haiku_direct_lt_silent_coord (peer study)": test(
             ps, "coord", {"arm": "direct_none", "model": "haiku"}, {"arm": "silent_none", "model": "haiku"}, "less"
+        ),
+        "A1_accept_aware_lt_none (escalation study)": test(
+            es, "accept", {"arm": "peer_aware", "model": "haiku"}, {"arm": "peer_none", "model": "haiku"}, "less"
+        ),
+        "A2_coord_silent_aware_vs_none (two-sided)": test(
+            es,
+            "coord",
+            {"arm": "silent_aware", "model": "haiku"},
+            {"arm": "silent_none", "model": "haiku"},
+            "two-sided",
         ),
     }
     # Within-market agreement of the two targets' labels, the reason for this check.
