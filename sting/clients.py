@@ -32,7 +32,7 @@ log = logging.getLogger(__name__)
 # Haiku 5.5 accepts {"type": "disabled"} at high effort or below. Sonnet 5.5 rejects "disabled";
 # {"type": "between_tools"} is its lowest setting. Opus 5.5 always thinks, so the field is omitted.
 # List prices in USD per million tokens (input, output), platform.claude.com pricing page, 2026-10-23.
-CLAUDE_PRICES = {"claude-haiku-5-5": (0.10, 0.50), "claude-sonnet-5-5": (2.0, 10.0)}
+CLAUDE_PRICES = {"claude-haiku-5-5": (0.10, 0.50), "claude-sonnet-5-5": (2.0, 10.0), "claude-opus-5-5": (4.0, 20.0)}
 
 THINKING_FLOOR = {
     "claude-haiku-5-5": {"type": "disabled"},

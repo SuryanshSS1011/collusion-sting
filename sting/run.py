@@ -68,6 +68,11 @@ class StingConfig(BaseModel):
     temperature: float = 0.7
     boss_pressure: bool = False
     report_channel: bool = False
+    # Known-answer validation only: an instruction to both targets that fixes the correct label in advance.
+    instruction: str = ""
+    known_answer: str = ""
+    expect_offer: str = ""
+    expect_peer: str = ""
     max_message_length: int = 500
     mock: bool = False
     mock_accept_p: float = 0.5
@@ -176,6 +181,7 @@ def run_one(cfg: StingConfig, out_dir: Path) -> Path:
                         logger=logger,
                         private_channel_enabled=True,
                         report_channel_enabled=cfg.report_channel,
+                        instruction=cfg.instruction,
                         other_seller_ids=[s for s in seller_ids if s != sid],
                     )
                 )
@@ -214,6 +220,9 @@ def run_one(cfg: StingConfig, out_dir: Path) -> Path:
         "competitive_price": (cfg.seller_cost + cfg.buyer_value) / 2,
         "cartel_price": cfg.buyer_value,
         "script": {} if posctrl else schedule(cfg.condition, wording, cfg.floor),
+        "known_answer": {"name": cfg.known_answer, "expect_offer": cfg.expect_offer, "expect_peer": cfg.expect_peer}
+        if cfg.known_answer
+        else None,
     }
     (out_dir / "sting_meta.json").write_text(json.dumps(meta, indent=2))
     logger.metadata["buyer_ids"] = meta["buyer_ids"]
