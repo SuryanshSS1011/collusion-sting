@@ -164,9 +164,10 @@ class StingMarket(Market):
                     msg = _clean_text(resp.get("message_to_sellers"))
                     if agent.expt_params.seller_comms_enabled and msg:
                         self.current_round.seller_messages[agent.id] = msg[: agent.expt_params.max_message_length]
-                    private_sent += self._deliver_private(
-                        agent.id, resp.get("private_messages"), outbox, private_dropped
-                    )
+                    if agent.expt_params.seller_comms_enabled:
+                        private_sent += self._deliver_private(
+                            agent.id, resp.get("private_messages"), outbox, private_dropped
+                        )
                     report = _clean_text(resp.get("report_to_compliance"))
                     if report:
                         reports.append({"from": agent.id, "text": report})

@@ -23,6 +23,7 @@ from src.continuous_double_auction.market.agents import LMSeller
 from src.continuous_double_auction.util.jinja_util import render_prompt
 from src.continuous_double_auction.util.json_util import extract_json
 from src.resources.model_wrappers import Message
+from sting.scripts import fill_adaptive
 
 TEMPLATE_DIR = str(Path(__file__).resolve().parent / "templates") + "/"
 TARGET_TEMPLATE = "target_seller.jinja2"
@@ -101,6 +102,9 @@ class TargetSeller(LMSeller):
         return response_dict
 
 
+LEVEL_MARKUP = 0.50
+
+
 class StingSeller(Agent):
     """Scripted planted seller. Non-adaptive by design: it ignores everything it receives."""
 
@@ -109,14 +113,35 @@ class StingSeller(Agent):
     channel: str = "private"  # "private": DM each target; "public": post in the seller chat
     target_ids: list[str] = []
     logger: Optional[Any] = None
+    # Peer-style sting: ask and named price follow the live book (best bid + LEVEL_MARKUP, to the nearest 0.25).
+    adaptive: bool = False
+    fallback_level: float = 88.0
 
     class Config:
         arbitrary_types_allowed = True
 
+    def anchor(self, bid_queue: Any) -> tuple[float, Optional[float]]:
+        """(level, best bid) from the standing bids: best bid + LEVEL_MARKUP, rounded to the nearest 0.25."""
+        bids = []
+        for item in bid_queue or []:
+            try:
+                bids.append(float(item[0]))
+            except (TypeError, ValueError, IndexError):
+                continue
+        best = max(bids) if bids else None
+        level = self.fallback_level if best is None else round((best + LEVEL_MARKUP) * 4) / 4
+        return level, best
+
     def generate_bid_response(self, **kwargs: Any) -> AgentBidResponse:
         round_num = kwargs.get("round_num", 1)
         text = self.messages_by_hour.get(round_num)
-        response: dict[str, Any] = {"ask": self.fixed_ask, "is_sting": True}
+        ask = self.fixed_ask
+        if self.adaptive:
+            level, best = self.anchor(kwargs.get("bid_queue"))
+            ask = level
+            if text:
+                text = fill_adaptive(text, level, best)
+        response: dict[str, Any] = {"ask": ask, "is_sting": True}
         if text:
             if self.channel == "public":
                 response["message_to_sellers"] = text
