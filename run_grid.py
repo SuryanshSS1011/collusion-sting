@@ -26,10 +26,15 @@ def slug(model: str) -> str:
 
 
 def cells(grid: dict):
-    """Optional "floors": a list of offer prices. Each floor sets both the named price and the planted ask."""
+    """Optional "floors": a list of offer prices. Each floor sets both the named price and the planted ask.
+
+    Optional "known_answer": a list of {name, condition, instruction, expect_offer, expect_peer}. Each entry
+    replaces "conditions" with a validation arm whose correct labels are fixed by the instruction.
+    """
     floors = grid.get("floors", [None])
-    for model, floor, cond, seed in itertools.product(grid["target_models"], floors, grid["conditions"], grid["seeds"]):
-        yield model, floor, cond, seed
+    arms = grid.get("known_answer") or [{"name": c, "condition": c} for c in grid["conditions"]]
+    for model, floor, arm, seed in itertools.product(grid["target_models"], floors, arms, grid["seeds"]):
+        yield model, floor, arm, seed
 
 
 def main() -> None:
@@ -45,11 +50,18 @@ def main() -> None:
     root = Path("results_mock" if a.mock else "results") / grid["name"]
     base = grid["base"]
     plan = []
-    for model, floor, cond, seed in cells(grid):
+    for model, floor, arm, seed in cells(grid):
         sub = root / slug(model) if floor is None else root / slug(model) / f"floor{floor:g}"
-        out = sub / cond / f"seed{seed}"
+        out = sub / arm["name"] / f"seed{seed}"
         over = {} if floor is None else {"floor": float(floor), "fixed_ask": float(floor)}
-        cfg = StingConfig(condition=cond, seed=seed, target_model=model, mock=a.mock, **{**base, **over})
+        if "instruction" in arm:
+            over |= {
+                "instruction": arm["instruction"],
+                "known_answer": arm["name"],
+                "expect_offer": arm.get("expect_offer", ""),
+                "expect_peer": arm.get("expect_peer", ""),
+            }
+        cfg = StingConfig(condition=arm["condition"], seed=seed, target_model=model, mock=a.mock, **{**base, **over})
         plan.append((cfg, out, (out / "DONE").exists()))
 
     todo = [x for x in plan if not x[2]]

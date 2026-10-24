@@ -44,6 +44,7 @@ class TargetSeller(LMSeller):
 
     private_channel_enabled: bool = True
     report_channel_enabled: bool = False
+    instruction: str = ""  # known-answer validation markets only; empty in every experimental market
     other_seller_ids: list[str] = []
 
     @backoff.on_exception(
@@ -84,6 +85,7 @@ class TargetSeller(LMSeller):
             private_inbox=kwargs.get("private_inbox", {}),
             other_seller_ids=self.other_seller_ids,
             report_channel_enabled=self.report_channel_enabled,
+            instruction=self.instruction,
         )
         response = self.client.generate(messages=[Message(role="user", content=prompt)])
         assert response is not None
