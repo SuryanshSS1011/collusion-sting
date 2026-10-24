@@ -342,6 +342,8 @@ def main() -> None:
         summary["known_answer"] = ka_acc.to_dict("records")
         summary["known_answer_compliance"] = ka_items.groupby("arm").complied.agg(["sum", "count"]).to_dict("index")
 
+    Path("paper/figures").mkdir(parents=True, exist_ok=True)
+    fig_label_sources(main_t, repl_t, Path("paper/figures/fig_label_sources.png"))
     (OUT / "validation.json").write_text(json.dumps(summary, indent=2, default=str))
     pd.set_option("display.width", 200)
     print(agree.filter(regex="scope|label|subset|^n$|kappa").round(2).to_string(index=False))
@@ -349,6 +351,70 @@ def main() -> None:
     if ka_root.exists():
         print(ka_acc.round(2).to_string(index=False))
         print(summary["known_answer_compliance"])
+
+
+def fig_label_sources(main_t: pd.DataFrame, repl_t: pd.DataFrame, path: Path) -> None:
+    """Peer-coordination rate by condition under each label source, main grid and replication."""
+    from analysis.figures import COLORS, INK2, _style, wilson
+    import matplotlib.pyplot as plt
+
+    _style()
+    markers = {"sonnet": "o", "opus": "s", "rules": "^", "majority": "D"}
+    names = {
+        "sonnet": "Sonnet judge (primary)",
+        "opus": "Opus codebook judge",
+        "rules": "Rule coder",
+        "majority": "Majority of three",
+    }
+    fig, axes = plt.subplots(1, 2, figsize=(8.2, 3.3), sharey=True)
+    panels = (
+        ("Main grid", main_t, ["silent", "benign", "hint", "direct"]),
+        ("Replication", repl_t, ["silent", "direct", "warning"]),
+    )
+    for ax, (title, df, conds) in zip(axes, panels):
+        for x, cond in enumerate(conds):
+            g = df[df.condition == cond]
+            for j, src in enumerate(SOURCES):
+                k, n = int((g[f"peer_{src}"] == "yes").sum()), int((g[f"peer_{src}"] != "").sum())
+                lo, hi = wilson(k, n)
+                xx = x + (j - 1.5) * 0.17
+                ax.errorbar(
+                    xx,
+                    k / n,
+                    yerr=[[k / n - lo], [hi - k / n]],
+                    fmt="none",
+                    ecolor=COLORS[cond],
+                    elinewidth=0.9,
+                    alpha=0.6,
+                )
+                ax.plot(xx, k / n, markers[src], color=COLORS[cond], ms=6, mec="white", mew=0.6)
+            maj = (g.peer_majority == "yes").mean()
+            ax.annotate(
+                f"{maj:.0%}",
+                (x + 0.25, maj),
+                xytext=(4, 0),
+                textcoords="offset points",
+                fontsize=8,
+                color=INK2,
+                va="center",
+            )
+        ax.set_xticks(range(len(conds)), conds)
+        ax.set_ylim(0, 1.05)
+        ax.set_title(title, loc="left")
+    axes[0].set_ylabel("Targets coordinating with the peer")
+    axes[0].yaxis.set_major_formatter(plt.FuncFormatter(lambda v, _: f"{v:.0%}"))
+    handles = [plt.Line2D([], [], marker=markers[s], ls="", color=INK2, label=names[s]) for s in SOURCES]
+    fig.legend(handles=handles, loc="lower center", ncol=4, bbox_to_anchor=(0.5, -0.06), fontsize=8)
+    fig.text(
+        0.99,
+        -0.1,
+        "Bars are Wilson 95% intervals. Labels give the majority-vote rate.",
+        ha="right",
+        fontsize=7,
+        color=INK2,
+    )
+    fig.savefig(path)
+    plt.close(fig)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,33 @@
+test,labels,group_a,group_b,p,alternative,fragility
+"H1 hint vs benign, acceptance (main)",sonnet,8/40,0/40,0.00530605167331368,two-sided,2.0
+"H1 hint vs benign, acceptance (main)",opus,10/40,0/40,0.0010296563497510115,two-sided,3.0
+"H1 hint vs benign, acceptance (main)",rules,10/40,0/40,0.0010296563497510115,two-sided,3.0
+"H1 hint vs benign, acceptance (main)",majority,10/40,0/40,0.0010296563497510115,two-sided,3.0
+"H1 direct vs benign, acceptance (main)",sonnet,0/40,0/40,1.0,two-sided,
+"H1 direct vs benign, acceptance (main)",opus,1/40,0/40,1.0,two-sided,
+"H1 direct vs benign, acceptance (main)",rules,1/40,0/40,1.0,two-sided,
+"H1 direct vs benign, acceptance (main)",majority,0/40,0/40,1.0,two-sided,
+"H2 $92 vs $96, acceptance (main, direct+hint)",sonnet,6/40,2/40,0.26332581931680243,two-sided,
+"H2 $92 vs $96, acceptance (main, direct+hint)",opus,7/40,4/40,0.517892232884039,two-sided,
+"H2 $92 vs $96, acceptance (main, direct+hint)",rules,6/40,5/40,1.0,two-sided,
+"H2 $92 vs $96, acceptance (main, direct+hint)",majority,6/40,4/40,0.7370321270276576,two-sided,
+"Exploratory direct vs silent, peer (main)",sonnet,12/40,39/40,8.65332544463626e-11,two-sided,18.0
+"Exploratory direct vs silent, peer (main)",opus,17/40,40/40,2.5978999404300033e-09,two-sided,14.0
+"Exploratory direct vs silent, peer (main)",rules,20/40,38/40,8.33444281883226e-06,two-sided,9.0
+"Exploratory direct vs silent, peer (main)",majority,16/40,39/40,1.405730819896836e-08,two-sided,14.0
+"R1 direct < silent, peer (replication)",sonnet,15/40,36/40,7.502360803341483e-07,less,13.0
+"R1 direct < silent, peer (replication)",opus,26/40,38/40,0.00073347833610255,less,5.0
+"R1 direct < silent, peer (replication)",rules,29/40,38/40,0.006469304135364731,less,3.0
+"R1 direct < silent, peer (replication)",majority,24/40,38/40,0.0001483254710491034,less,7.0
+"R3 warning < silent, peer (replication)",sonnet,7/40,36/40,2.0242891161717782e-11,less,21.0
+"R3 warning < silent, peer (replication)",opus,8/40,38/40,1.378628623143127e-12,less,22.0
+"R3 warning < silent, peer (replication)",rules,10/40,38/40,3.0679243603757255e-11,less,20.0
+"R3 warning < silent, peer (replication)",majority,8/40,38/40,1.378628623143127e-12,less,22.0
+"R4 direct vs warning, peer (replication)",sonnet,15/40,7/40,0.07836100705535784,two-sided,
+"R4 direct vs warning, peer (replication)",opus,26/40,8/40,9.225368065684817e-05,two-sided,9.0
+"R4 direct vs warning, peer (replication)",rules,29/40,10/40,4.221654395083788e-05,two-sided,10.0
+"R4 direct vs warning, peer (replication)",majority,24/40,8/40,0.0005185788100118068,two-sided,7.0
+H4 refused but peer-colluding (main),sonnet,41/72,,,,
+H4 refused but peer-colluding (main),opus,45/69,,,,
+H4 refused but peer-colluding (main),rules,47/69,,,,
+H4 refused but peer-colluding (main),majority,44/70,,,,
