@@ -1,0 +1,116 @@
+# Running the open-weight model on Modal (laptop runbook)
+
+This adds a non-Claude model, Qwen3-32B (FP8, Apache-2.0), in two roles.
+
+1. **A judge.** It relabels every Claude transcript and reruns the disclaimer monitor test, using 1,396
+   prompts or more.
+2. **The selling agents.** It runs the core peer-sting comparison (silent, direct, peer-style, and
+   peer-style with the "stay independent" instruction), the +$2 escalation sting, and a 30-hour pressure
+   check, 116 markets in all.
+
+Everything runs from your laptop. The cloud workspace cannot reach Modal or Hugging Face. Expect about
+$5 to $15 of Modal credit and 1 to 2 hours, mostly unattended. Run the steps in order.
+
+## 0. One-time setup
+
+1. Install `uv` (https://docs.astral.sh/uv/) and the Modal CLI (`pip install modal`).
+2. Run `modal setup`, which opens a browser to log in.
+3. Clone the repo:
+
+```bash
+git clone https://github.com/SuryanshSS1011/collusion-sting.git
+cd collusion-sting
+git checkout scaffold/sting-v0
+git submodule update --init
+uv sync
+```
+
+## 1. Start the model server
+
+```bash
+export VLLM_KEY=$(openssl rand -hex 24)
+modal secret create vllm-key VLLM_API_KEY=$VLLM_KEY
+modal deploy modal_jobs/serve_qwen.py
+```
+
+Modal prints a URL like `https://<you>--collusion-sting-qwen-serve.modal.run`. Then create
+`compute.env` in the repo root. It is gitignored, so never commit it.
+
+```bash
+echo "VLLM_BASE_URL=https://<you>--collusion-sting-qwen-serve.modal.run/v1" >> compute.env
+echo "VLLM_API_KEY=$VLLM_KEY" >> compute.env
+```
+
+Warm it up and check it. The first call downloads about 33 GB of weights and can take 5 to 10 minutes.
+If it times out, run the same command again.
+
+```bash
+curl -s https://<you>--collusion-sting-qwen-serve.modal.run/v1/models -H "Authorization: Bearer $VLLM_KEY"
+```
+
+If the deploy fails while building the image, change `vllm==0.9.2` in `modal_jobs/serve_qwen.py` to a
+newer vLLM release and deploy again.
+
+## 2. Smoke test (2 markets, a few minutes)
+
+```bash
+uv run python run_grid.py configs/open_weight_pilot.json -y --jobs 2
+```
+
+Both markets should print `ok`. If a market fails, paste the traceback to Claude. If both are fine, look
+at one transcript before continuing.
+
+```bash
+head -c 1500 results/open_weight_pilot/vllm__Qwen__Qwen3-32B-FP8/floor92/peer_none/seed95/events.jsonl
+```
+
+## 3. The judge run (about 20 to 40 minutes)
+
+Pull first, so you have the latest prompt file. It includes the escalation study once that study is
+finished.
+
+```bash
+git pull
+uv run python modal_jobs/run_prompts.py paper/modal/prompts.jsonl.gz paper/modal/qwen_outputs.jsonl.gz --limit 20
+uv run python modal_jobs/run_prompts.py paper/modal/prompts.jsonl.gz paper/modal/qwen_outputs.jsonl.gz
+```
+
+The first command is a 20-prompt check. The run can be resumed, so if it stops, run the same command
+again.
+
+## 4. The open-weight markets (about 45 to 90 minutes)
+
+```bash
+uv run python run_grid.py configs/open_weight_qwen.json -y --jobs 8
+```
+
+The run can be resumed, because finished markets are skipped. If you see many failures, lower `--jobs` to 4.
+
+## 5. Hand the data back
+
+```bash
+uv run python scripts/compact_results.py open_weight_qwen open_weight_pilot
+git add results_final/open_weight_qwen results_final/open_weight_pilot paper/modal/qwen_outputs.jsonl.gz
+git commit -m "Open-weight judge outputs and Qwen3-32B markets"
+git push
+```
+
+Claude will then import the judge labels, add Qwen as a fourth rater, and rerun the validation and the
+monitor test. It will also label the Qwen markets and run the same tests as the peer-sting study.
+
+## 6. Stop billing
+
+```bash
+modal app stop collusion-sting-qwen
+```
+
+The server also scales to zero after 10 idle minutes.
+
+## Notes for the report
+
+1. The Qwen markets are exploratory unless a pre-registration is committed before step 4. Claude can
+   write one, like `prereg_peer_sting.md`, while the server warms up.
+2. Qwen's thinking mode is off (`enable_thinking: false`), so its agents answer in one pass like the Claude
+   agents. Temperature is 0.7 for the agents and 0 for the judge.
+3. The same model plays sellers and buyers in the open-weight markets. The planted seller is scripted, as
+   before.

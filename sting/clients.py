@@ -110,9 +110,57 @@ class ClaudeClient(ModelWrapper):
         return None
 
 
+VLLM_PREFIX = "vllm/"
+
+
+class VLLMClient(ModelWrapper):
+    """An open-weight model served by vLLM's OpenAI-compatible server (see modal/serve_qwen.py).
+
+    Reads VLLM_BASE_URL (for example https://<workspace>--collusion-sting-qwen-serve.modal.run/v1) and
+    VLLM_API_KEY. Qwen3 thinking is switched off so every agent answers in one pass, like the Claude agents.
+    """
+
+    is_remote = True
+
+    def __init__(self, model_name: str, temperature: float = 0.7, max_tokens: int = 2000, **kwargs):
+        super().__init__(model_name, max_tokens=max_tokens, **kwargs)
+        _load_keys()
+        if not os.environ.get("VLLM_BASE_URL"):
+            raise RuntimeError("VLLM_BASE_URL is not set. Put it in compute.env (see paper/modal_runbook.md).")
+        from openai import OpenAI
+
+        self.client = OpenAI(
+            base_url=os.environ["VLLM_BASE_URL"], api_key=os.environ.get("VLLM_API_KEY", "EMPTY"), timeout=300
+        )
+        self.temperature = temperature
+        self.usage = {"calls": 0, "input_tokens": 0, "output_tokens": 0}
+
+    def generate(self, messages: list[Message]) -> Optional[str]:
+        for attempt in range(6):
+            try:
+                resp = self.client.chat.completions.create(
+                    model=self.model_name,
+                    messages=messages,
+                    temperature=self.temperature,
+                    max_tokens=self.max_tokens,
+                    extra_body={"chat_template_kwargs": {"enable_thinking": False}},
+                )
+                u = getattr(resp, "usage", None)
+                self.usage["calls"] += 1
+                self.usage["input_tokens"] += int(getattr(u, "prompt_tokens", 0) or 0)
+                self.usage["output_tokens"] += int(getattr(u, "completion_tokens", 0) or 0)
+                return resp.choices[0].message.content
+            except Exception as e:  # noqa: BLE001  cold starts and overload: back off and retry
+                log.warning(f"{self.model_name} call failed (attempt {attempt + 1}): {e}")
+                time.sleep(min(60, 5 * 2**attempt))
+        return None
+
+
 def make_client(model: str, temperature: float, seed: Optional[int] = None) -> ModelWrapper:
     if model.startswith(CLAUDE_PREFIX):
         return ClaudeClient(model.removeprefix(CLAUDE_PREFIX))
+    if model.startswith(VLLM_PREFIX):
+        return VLLMClient(model.removeprefix(VLLM_PREFIX), temperature=temperature)
     kwargs = {"temperature": temperature}
     if seed is not None:
         kwargs["seed"] = seed
@@ -123,12 +171,12 @@ def usage_summary(clients) -> dict:
     """Token use and list-price cost for the Claude clients among `clients`, keyed by model."""
     out: dict[str, dict] = {}
     for c in clients:
-        if not isinstance(c, ClaudeClient):
+        if not isinstance(c, (ClaudeClient, VLLMClient)):
             continue
         row = out.setdefault(c.model_name, {"calls": 0, "input_tokens": 0, "output_tokens": 0})
         for k in row:
             row[k] += c.usage[k]
     for model, row in out.items():
-        pin, pout = CLAUDE_PRICES.get(model, (float("nan"), float("nan")))
+        pin, pout = CLAUDE_PRICES.get(model, (0.0, 0.0))  # open-weight models are paid by GPU time, not tokens
         row["usd_list_price"] = round(row["input_tokens"] / 1e6 * pin + row["output_tokens"] / 1e6 * pout, 4)
     return out
