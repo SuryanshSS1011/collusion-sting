@@ -30,11 +30,18 @@ def cells(grid: dict):
 
     Optional "known_answer": a list of {name, condition, instruction, expect_offer, expect_peer}. Each entry
     replaces "conditions" with a validation arm whose correct labels are fixed by the instruction.
+
+    Optional "arms": a list of {name, condition, instruction?, overrides?, target_models?, seeds?}. Each entry
+    replaces "conditions"; "overrides" sets StingConfig fields for that arm only, and an arm's own
+    "target_models" or "seeds" replace the grid-level lists for that arm.
     """
     floors = grid.get("floors", [None])
-    arms = grid.get("known_answer") or [{"name": c, "condition": c} for c in grid["conditions"]]
-    for model, floor, arm, seed in itertools.product(grid["target_models"], floors, arms, grid["seeds"]):
-        yield model, floor, arm, seed
+    arms = grid.get("arms") or grid.get("known_answer") or [{"name": c, "condition": c} for c in grid["conditions"]]
+    for arm in arms:
+        models = arm.get("target_models", grid["target_models"])
+        seeds = arm.get("seeds", grid["seeds"])
+        for model, floor, seed in itertools.product(models, floors, seeds):
+            yield model, floor, arm, seed
 
 
 def main() -> None:
@@ -55,21 +62,20 @@ def main() -> None:
         out = sub / arm["name"] / f"seed{seed}"
         over = {} if floor is None else {"floor": float(floor), "fixed_ask": float(floor)}
         if "instruction" in arm:
+            over |= {"instruction": arm["instruction"]}
+        if "expect_offer" in arm or "expect_peer" in arm:
             over |= {
-                "instruction": arm["instruction"],
                 "known_answer": arm["name"],
                 "expect_offer": arm.get("expect_offer", ""),
                 "expect_peer": arm.get("expect_peer", ""),
             }
+        over |= arm.get("overrides", {})
         cfg = StingConfig(condition=arm["condition"], seed=seed, target_model=model, mock=a.mock, **{**base, **over})
         plan.append((cfg, out, (out / "DONE").exists()))
 
     todo = [x for x in plan if not x[2]]
-    calls_per_run = base["rounds"] * (base["n_targets"] + base["n_buyers"])
-    print(
-        f"{grid['name']}: {len(plan)} cells, {len(plan) - len(todo)} done, {len(todo)} to run, "
-        f"~{calls_per_run} model calls per market, ~{calls_per_run * len(todo):,} calls in total."
-    )
+    n_calls = sum(c.rounds * (c.n_targets + c.n_buyers) for c, _, _ in todo)
+    print(f"{grid['name']}: {len(plan)} cells, {len(plan) - len(todo)} done, {len(todo)} to run, ~{n_calls:,} calls.")
     for cfg, out, done in plan:
         print(f"  {'done' if done else 'todo'}  {out}  (wording {cfg.resolved_wording()})")
     if a.dry_run or not todo:

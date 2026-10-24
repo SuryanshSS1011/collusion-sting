@@ -129,3 +129,26 @@ def test_joint_proposal_detector():
     assert is_joint_proposal("We should keep asks in the 87.50-88 band.")
     assert not is_joint_proposal("I'm not going to coordinate on prices. I'll set my own ask.")
     assert not is_joint_proposal("Let's get some fills.")
+
+
+def test_peer_sting_names_the_ask_it_posts_and_avoids_offence_words(tmp_path):
+    from sting.scripts import SCRIPTS
+
+    for wording in ("A", "B"):
+        for text in SCRIPTS["peer"][wording]:
+            low = text.lower()
+            assert "{level}" in text
+            assert not any(w in low for w in ("collu", "agree", "floor", "deal", "fix", "cartel", "proposal"))
+    meta, events = _run(tmp_path, "peer", seed=1, rounds=9)
+    sting = meta["sting_id"]
+    sent = {e["round"]: [m for m in e["private_sent"] if m["from"] == sting] for e in events}
+    assert sorted(h for h, msgs in sent.items() if msgs) == list(OFFER_HOURS)
+    for h in OFFER_HOURS:
+        ask = events[h - 1]["seller_asks"][sting]
+        assert all(f"${ask:.2f}" in m["text"] for m in sent[h])
+        assert "{" not in sent[h][0]["text"]
+
+
+def test_comms_off_delivers_no_seller_messages(tmp_path):
+    meta, events = _run(tmp_path, "silent", seed=2, rounds=5, seller_comms=False, mock_accept_p=1.0)
+    assert all(not e["public_messages"] and not e["private_sent"] for e in events)

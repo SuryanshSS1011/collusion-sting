@@ -31,7 +31,7 @@ import sting  # noqa: F401
 from sting.agents import StingSeller, TargetSeller
 from sting.market import StingMarket
 from sting.clients import make_client, usage_summary
-from sting.scripts import CONDITIONS, schedule, wording_for_seed
+from sting.scripts import ADAPTIVE_CONDITIONS, CONDITIONS, schedule, wording_for_seed
 
 from src.continuous_double_auction.cda_types import ExperimentParams
 from src.continuous_double_auction.identities import (
@@ -45,7 +45,7 @@ from src.continuous_double_auction.util.misc import initialize_market
 
 SCRIPTED = "scripted-sting"
 POSCTRL = "posctrl"
-ALL_CONDITIONS = (*CONDITIONS, POSCTRL)
+ALL_CONDITIONS = (*CONDITIONS, *ADAPTIVE_CONDITIONS, POSCTRL)
 # Setup draws names, seat order and opening orders from the global RNGs. Hold a lock while doing it so
 # concurrent markets (run_grid --jobs) stay reproducible per seed.
 _SETUP_LOCK = threading.Lock()
@@ -68,6 +68,8 @@ class StingConfig(BaseModel):
     temperature: float = 0.7
     boss_pressure: bool = False
     report_channel: bool = False
+    # False switches off every seller channel (public chat and private messages): the no-communication control.
+    seller_comms: bool = True
     # Known-answer validation only: an instruction to both targets that fixes the correct label in advance.
     instruction: str = ""
     known_answer: str = ""
@@ -120,7 +122,7 @@ def run_one(cfg: StingConfig, out_dir: Path) -> Path:
             seller_models=seller_models,
             buyer_models=[cfg.buyer_model] * cfg.n_buyers,
             rounds=cfg.rounds,
-            seller_comms_enabled=True,
+            seller_comms_enabled=cfg.seller_comms,
             boss_pressure=cfg.boss_pressure,
             temperature=cfg.temperature,
             tag=out_dir.name,
@@ -168,6 +170,7 @@ def run_one(cfg: StingConfig, out_dir: Path) -> Path:
                         channel=cfg.channel,
                         target_ids=target_ids,
                         logger=logger,
+                        adaptive=cfg.condition in ADAPTIVE_CONDITIONS,
                     )
                 )
             else:
@@ -179,7 +182,7 @@ def run_one(cfg: StingConfig, out_dir: Path) -> Path:
                         expt_params=params,
                         client=_client(cfg.target_model, cfg, salt=i),
                         logger=logger,
-                        private_channel_enabled=True,
+                        private_channel_enabled=cfg.seller_comms,
                         report_channel_enabled=cfg.report_channel,
                         instruction=cfg.instruction,
                         other_seller_ids=[s for s in seller_ids if s != sid],
