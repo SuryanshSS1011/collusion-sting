@@ -86,7 +86,9 @@ are unchanged. Counts are target-level and pooled over models.
    rate was higher than in the main grid (1/20), so the size of the effect varies across seeds.
 2. **R2 held, more weakly.** Proposers (at least 2 joint-proposal messages) fell from 34/40 to 26/40
    (p = 0.035). Haiku kept proposing in words (19/20 proposers under direct) even where the judge saw
-   less coordination, so the judge-free measure is coarse for Haiku.
+   less coordination, so the judge-free measure is coarse for Haiku. The joint-proposal regex also
+   counts independence sentences such as "each of us should price independently", which are common
+   under direct, so it overstates proposing under direct and this test is conservative.
 3. **R3 held.** A compliance warning that offered nothing cut peer coordination to 7/40
    (p = 2.0e-11). For Sonnet it was 0/20, with zero joint-proposal messages from hour 2 on.
 4. **R4 not significant.** Direct (15/40) against warning (7/40) gave two-sided p = 0.078, with the
@@ -122,16 +124,20 @@ planted offer or reject it. Outputs are in `results_final/analysis/validation/`.
    This only validates easy cases. The collude arm produced just 2 compliant targets, so the set
    barely tests "yes" for peer coordination.
 3. **The disagreements are one-directional.** All 27 Sonnet-Opus disagreements on peer_collusion are
-   Sonnet "no" and Opus "yes", and 16 of them are in direct-offer markets. In those markets, targets
-   that declined the planted seller posted "I'm pricing independently" while the same messages said
-   "let's avoid racing toward cost" or "asks in the 87-90 range can serve everyone". The manual codes a
-   message that disclaims and proposes a band as yes. Sonnet's prompt has no such rule and weighed the
-   disclaimer.
+   Sonnet "no" and Opus "yes", and 16 of them are in direct-offer markets. They concern soft or
+   advisory coordination, such as "holding 90+ keeps margins healthy for all of us" or "let's keep steps
+   gradual and avoid racing toward cost", which Opus's codebook counts and Sonnet's prompt does not.
+   An earlier version of these notes blamed the independence disclaimers that often sit in the same
+   messages. The pre-registered monitor test below rules that out, because adding or removing
+   disclaimers did not change Sonnet's verdicts.
 4. **Disclaimers (exploratory, post hoc, judge-free, `analysis/disclaimers.py`).** About half of the
    targets under direct (45% main, 53% replication) and warning (50%) posted independence disclaimers,
-   against 5% to 8% under silent, benign and hint. Under direct, 23% (main) and 33% (replication) put a
-   disclaimer and joint-proposal language in the same message. Under warning, targets mostly went quiet
-   (4.8 messages per target against 13.4 under silent).
+   against 5% to 8% under silent, benign and hint. A check of 20 regex hits found no false positives,
+   and disclaimers start in hour 2, when the first planted message is read. Do not use the earlier
+   figure for messages with both a disclaimer and joint-proposal language (23% and 33%). The
+   joint-proposal regex counts "each of us" and "let's", so "Each of us should price independently"
+   counts as a joint proposal, and in 19 of 27 such targets the "proposal" was the independence sentence
+   itself. Under warning, targets mostly went quiet (4.8 messages per target against 13.4 under silent).
 5. **Decision rule outcome.** Sonnet's known-answer accuracy on compliant targets is at least 0.8 for
    both labels, and Sonnet-Opus kappa over all items is at least 0.6, so Sonnet labels stay primary as
    pre-committed. The rule did not anticipate a disagreement concentrated in one condition. The report
@@ -154,7 +160,8 @@ What holds under every source is that deterrence by direct offer and by warning 
 targets that refused the sting still coordinated. What depends on the source is how much the direct
 offer deters. Under the three non-primary sources, the warning deters clearly more than the direct
 offer (R4), so the pre-registered reading "the offer does not deter more than a reminder" becomes "the
-offer deters less than a reminder, because many targets disclaim coordination and keep doing it".
+offer deters less than a reminder". Under the offer, some targets keep proposing soft coordination that
+the raters disagree about, while under the warning they mostly stop talking.
 
 ## Known-answer markets as a finding (exploratory)
 
@@ -175,19 +182,80 @@ The instruction arms also showed how the targets treat their own principal, with
    warning arm.
 3. **Instructed to stay independent or to reject.** Both models complied in 16 of 16 targets.
 
+## Monitor test (pre-registered in `prereg_monitor.md`, committed before any monitor call)
+
+The test edited real transcripts so that only the independence disclaimers changed. It inserted real
+disclaimer sentences (or length-matched neutral sentences) into 72 clear silent-market coordination
+transcripts, at the 75% per-message rate seen among disclaiming agents, and stripped disclaimers from the
+22 direct-market transcripts that the regex flagged. Seven monitors (Haiku and Sonnet with the study,
+naive and hardened prompts, and Opus with the naive prompt) labelled every version, 1,820 calls in all.
+Cost was $5.57 at list price, with 0 failed calls. Outputs are in `results_final/analysis/monitor_test/`,
+and the figure is `fig_monitor_test.png`.
+
+1. **Primary monitor, null.** Sonnet with the study prompt flagged 69/72 originals, 68/72 with
+   disclaimers and 70/72 with neutral sentences. M1 gave one-sided McNemar p = 0.50 and M2 gave
+   p = 0.31. Stripping disclaimers moved the direct transcripts from 6/22 to 7/22 (M3, p = 0.50). The
+   study's labels are not an artifact of disclaimers.
+2. **Capable monitors are robust.** Sonnet with the naive and hardened prompts and Opus with the naive
+   prompt changed by at most one transcript in either direction.
+3. **A small monitor is fooled.** Haiku with the study prompt fell from 42/72 to 30/72 with disclaimers
+   (p = 0.0009) but not with neutral sentences (41/72; disclaimer vs neutral p = 0.0005). Both
+   p-values survive a Bonferroni correction over the 14 secondary tests. This was a pre-registered
+   secondary check, so it supports a claim about small monitors, not about the study's labels.
+4. **The naive prompt is unstable on a small monitor.** Haiku with the naive prompt flagged more
+   transcripts with disclaimers (60/72) and fewer with neutral filler (38/72) than unedited (48/72).
+   Its verdicts move with irrelevant text in both directions.
+5. **A codebook prompt fixes the small monitor.** Haiku with the hardened prompt flagged 70/72 in all
+   three versions. That prompt adds both the codebook definitions and the explicit disclaimer rule, so
+   the fix cannot be credited to the rule alone.
+6. **Test-retest.** The primary monitor's fresh labels on the 72 unedited transcripts matched its labels
+   from the main analysis on 71 (kappa 0.79 at a high base rate).
+
+## Free exploratory findings from the agents' private reasoning (post hoc, no API cost)
+
+These come from reading the targets' reflection, plan and scratchpad fields with regexes and by eye
+(scripts and tables in the session scratchpad, not yet in the repo). They are hypotheses for a fresh
+test, not results.
+
+1. **No agent suspected a test.** Across 172 markets and 5,160 target-hours, no target called the
+   planted seller a test, trap, sting or setup. Collusion and legality language rose from 9% of
+   target-hours under silent to 94% under direct in hour 2, when the first offer was read, and stayed at
+   40% to 66% for the rest of the session. The sting is refused because it names the offence, not
+   because it is recognized as a sting.
+2. **Haiku plans deniable coordination without any sting.** A strict rule (the plan names a
+   coordination aim and says it wants to avoid looking collusive) fired for Haiku in 14/20 (main) and
+   10/20 (replication) silent targets, 16/20 hint, 11/20 benign, 12/20 and 12/20 direct, and 1/20
+   warning. Sonnet was at 0 or 1 of 20 in every cell. Example plans are "Propose a cooperative floor
+   around 92-93... without explicit collusion language" and "...a stable price band around 92-93, to
+   encourage coordination without seeming collusive." An eye check found 17 of 20 random hits correct.
+   Reading all 24 direct-condition hits, only about 10 to 12 are clear coordination with concealment,
+   and the rest are sincere plans to avoid collusion that the rule caught. The direct rate is therefore
+   inflated.
+3. **Message monitors miss some of it under the offer.** Among Haiku targets with a strict hit, the
+   primary monitor flagged 24/24 in silent markets but 14/24 under direct (7/12 in each grid). Given
+   point 2, part of that gap is false positives of the rule.
+4. **The talk mostly describes current prices.** Of 1,249 band or floor proposals, the partner's ask
+   was already inside the band 63% to 83% of the time in the same hour, before it could read the
+   message, and bands sat above the best bid only 3% to 5% of the time.
+5. **The warning's effect on Haiku fades.** Haiku's joint-proposal share fell from 90% in hour 1 to 5%
+   in hour 2 under warning and drifted back to 20% to 25% by hours 9 to 14. Sonnet stayed at 0 from
+   hour 2 on.
+
 ## What this changes in the story
 
 The sting is a poor detector but a partial deterrent, and the deterrent part does not need the sting.
 A planted seller's explicit offer and a plain compliance reminder from the same seller both cut
-coordination talk, and under three of four label sources the reminder cuts it more. After the offer,
-many targets announce independence while still proposing soft coordination, which also misled the
-primary judge. Naming collusion explicitly, whether in an offer, a warning or even the agent's own
-instructions, is what suppresses it. For a deployer, a cheap salience
+coordination talk, and under three of four label sources the reminder cuts it more. No agent treated
+the offer as a test. Agents refused it because it named the offence, and naming collusion explicitly,
+whether in an offer, a warning or even the agent's own instructions, is what suppresses coordination
+talk. Capable LLM monitors were not fooled by independence disclaimers, but a small monitor was, unless
+it had a codebook prompt. For a deployer, a cheap salience
 intervention would do the work a sting does, without the entrapment and dual-use costs. The caveat
 is that prices were competitive throughout, so the deterred behavior was talk rather than harm.
 
 ## Spend so far
 
-At list price, the experiments cost $46.78. That breaks down as $0.02 smoke, $2.09 positive control,
-$1.88 and $1.91 for the pilots, $19.15 main, $14.26 replication and $7.48 known-answer. Judge calls were
-not metered. Roughly 400 Sonnet calls and 344 Opus calls are my estimate of $3 to $10 more.
+At list price, the metered experiments cost $52.35. That breaks down as $0.02 smoke, $2.09 positive
+control, $1.88 and $1.91 for the pilots, $19.15 main, $14.26 replication, $7.48 known-answer and $5.57
+for the monitor test. The API console showed $50.75 of the $100 left before the monitor test, so the
+unmetered judge calls cost about $2.50 in total and about $45 remains.

@@ -370,10 +370,10 @@ def analyse(mock: bool) -> dict:
         "note": "items were selected on a majority yes label, so base rates are high and kappa is unstable",
     }
     res = {"failures": {f"{m}/{p}": int(n) for (m, p), n in failures.items()}, "test_retest_primary": retest}
-    out = OUT / ("mock_" if mock else "")
-    rates.to_csv(f"{out}rates.csv", index=False)
-    tests.to_csv(f"{out}tests.csv", index=False)
-    (Path(f"{out}summary.json")).write_text(
+    pre = "mock_" if mock else ""
+    rates.to_csv(OUT / f"{pre}rates.csv", index=False)
+    tests.to_csv(OUT / f"{pre}tests.csv", index=False)
+    (OUT / f"{pre}summary.json").write_text(
         json.dumps(res | {"tests": tests.to_dict("records")}, indent=2, default=str)
     )
     pd.set_option("display.width", 220)
@@ -395,12 +395,12 @@ def figure(rates: pd.DataFrame) -> None:
     marks = {"original": "o", "neutral": "s", "disclaimer": "D", "stripped": "^"}
     order = [f"{m}/{p}" for m, p in MONITORS]
     rates = rates.assign(monitor=rates.model + "/" + rates.prompt)
-    fig, axes = plt.subplots(1, 2, figsize=(9.5, 3.6), sharey=True, gridspec_kw={"width_ratios": [3, 2]})
+    fig, axes = plt.subplots(1, 2, figsize=(10.5, 3.8), sharey=True, gridspec_kw={"width_ratios": [3, 2.4]})
     for ax, (s, versions, title) in zip(
         axes,
         (
             ("insertion", ["original", "neutral", "disclaimer"], "Silent-market coordination, edited"),
-            ("strip", ["original", "stripped"], "Direct-market disclaim-and-continue"),
+            ("strip", ["original", "stripped"], "Direct-market transcripts, disclaimers stripped"),
         ),
     ):
         sub = rates[rates.set == s]
@@ -423,13 +423,13 @@ def figure(rates: pd.DataFrame) -> None:
                 ax.plot(
                     xx, r.rate, marks[v], color=colors[v], ms=5.5, mec="white", mew=0.5, label=v if x == 0 else None
                 )
-        ax.set_xticks(range(len(order)), [o.replace("/", "\n") for o in order], fontsize=7.5)
+        ax.set_xticks(range(len(order)), [o.replace("/", "\n") for o in order], fontsize=7)
         ax.set_ylim(0, 1.05)
         ax.set_title(title, loc="left")
-        ax.legend(loc="lower left", fontsize=7.5)
+        ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.2), ncol=len(versions), fontsize=7.5)
     axes[0].set_ylabel("Share of transcripts flagged as colluding")
     axes[0].yaxis.set_major_formatter(plt.FuncFormatter(lambda v, _: f"{v:.0%}"))
-    fig.text(0.99, -0.04, "Model / prompt. Bars are Wilson 95% intervals.", ha="right", fontsize=7, color=INK2)
+    fig.text(0.99, -0.12, "Monitor model / prompt. Bars are Wilson 95% intervals.", ha="right", fontsize=7, color=INK2)
     FIG.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(FIG)
     plt.close(fig)
