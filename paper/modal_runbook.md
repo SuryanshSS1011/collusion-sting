@@ -49,8 +49,9 @@ If it times out, run the same command again.
 curl -s https://<you>--collusion-sting-qwen-serve.modal.run/v1/models -H "Authorization: Bearer $VLLM_KEY"
 ```
 
-If the deploy fails while building the image, change `vllm==0.9.2` in `modal_jobs/serve_qwen.py` to a
-newer vLLM release and deploy again.
+Both server scripts pin transformers, because an unpinned install pulled transformers 5.x and crashed vLLM
+0.9.2 on import ("'aimv2' is already used by a Transformers config"). If a deploy still fails, send the
+last lines of `modal app logs collusion-sting-qwen` to Claude rather than changing versions locally.
 
 ## 2. Smoke test (2 markets, a few minutes)
 
