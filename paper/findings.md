@@ -72,3 +72,46 @@ same time. The explicit offer instead worked as a deterrent on coordination talk
 4. Claude sampling is unseeded, so hour-1 asks differ by condition and matched seeds pair only the
    cast and the opening book.
 5. The planted seller never replies. Acceptance might be higher against an adaptive partner.
+
+## Replication (pre-registered in `prereg_replication.md`, run October 24, 2026)
+
+There were 60 new markets on fresh seeds 5 to 14, all at $92, with silent, direct and warning conditions on
+Haiku 5.5 and Sonnet 5.5. Cost was $14.26 at list price, with 0 failed calls. The judge and its prompt
+are unchanged. Counts are target-level and pooled over models.
+
+1. **R1 replicated.** Peer coordination fell from 36/40 under silent to 15/40 under direct (one-sided
+   Fisher p = 7.5e-7). Sonnet went from 16/20 to 7/20 and Haiku from 20/20 to 8/20. Sonnet's direct
+   rate was higher than in the main grid (1/20), so the size of the effect varies across seeds.
+2. **R2 held, more weakly.** Proposers (at least 2 joint-proposal messages) fell from 34/40 to 26/40
+   (p = 0.035). Haiku kept proposing in words (19/20 proposers under direct) even where the judge saw
+   less coordination, so the judge-free measure is coarse for Haiku.
+3. **R3 held.** A compliance warning that offered nothing cut peer coordination to 7/40
+   (p = 2.0e-11). For Sonnet it was 0/20, with zero joint-proposal messages from hour 2 on.
+4. **R4 not significant.** Direct (15/40) against warning (7/40) gave two-sided p = 0.078, with the
+   warning numerically lower.
+5. **Pre-registered reading.** R1 and R3 hold and R4 does not, which is consistent with salience.
+   Mentioning that coordination is collusion is enough to suppress coordination talk, and the offer
+   itself does not deter more than a plain reminder does.
+6. **Prices did not move.** No condition changed the target ask index or trade price relative to
+   silent (all paired 95% intervals include zero). Prices stayed near or below the $90 competitive
+   level, so what was deterred was coordination talk, not supracompetitive pricing.
+7. **Timing (exploratory, `fig_timing_replication.png`).** Joint-proposal rates are similar across
+   conditions in hour 1, before any message is read. They split at hour 2, when the first message
+   arrives. Under warning, Haiku drifted back up slowly after the last message (hour 9), and Sonnet
+   stayed at zero.
+8. **Refused or ignored sting, still coordinating.** This was 13/37 targets (35%, CI 22% to 51%),
+   lower than the main grid's 57% because the replication has no hint arm, where this was most common.
+
+## What this changes in the story
+
+The sting is a poor detector but a decent deterrent, and the deterrent part does not need the sting.
+A planted seller's explicit offer and a plain compliance reminder from the same seller both cut
+coordination talk sharply, with the reminder at least as effective. For a deployer, a cheap salience
+intervention would do the work a sting does, without the entrapment and dual-use costs. The caveat
+is that prices were competitive throughout, so the deterred behavior was talk rather than harm.
+
+## Spend so far
+
+At list price, the experiments cost $39.30. That breaks down as $0.02 smoke, $2.09 positive control,
+$1.88 and $1.91 for the pilots, $19.15 main and $14.26 replication. Judge calls were not metered;
+roughly 330 Sonnet calls are my estimate of about $2 more.
