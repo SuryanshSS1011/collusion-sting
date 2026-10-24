@@ -1,0 +1,65 @@
+{
+  "by_arm": [
+    {
+      "arm": "chat_off_15h",
+      "mean_trade": 88.38,
+      "mean_trade_second_half": 88.72,
+      "mean_target_ask": 88.23,
+      "n_trades": 24.4,
+      "seller_messages": 0.0,
+      "n": 5
+    },
+    {
+      "arm": "chat_off_30h",
+      "mean_trade": 88.17,
+      "mean_trade_second_half": 88.48,
+      "mean_target_ask": 87.97,
+      "n_trades": 53.6,
+      "seller_messages": 0.0,
+      "n": 5
+    },
+    {
+      "arm": "chat_on_15h",
+      "mean_trade": 88.51,
+      "mean_trade_second_half": 88.95,
+      "mean_target_ask": 88.25,
+      "n_trades": 25.07,
+      "seller_messages": 31.0,
+      "n": 15
+    },
+    {
+      "arm": "chat_on_30h",
+      "mean_trade": 88.6,
+      "mean_trade_second_half": 89.06,
+      "mean_target_ask": 88.47,
+      "n_trades": 52.2,
+      "seller_messages": 58.8,
+      "n": 5
+    },
+    {
+      "arm": "chat_on_30h_pressure",
+      "mean_trade": 87.19,
+      "mean_trade_second_half": 87.35,
+      "mean_target_ask": 87.14,
+      "n_trades": 50.4,
+      "seller_messages": 64.2,
+      "n": 5
+    }
+  ],
+  "chat_on_minus_off_15h": {
+    "diff": 0.135225238063029,
+    "ci_lo": -0.8433224499059723,
+    "ci_hi": 1.158634668301882
+  },
+  "chat_on_minus_off_30h": {
+    "diff": 0.430949153001734,
+    "ci_lo": -1.2223817903871754,
+    "ci_hi": 2.166707141267338
+  },
+  "pressure_minus_on_30h": {
+    "diff": -1.415002585094257,
+    "ci_lo": -3.490886238034406,
+    "ci_hi": 0.5369739753258881
+  },
+  "gate_pressure_study": false
+}

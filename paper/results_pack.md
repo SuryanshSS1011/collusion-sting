@@ -30,10 +30,10 @@ Status tags: prereg (confirmatory, pre-registered), prereg secondary, validation
 
 | Test | Labels | Group A | Group B | p | Fragility |
 |---|---|---|---|---|---|
-| H1 hint vs benign, acceptance (main) | sonnet | 8/40 | 0/40 | 0.005 | 2 |
-| H1 hint vs benign, acceptance (main) | opus | 10/40 | 0/40 | 0.001 | 3 |
-| H1 hint vs benign, acceptance (main) | rules | 10/40 | 0/40 | 0.001 | 3 |
-| H1 hint vs benign, acceptance (main) | majority | 10/40 | 0/40 | 0.001 | 3 |
+| Hint vs benign, acceptance (main; in the H1 table, not a hypothesis) | sonnet | 8/40 | 0/40 | 0.005 | 2 |
+| Hint vs benign, acceptance (main; in the H1 table, not a hypothesis) | opus | 10/40 | 0/40 | 0.001 | 3 |
+| Hint vs benign, acceptance (main; in the H1 table, not a hypothesis) | rules | 10/40 | 0/40 | 0.001 | 3 |
+| Hint vs benign, acceptance (main; in the H1 table, not a hypothesis) | majority | 10/40 | 0/40 | 0.001 | 3 |
 | H1 direct vs benign, acceptance (main) | sonnet | 0/40 | 0/40 | 1.000 |  |
 | H1 direct vs benign, acceptance (main) | opus | 1/40 | 0/40 | 1.000 |  |
 | H1 direct vs benign, acceptance (main) | rules | 1/40 | 0/40 | 1.000 |  |
@@ -139,8 +139,28 @@ Judge-free reasoning rules per cell (`analysis/out/explore/reasoning_rules_by_ce
 ## G. Price-stakes pilot (exploratory)
 
 1. chat_off_15h: mean trade 88.38, n = 5 markets. [exploratory pilot; `analysis/out/price_pilot/summary.json`]
-1. chat_off_30h: mean trade 89.22, n = 2 markets. [exploratory pilot; `analysis/out/price_pilot/summary.json`]
+1. chat_off_30h: mean trade 88.17, n = 5 markets. [exploratory pilot; `analysis/out/price_pilot/summary.json`]
 1. chat_on_15h: mean trade 88.51, n = 15 markets. [exploratory pilot; `analysis/out/price_pilot/summary.json`]
-1. chat_on_30h: mean trade 87.68, n = 5 markets. [exploratory pilot; `analysis/out/price_pilot/summary.json`]
+1. chat_on_30h: mean trade 88.60, n = 5 markets. [exploratory pilot; `analysis/out/price_pilot/summary.json`]
+1. chat_on_30h_pressure: mean trade 87.19, n = 5 markets. [exploratory pilot; `analysis/out/price_pilot/summary.json`]
 1. chat_on_minus_off_15h: +0.14 (95% CI -0.84 to +1.16). [exploratory pilot; `analysis/out/price_pilot/summary.json`]
-1. chat_on_minus_off_30h: -1.54 (95% CI -2.47 to -0.42). [exploratory pilot; `analysis/out/price_pilot/summary.json`]
+1. chat_on_minus_off_30h: +0.43 (95% CI -1.22 to +2.17). [exploratory pilot; `analysis/out/price_pilot/summary.json`]
+1. pressure_minus_on_30h: -1.42 (95% CI -3.49 to +0.54). [exploratory pilot; `analysis/out/price_pilot/summary.json`]
+
+## H. Market-level sensitivity analysis
+
+The two targets in a market agree on peer coordination main coord 89%, replication coord 83%, peer study coord 93% of the time, so these tests use one observation per market.
+
+| Test | Target level | Market, any target | Market, both targets |
+|---|---|---|---|
+| main_direct_vs_silent_coord (two-sided) | 12/40 vs 39/40, p = 8.7e-11 | 7/20 vs 20/20, p = 1.3e-05 | 5/20 vs 19/20, p = 1e-05 |
+| main_hint_vs_benign_accept (two-sided) | 8/40 vs 0/40, p = 0.005 | 7/20 vs 0/20, p = 0.008 | 1/20 vs 0/20, p = 1.000 |
+| R1_direct_lt_silent_coord | 15/40 vs 36/40, p = 7.5e-07 | 12/20 vs 18/20, p = 0.032 | 3/20 vs 18/20, p = 1.7e-06 |
+| R3_warning_lt_silent_coord | 7/40 vs 36/40, p = 2e-11 | 4/20 vs 18/20, p = 8.3e-06 | 3/20 vs 18/20, p = 1.7e-06 |
+| R4_direct_vs_warning_coord (two-sided) | 15/40 vs 7/40, p = 0.078 | 12/20 vs 4/20, p = 0.022 | 3/20 vs 3/20, p = 1.000 |
+| P1_peer_gt_direct_accept_haiku | 35/40 vs 1/40, p = 3.6e-16 | 20/20 vs 1/20, p = 1.5e-10 | 15/20 vs 0/20, p = 3.9e-07 |
+| P2_none_gt_independent_accept_haiku | 35/40 vs 0/40, p = 1.1e-17 | 20/20 vs 0/20, p = 7.3e-12 | 15/20 vs 0/20, p = 3.9e-07 |
+| P5_deceptive_sonnet_gt_haiku_silent | 16/16 vs 12/40, p = 7.3e-07 | 8/8 vs 10/20, p = 0.014 | 8/8 vs 2/20, p = 1.4e-05 |
+| Haiku_direct_lt_silent_coord (peer study) | 22/40 vs 37/40, p = 0.00012 | 13/20 vs 19/20, p = 0.022 | 9/20 vs 18/20, p = 0.003 |
+
+Source: `analysis/out/market_level/market_level_tests.json`. Status: sensitivity analysis added after results (deviation logged).

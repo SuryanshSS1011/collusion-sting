@@ -101,4 +101,4 @@ metered spend passes $25.
 
 | When (ET) | What changed | Why | Seen results first? |
 |---|---|---|---|
-| | | | |
+| Oct 24, 07:40 | Added a market-level sensitivity analysis (`analysis/market_level.py`): every key test repeated with one observation per market, counting a market if any target, or if both targets, has the label. The pre-registered target-level tests are unchanged and remain primary. | An independent re-computation of all reported numbers found that the two targets in a market share peer labels 83% to 95% of the time, so target-level tests overstate the effective sample. | Yes, all target-level results had been seen. |

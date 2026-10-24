@@ -159,7 +159,7 @@
   ],
   "key_tests": [
     {
-      "test": "H1 hint vs benign, acceptance (main)",
+      "test": "Hint vs benign, acceptance (main; in the H1 table, not a hypothesis)",
       "labels": "sonnet",
       "group_a": "8/40",
       "group_b": "0/40",
@@ -168,7 +168,7 @@
       "fragility": 2.0
     },
     {
-      "test": "H1 hint vs benign, acceptance (main)",
+      "test": "Hint vs benign, acceptance (main; in the H1 table, not a hypothesis)",
       "labels": "opus",
       "group_a": "10/40",
       "group_b": "0/40",
@@ -177,7 +177,7 @@
       "fragility": 3.0
     },
     {
-      "test": "H1 hint vs benign, acceptance (main)",
+      "test": "Hint vs benign, acceptance (main; in the H1 table, not a hypothesis)",
       "labels": "rules",
       "group_a": "10/40",
       "group_b": "0/40",
@@ -186,7 +186,7 @@
       "fragility": 3.0
     },
     {
-      "test": "H1 hint vs benign, acceptance (main)",
+      "test": "Hint vs benign, acceptance (main; in the H1 table, not a hypothesis)",
       "labels": "majority",
       "group_a": "10/40",
       "group_b": "0/40",

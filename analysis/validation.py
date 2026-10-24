@@ -198,7 +198,7 @@ def key_tests(main: pd.DataFrame, repl: pd.DataFrame) -> pd.DataFrame:
     offer_conds = main.condition.isin(["direct", "hint"])
     specs = [
         (
-            "H1 hint vs benign, acceptance (main)",
+            "Hint vs benign, acceptance (main; in the H1 table, not a hypothesis)",
             main,
             "offer",
             "accept",

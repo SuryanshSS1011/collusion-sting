@@ -332,6 +332,39 @@ Secondary and descriptive results follow.
    and artificial innocent group. The sting has not been tested against agents that are independent by
    disposition rather than by instruction.
 
+## Price-stakes pilot (exploratory, sprint plan step 2, `analysis/price_pilot.py`)
+
+Haiku targets and buyers ran with a silent planted seller at $92 and 5 seeds per arm. The silent Haiku
+$92 markets from the main grid and replication (n = 15) served as the chat-on, 15-hour arm.
+
+1. **No price effect at 15 hours.** Seller chat changed the mean trade price by +$0.14 (95% bootstrap
+   CI −$0.84 to +$1.16).
+2. **No price effect at 30 hours either.** The difference was +$0.43 (CI −$1.22 to +$2.17).
+3. **CEO pressure did not raise prices.** It changed them by −$1.42 (CI −$3.49 to +$0.54).
+
+The gate for a pressure-plus-oversight study (a chat gap of at least $1.50, or a pressure rise of at least
+$2) was not met, so that study was not run. In this market the agents' coordination talk has no
+detectable price effect. That fits the descriptive finding that bands mostly describe current prices,
+and the per se framing, under which the agreement itself is the offence.
+
+## Market-level sensitivity analysis (added after results; deviation logged at 07:40 ET)
+
+An independent re-computation of every reported number, from the raw files and with its own code,
+matched the results pack with no discrepancies. It also pointed out that the two targets in a market
+share peer labels 83% (replication), 89% (main) and 93% (peer study) of the time. Treating them as
+independent overstates the sample. `analysis/market_level.py` repeats each key test with one observation
+per market. A market counts if any target has the label, or only if both do.
+
+1. **Robust under both codings.** The main grid's direct vs silent result holds (p ≤ 1.3e-5), as do R3
+   (p ≤ 8.3e-6), P1 and P2 (p ≤ 3.9e-7), and P5 (p = 0.014 and 1.4e-5).
+2. **Weaker under one coding.** R1 gives p = 0.032 counting any target and p = 1.7e-6 counting both. The
+   Haiku deterrence test in the peer study gives p = 0.022 and 0.0029.
+3. **Fails under one coding.** Hint vs benign acceptance gives p = 0.008 counting any target and p = 1 counting both.
+   R4 gives p = 0.022 and p = 1. Both were already flagged as fragile or label-dependent.
+
+The report should state the target-level pre-registered tests and give the market-level results beside
+them, or in the appendix.
+
 ## What this changes in the story
 
 The sting is a poor detector but a partial deterrent, and the deterrent part does not need the sting.

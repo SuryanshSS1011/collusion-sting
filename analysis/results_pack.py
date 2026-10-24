@@ -274,6 +274,29 @@ def price_pilot(pk: Pack) -> None:
             )
 
 
+def market_level(pk: Pack) -> None:
+    r = json.loads((A / "market_level" / "market_level_tests.json").read_text())
+    agree = r.pop("within_market_label_agreement")
+    pk.note(
+        "The two targets in a market agree on peer coordination "
+        + ", ".join(f"{k} {v:.0%}" for k, v in agree.items())
+        + " of the time, so these tests use one observation per market."
+    )
+    pk.note("")
+    pk.note("| Test | Target level | Market, any target | Market, both targets |")
+    pk.note("|---|---|---|---|")
+    for name, v in r.items():
+        cells = [
+            f"{x['a'][0]}/{x['a'][1]} vs {x['b'][0]}/{x['b'][1]}, p = {p_fmt(x['p'])}"
+            for x in (v["target"], v["any"], v["both"])
+        ]
+        pk.note(f"| {name} | " + " | ".join(cells) + " |")
+    pk.note("")
+    pk.note(
+        "Source: `analysis/out/market_level/market_level_tests.json`. Status: sensitivity analysis added after results (deviation logged)."
+    )
+
+
 def main() -> None:
     pk = Pack()
     pk.note("# Results pack")
@@ -287,6 +310,7 @@ def main() -> None:
     pk.section("E. Private reasoning (exploratory)", reasoning)
     pk.section("F. Peer-style sting study (prereg_peer_sting.md)", peer_sting)
     pk.section("G. Price-stakes pilot (exploratory)", price_pilot)
+    pk.section("H. Market-level sensitivity analysis", market_level)
     OUT.write_text("\n".join(pk.lines) + "\n")
     print(f"wrote {OUT} ({len(pk.lines)} lines)")
 

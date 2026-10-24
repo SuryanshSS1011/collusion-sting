@@ -157,7 +157,7 @@ Agrawal et al. double-auction harness.
    "deceive people".
 5. **Preexisting code.** The market harness is from Agrawal et al. 2025 (pinned submodule). Everything in
    `sting/`, `analysis/`, `configs/` and the pre-registrations was written during the sprint.
-6. **Compute and cost.** About $77 of API at list price in total, of which $71.59 was metered (the
+6. **Compute and cost.** About $79 of API at list price in total, of which $73.62 was metered (the
    `usage_total.json` and `usage.json` files) and about $5 of judge calls was not.
 
 ## Figures (draft captions)
