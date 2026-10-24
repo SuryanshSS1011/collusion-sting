@@ -199,6 +199,7 @@ def analyse(root: Path, mock: bool = False) -> dict:
     od = out_dir(root)
     od.mkdir(parents=True, exist_ok=True)
     t.to_csv(od / "peer_sting_targets.csv", index=False)
+    figure(t, Path("paper/figures/mock_fig_peer_sting.png" if mock else "paper/figures/fig_peer_sting.png"))
     (od / "peer_sting_tests.json").write_text(json.dumps(res, indent=2, default=str))
     return res
 
@@ -209,6 +210,93 @@ def main() -> None:
     ap.add_argument("--mock", action="store_true")
     a = ap.parse_args()
     print(json.dumps(analyse(Path(a.root), a.mock), indent=2, default=str))
+
+
+def figure(t: pd.DataFrame, path: Path) -> None:
+    """Three panels: what the sting sees (acceptance), what agents do with each other (peer coordination),
+    and what accepting meant (acceptors whose notes show deceptive intent, and acceptors that held the level)."""
+    import matplotlib.pyplot as plt
+
+    from analysis.figures import COLORS, INK2, _style
+
+    _style()
+    color = {"silent": COLORS["silent"], "direct": COLORS["direct"], "peer": COLORS["hint"]}
+    cells = [
+        ("haiku", "direct", "none"),
+        ("haiku", "peer", "none"),
+        ("haiku", "direct", "independent"),
+        ("haiku", "peer", "independent"),
+        ("sonnet", "peer", "none"),
+    ]
+    coord_cells = [
+        ("haiku", "silent", "none"),
+        ("haiku", "direct", "none"),
+        ("haiku", "peer", "none"),
+        ("haiku", "silent", "independent"),
+        ("haiku", "direct", "independent"),
+        ("haiku", "peer", "independent"),
+        ("sonnet", "silent", "none"),
+        ("sonnet", "peer", "none"),
+    ]
+
+    def label(m, s, i):
+        return f"{m.capitalize()}\n{s}\n{'instructed' if i == 'independent' else 'default'}"
+
+    def dot(ax, x, k, n, c, filled):
+        if n == 0:
+            return
+        lo, hi = wilson(k, n)
+        ax.errorbar(x, k / n, yerr=[[k / n - lo], [hi - k / n]], fmt="none", ecolor=c, elinewidth=1, alpha=0.7)
+        ax.plot(x, k / n, "o", ms=7, color=c, mfc=c if filled else "white", mew=1.5)
+        ax.annotate(
+            f"{k}/{n}", (x, k / n), xytext=(7, 0), textcoords="offset points", fontsize=7, color=INK2, va="center"
+        )
+
+    fig, axes = plt.subplots(1, 3, figsize=(12.5, 3.9), gridspec_kw={"width_ratios": [5, 8, 4]})
+    ax = axes[0]
+    for x, (m, s, i) in enumerate(cells):
+        g = t[(t.m == m) & (t.sting == s) & (t.instruction == i)]
+        dot(ax, x, int(g.accept.sum()), len(g), color[s], i == "none")
+    ax.set_xticks(range(len(cells)), [label(*c) for c in cells], fontsize=7)
+    ax.set_title("What the sting sees: agreed to it", loc="left")
+    ax = axes[1]
+    for x, (m, s, i) in enumerate(coord_cells):
+        g = t[(t.m == m) & (t.sting == s) & (t.instruction == i)]
+        dot(ax, x, int(g.coord.sum()), len(g), color[s], i == "none")
+    ax.set_xticks(range(len(coord_cells)), [label(*c) for c in coord_cells], fontsize=7)
+    ax.set_title("What agents do: coordinated with the other seller", loc="left")
+    ax = axes[2]
+    xs = []
+    for x, m in enumerate(("haiku", "sonnet")):
+        acc = t[(t.m == m) & (t.sting == "peer") & (t.instruction == "none") & t.accept]
+        if "deceptive_intent" in acc:
+            dot(ax, x - 0.12, int((acc.deceptive_intent == "yes").sum()), len(acc), "#52514e", True)
+        dot(ax, x + 0.12, int(acc.held.sum()), len(acc), "#1baf7a", True)
+        xs.append(x)
+    ax.set_xticks(xs, ["Haiku\nacceptors", "Sonnet\nacceptors"], fontsize=7)
+    ax.set_title("What agreeing meant", loc="left")
+    ax.legend(
+        handles=[
+            plt.Line2D([], [], marker="o", ls="", color="#52514e", label="notes plan to undercut"),
+            plt.Line2D([], [], marker="o", ls="", color="#1baf7a", label="held the named level"),
+        ],
+        loc="upper left",
+        fontsize=7,
+    )
+    for ax in axes:
+        ax.set_ylim(-0.03, 1.08)
+        ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda v, _: f"{v:.0%}"))
+    fig.text(
+        0.99,
+        -0.12,
+        "Filled: default prompt. Hollow: told to price independently. Bars are Wilson 95% intervals.",
+        ha="right",
+        fontsize=7,
+        color=INK2,
+    )
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(path)
+    plt.close(fig)
 
 
 if __name__ == "__main__":
