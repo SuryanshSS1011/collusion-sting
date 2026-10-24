@@ -1,0 +1,8 @@
+scope,condition,any_disclaimer,share_msgs_with_disclaimer,any_joint_proposal,disclaimer_and_joint_same_msg,n_msgs,n_targets
+main_claude,benign,0.075,0.036,0.85,0.05,13.1,40
+main_claude,direct,0.45,0.323,0.5,0.225,9.25,40
+main_claude,hint,0.05,0.004,0.9,0.05,15.25,40
+main_claude,silent,0.075,0.016,0.95,0.025,13.8,40
+replication_claude,direct,0.525,0.404,0.725,0.325,11.2,40
+replication_claude,silent,0.05,0.01,0.95,0.025,13.35,40
+replication_claude,warning,0.5,0.369,0.25,0.125,4.75,40
