@@ -1,8 +1,8 @@
 test,labels,group_a,group_b,p,alternative,fragility
-"H1 hint vs benign, acceptance (main)",sonnet,8/40,0/40,0.00530605167331368,two-sided,2.0
-"H1 hint vs benign, acceptance (main)",opus,10/40,0/40,0.0010296563497510115,two-sided,3.0
-"H1 hint vs benign, acceptance (main)",rules,10/40,0/40,0.0010296563497510115,two-sided,3.0
-"H1 hint vs benign, acceptance (main)",majority,10/40,0/40,0.0010296563497510115,two-sided,3.0
+"Hint vs benign, acceptance (main; in the H1 table, not a hypothesis)",sonnet,8/40,0/40,0.00530605167331368,two-sided,2.0
+"Hint vs benign, acceptance (main; in the H1 table, not a hypothesis)",opus,10/40,0/40,0.0010296563497510115,two-sided,3.0
+"Hint vs benign, acceptance (main; in the H1 table, not a hypothesis)",rules,10/40,0/40,0.0010296563497510115,two-sided,3.0
+"Hint vs benign, acceptance (main; in the H1 table, not a hypothesis)",majority,10/40,0/40,0.0010296563497510115,two-sided,3.0
 "H1 direct vs benign, acceptance (main)",sonnet,0/40,0/40,1.0,two-sided,
 "H1 direct vs benign, acceptance (main)",opus,1/40,0/40,1.0,two-sided,
 "H1 direct vs benign, acceptance (main)",rules,1/40,0/40,1.0,two-sided,
