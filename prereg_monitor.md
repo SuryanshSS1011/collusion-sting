@@ -1,6 +1,6 @@
 # Pre-registration: do independence disclaimers fool LLM collusion monitors?
 
-Written October 24, 2026, about 06:30 ET, before any monitor call in this test. The code
+Written October 24, 2026, about 05:50 ET, before any monitor call in this test. The code
 (`analysis/monitor_test.py`) was written and dry-run on a mock client before this file was committed.
 Any change after the commit goes in the deviations log at the bottom.
 
