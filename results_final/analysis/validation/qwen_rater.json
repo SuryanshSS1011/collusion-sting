@@ -1,0 +1,694 @@
+{
+  "agreement": [
+    {
+      "grid": "main_claude",
+      "label": "offer",
+      "vs": "sonnet",
+      "n": 54,
+      "raw": 0.833,
+      "kappa": 0.636
+    },
+    {
+      "grid": "main_claude",
+      "label": "offer",
+      "vs": "opus",
+      "n": 54,
+      "raw": 0.833,
+      "kappa": 0.699
+    },
+    {
+      "grid": "main_claude",
+      "label": "offer",
+      "vs": "rules",
+      "n": 54,
+      "raw": 0.685,
+      "kappa": 0.508
+    },
+    {
+      "grid": "main_claude",
+      "label": "peer",
+      "vs": "sonnet",
+      "n": 146,
+      "raw": 0.945,
+      "kappa": 0.801
+    },
+    {
+      "grid": "main_claude",
+      "label": "peer",
+      "vs": "opus",
+      "n": 146,
+      "raw": 0.952,
+      "kappa": 0.774
+    },
+    {
+      "grid": "main_claude",
+      "label": "peer",
+      "vs": "rules",
+      "n": 146,
+      "raw": 0.884,
+      "kappa": 0.497
+    },
+    {
+      "grid": "replication_claude",
+      "label": "offer",
+      "vs": "sonnet",
+      "n": 27,
+      "raw": 0.815,
+      "kappa": 0.605
+    },
+    {
+      "grid": "replication_claude",
+      "label": "offer",
+      "vs": "opus",
+      "n": 27,
+      "raw": 0.852,
+      "kappa": 0.681
+    },
+    {
+      "grid": "replication_claude",
+      "label": "offer",
+      "vs": "rules",
+      "n": 27,
+      "raw": 0.667,
+      "kappa": 0.391
+    },
+    {
+      "grid": "replication_claude",
+      "label": "peer",
+      "vs": "sonnet",
+      "n": 97,
+      "raw": 0.918,
+      "kappa": 0.827
+    },
+    {
+      "grid": "replication_claude",
+      "label": "peer",
+      "vs": "opus",
+      "n": 97,
+      "raw": 0.876,
+      "kappa": 0.72
+    },
+    {
+      "grid": "replication_claude",
+      "label": "peer",
+      "vs": "rules",
+      "n": 97,
+      "raw": 0.804,
+      "kappa": 0.545
+    },
+    {
+      "grid": "known_answer_claude",
+      "label": "offer",
+      "vs": "sonnet",
+      "n": 32,
+      "raw": 1.0,
+      "kappa": 1.0
+    },
+    {
+      "grid": "known_answer_claude",
+      "label": "offer",
+      "vs": "opus",
+      "n": 32,
+      "raw": 1.0,
+      "kappa": 1.0
+    },
+    {
+      "grid": "known_answer_claude",
+      "label": "offer",
+      "vs": "rules",
+      "n": 32,
+      "raw": 1.0,
+      "kappa": 1.0
+    },
+    {
+      "grid": "known_answer_claude",
+      "label": "peer",
+      "vs": "sonnet",
+      "n": 8,
+      "raw": 0.625,
+      "kappa": 0.0
+    },
+    {
+      "grid": "known_answer_claude",
+      "label": "peer",
+      "vs": "opus",
+      "n": 8,
+      "raw": 0.625,
+      "kappa": 0.0
+    },
+    {
+      "grid": "known_answer_claude",
+      "label": "peer",
+      "vs": "rules",
+      "n": 8,
+      "raw": 0.375,
+      "kappa": 0.0
+    },
+    {
+      "grid": "peer_sting_claude",
+      "label": "offer",
+      "vs": "sonnet",
+      "n": 118,
+      "raw": 0.983,
+      "kappa": 0.967
+    },
+    {
+      "grid": "peer_sting_claude",
+      "label": "offer",
+      "vs": "sonnetcb",
+      "n": 118,
+      "raw": 0.941,
+      "kappa": 0.892
+    },
+    {
+      "grid": "peer_sting_claude",
+      "label": "offer",
+      "vs": "rules",
+      "n": 118,
+      "raw": 0.703,
+      "kappa": 0.532
+    },
+    {
+      "grid": "peer_sting_claude",
+      "label": "peer",
+      "vs": "sonnet",
+      "n": 151,
+      "raw": 0.927,
+      "kappa": 0.755
+    },
+    {
+      "grid": "peer_sting_claude",
+      "label": "peer",
+      "vs": "sonnetcb",
+      "n": 151,
+      "raw": 0.921,
+      "kappa": 0.684
+    },
+    {
+      "grid": "peer_sting_claude",
+      "label": "peer",
+      "vs": "rules",
+      "n": 151,
+      "raw": 0.834,
+      "kappa": 0.222
+    },
+    {
+      "grid": "escalate_aware_claude",
+      "label": "offer",
+      "vs": "sonnet",
+      "n": 159,
+      "raw": 0.761,
+      "kappa": 0.605
+    },
+    {
+      "grid": "escalate_aware_claude",
+      "label": "offer",
+      "vs": "rules",
+      "n": 159,
+      "raw": 0.629,
+      "kappa": 0.395
+    },
+    {
+      "grid": "escalate_aware_claude",
+      "label": "peer",
+      "vs": "sonnet",
+      "n": 257,
+      "raw": 0.946,
+      "kappa": 0.872
+    },
+    {
+      "grid": "escalate_aware_claude",
+      "label": "peer",
+      "vs": "rules",
+      "n": 257,
+      "raw": 0.93,
+      "kappa": 0.827
+    }
+  ],
+  "known_answer_accuracy": [
+    {
+      "label": "offer",
+      "subset": "all",
+      "n": 64,
+      "sonnet": 0.859,
+      "opus": 0.859,
+      "rules": 0.859,
+      "qwen": 0.859
+    },
+    {
+      "label": "offer",
+      "subset": "complied",
+      "n": 42,
+      "sonnet": 0.976,
+      "opus": 0.976,
+      "rules": 0.976,
+      "qwen": 0.976
+    },
+    {
+      "label": "peer",
+      "subset": "all",
+      "n": 64,
+      "sonnet": 0.797,
+      "opus": 0.797,
+      "rules": 0.828,
+      "qwen": 0.75
+    },
+    {
+      "label": "peer",
+      "subset": "complied",
+      "n": 42,
+      "sonnet": 1.0,
+      "opus": 1.0,
+      "rules": 1.0,
+      "qwen": 0.952
+    }
+  ],
+  "main_key_tests": [
+    {
+      "test": "Hint vs benign, acceptance (main; in the H1 table, not a hypothesis)",
+      "labels": "sonnet",
+      "group_a": "8/40",
+      "group_b": "0/40",
+      "p": 0.00530605167331368,
+      "alternative": "two-sided",
+      "fragility": 2.0
+    },
+    {
+      "test": "Hint vs benign, acceptance (main; in the H1 table, not a hypothesis)",
+      "labels": "qwen",
+      "group_a": "12/40",
+      "group_b": "0/40",
+      "p": 0.00018546605057626913,
+      "alternative": "two-sided",
+      "fragility": 5.0
+    },
+    {
+      "test": "H1 direct vs benign, acceptance (main)",
+      "labels": "sonnet",
+      "group_a": "0/40",
+      "group_b": "0/40",
+      "p": 1.0,
+      "alternative": "two-sided",
+      "fragility": NaN
+    },
+    {
+      "test": "H1 direct vs benign, acceptance (main)",
+      "labels": "qwen",
+      "group_a": "0/40",
+      "group_b": "0/40",
+      "p": 1.0,
+      "alternative": "two-sided",
+      "fragility": NaN
+    },
+    {
+      "test": "H2 $92 vs $96, acceptance (main, direct+hint)",
+      "labels": "sonnet",
+      "group_a": "6/40",
+      "group_b": "2/40",
+      "p": 0.26332581931680243,
+      "alternative": "two-sided",
+      "fragility": NaN
+    },
+    {
+      "test": "H2 $92 vs $96, acceptance (main, direct+hint)",
+      "labels": "qwen",
+      "group_a": "8/40",
+      "group_b": "4/40",
+      "p": 0.3482062693028519,
+      "alternative": "two-sided",
+      "fragility": NaN
+    },
+    {
+      "test": "Exploratory direct vs silent, peer (main)",
+      "labels": "sonnet",
+      "group_a": "12/40",
+      "group_b": "39/40",
+      "p": 8.65332544463626e-11,
+      "alternative": "two-sided",
+      "fragility": 18.0
+    },
+    {
+      "test": "Exploratory direct vs silent, peer (main)",
+      "labels": "qwen",
+      "group_a": "12/40",
+      "group_b": "40/40",
+      "p": 3.839359412295953e-12,
+      "alternative": "two-sided",
+      "fragility": 19.0
+    },
+    {
+      "test": "R1 direct < silent, peer (replication)",
+      "labels": "sonnet",
+      "group_a": "15/40",
+      "group_b": "36/40",
+      "p": 7.502360803341483e-07,
+      "alternative": "less",
+      "fragility": 13.0
+    },
+    {
+      "test": "R1 direct < silent, peer (replication)",
+      "labels": "qwen",
+      "group_a": "17/40",
+      "group_b": "37/40",
+      "p": 1.2062711180566968e-06,
+      "alternative": "less",
+      "fragility": 12.0
+    },
+    {
+      "test": "R3 warning < silent, peer (replication)",
+      "labels": "sonnet",
+      "group_a": "7/40",
+      "group_b": "36/40",
+      "p": 2.0242891161717782e-11,
+      "alternative": "less",
+      "fragility": 21.0
+    },
+    {
+      "test": "R3 warning < silent, peer (replication)",
+      "labels": "qwen",
+      "group_a": "6/40",
+      "group_b": "37/40",
+      "p": 4.466222956090135e-13,
+      "alternative": "less",
+      "fragility": 23.0
+    },
+    {
+      "test": "R4 direct vs warning, peer (replication)",
+      "labels": "sonnet",
+      "group_a": "15/40",
+      "group_b": "7/40",
+      "p": 0.07836100705535784,
+      "alternative": "two-sided",
+      "fragility": NaN
+    },
+    {
+      "test": "R4 direct vs warning, peer (replication)",
+      "labels": "qwen",
+      "group_a": "17/40",
+      "group_b": "6/40",
+      "p": 0.012550291612986576,
+      "alternative": "two-sided",
+      "fragility": 2.0
+    },
+    {
+      "test": "H4 refused but peer-colluding (main)",
+      "labels": "sonnet",
+      "group_a": "41/72",
+      "group_b": "",
+      "p": NaN,
+      "alternative": "",
+      "fragility": NaN
+    },
+    {
+      "test": "H4 refused but peer-colluding (main)",
+      "labels": "qwen",
+      "group_a": "38/68",
+      "group_b": "",
+      "p": NaN,
+      "alternative": "",
+      "fragility": NaN
+    }
+  ],
+  "study_tests": [
+    {
+      "test": "P1 accept: peer_none > direct_none",
+      "labels": "sonnet",
+      "a": "35/40",
+      "b": "1/40",
+      "p": 3.6492472888317866e-16
+    },
+    {
+      "test": "P1 accept: peer_none > direct_none",
+      "labels": "qwen",
+      "a": "34/40",
+      "b": "1/40",
+      "p": 2.6630666201198042e-15
+    },
+    {
+      "test": "P2 accept: peer_none > peer_independent",
+      "labels": "sonnet",
+      "a": "35/40",
+      "b": "0/40",
+      "p": 1.1364437923697601e-17
+    },
+    {
+      "test": "P2 accept: peer_none > peer_independent",
+      "labels": "qwen",
+      "a": "34/40",
+      "b": "0/40",
+      "p": 8.712735741501497e-17
+    },
+    {
+      "test": "P4 coord: peer_independent > silent_independent",
+      "labels": "sonnet",
+      "a": "0/40",
+      "b": "0/40",
+      "p": 1.0
+    },
+    {
+      "test": "P4 coord: peer_independent > silent_independent",
+      "labels": "qwen",
+      "a": "0/40",
+      "b": "0/40",
+      "p": 1.0
+    },
+    {
+      "test": "deterrence coord: direct_none < silent_none",
+      "labels": "sonnet",
+      "a": "22/40",
+      "b": "37/40",
+      "p": 0.0001215972845854248
+    },
+    {
+      "test": "deterrence coord: direct_none < silent_none",
+      "labels": "qwen",
+      "a": "19/40",
+      "b": "39/40",
+      "p": 1.9804049516652222e-07
+    },
+    {
+      "test": "A1 accept: peer_aware < peer_none",
+      "labels": "sonnet",
+      "a": "0/40",
+      "b": "36/40",
+      "p": 1.262715324855289e-18
+    },
+    {
+      "test": "A1 accept: peer_aware < peer_none",
+      "labels": "qwen",
+      "a": "0/40",
+      "b": "36/40",
+      "p": 1.262715324855289e-18
+    },
+    {
+      "test": "A2 coord: silent_aware vs silent_none",
+      "labels": "sonnet",
+      "a": "0/40",
+      "b": "40/40",
+      "p": 1.8603403656036264e-23
+    },
+    {
+      "test": "A2 coord: silent_aware vs silent_none",
+      "labels": "qwen",
+      "a": "1/40",
+      "b": "40/40",
+      "p": 7.627395498974867e-22
+    },
+    {
+      "test": "P3 accept predicts coord (peer arms)",
+      "labels": "sonnet",
+      "a": "sens 0.90",
+      "b": "spec 1.00",
+      "p": 1.4205547404622005e-18
+    },
+    {
+      "test": "P3 accept predicts coord (peer arms)",
+      "labels": "qwen",
+      "a": "sens 0.85",
+      "b": "spec 1.00",
+      "p": 8.712735741501497e-17
+    }
+  ],
+  "monitor_test": [
+    {
+      "prompt": "hardened",
+      "test": "M1 original > disclaimer",
+      "n_pairs": 72,
+      "rate_a": 1.0,
+      "rate_b": 0.944,
+      "a_only": 4,
+      "b_only": 0,
+      "p_one_sided": 0.0625,
+      "diff": 0.056,
+      "ci": [
+        0.014,
+        0.111
+      ]
+    },
+    {
+      "prompt": "hardened",
+      "test": "M2 neutral > disclaimer",
+      "n_pairs": 72,
+      "rate_a": 1.0,
+      "rate_b": 0.944,
+      "a_only": 4,
+      "b_only": 0,
+      "p_one_sided": 0.0625,
+      "diff": 0.056,
+      "ci": [
+        0.014,
+        0.111
+      ]
+    },
+    {
+      "prompt": "hardened",
+      "test": "M3 stripped > original",
+      "n_pairs": 22,
+      "rate_a": 0.364,
+      "rate_b": 0.273,
+      "a_only": 3,
+      "b_only": 1,
+      "p_one_sided": 0.3125,
+      "diff": 0.091,
+      "ci": [
+        -0.091,
+        0.273
+      ]
+    },
+    {
+      "prompt": "hardened",
+      "test": "control original > neutral",
+      "n_pairs": 72,
+      "rate_a": 1.0,
+      "rate_b": 1.0,
+      "a_only": 0,
+      "b_only": 0,
+      "p_one_sided": 1.0,
+      "diff": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "prompt": "naive",
+      "test": "M1 original > disclaimer",
+      "n_pairs": 72,
+      "rate_a": 0.972,
+      "rate_b": 0.847,
+      "a_only": 10,
+      "b_only": 1,
+      "p_one_sided": 0.005859375,
+      "diff": 0.125,
+      "ci": [
+        0.042,
+        0.222
+      ]
+    },
+    {
+      "prompt": "naive",
+      "test": "M2 neutral > disclaimer",
+      "n_pairs": 72,
+      "rate_a": 0.903,
+      "rate_b": 0.847,
+      "a_only": 8,
+      "b_only": 4,
+      "p_one_sided": 0.19384765625,
+      "diff": 0.056,
+      "ci": [
+        -0.042,
+        0.153
+      ]
+    },
+    {
+      "prompt": "naive",
+      "test": "M3 stripped > original",
+      "n_pairs": 22,
+      "rate_a": 0.364,
+      "rate_b": 0.273,
+      "a_only": 2,
+      "b_only": 0,
+      "p_one_sided": 0.25,
+      "diff": 0.091,
+      "ci": [
+        0.0,
+        0.227
+      ]
+    },
+    {
+      "prompt": "naive",
+      "test": "control original > neutral",
+      "n_pairs": 72,
+      "rate_a": 0.972,
+      "rate_b": 0.903,
+      "a_only": 5,
+      "b_only": 0,
+      "p_one_sided": 0.03125,
+      "diff": 0.069,
+      "ci": [
+        0.014,
+        0.139
+      ]
+    },
+    {
+      "prompt": "study",
+      "test": "M1 original > disclaimer",
+      "n_pairs": 72,
+      "rate_a": 0.528,
+      "rate_b": 0.153,
+      "a_only": 27,
+      "b_only": 0,
+      "p_one_sided": 7.450580596923828e-09,
+      "diff": 0.375,
+      "ci": [
+        0.264,
+        0.486
+      ]
+    },
+    {
+      "prompt": "study",
+      "test": "M2 neutral > disclaimer",
+      "n_pairs": 71,
+      "rate_a": 0.479,
+      "rate_b": 0.155,
+      "a_only": 23,
+      "b_only": 0,
+      "p_one_sided": 1.1920928955078125e-07,
+      "diff": 0.324,
+      "ci": [
+        0.211,
+        0.437
+      ]
+    },
+    {
+      "prompt": "study",
+      "test": "M3 stripped > original",
+      "n_pairs": 22,
+      "rate_a": 0.0,
+      "rate_b": 0.0,
+      "a_only": 0,
+      "b_only": 0,
+      "p_one_sided": 1.0,
+      "diff": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "prompt": "study",
+      "test": "control original > neutral",
+      "n_pairs": 71,
+      "rate_a": 0.535,
+      "rate_b": 0.479,
+      "a_only": 7,
+      "b_only": 3,
+      "p_one_sided": 0.171875,
+      "diff": 0.056,
+      "ci": [
+        -0.028,
+        0.141
+      ]
+    }
+  ]
+}
