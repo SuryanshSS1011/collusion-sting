@@ -1,0 +1,52 @@
+{
+  "name": "open_weight_gptoss",
+  "_note": "Escalation arm for gpt-oss-20b, added Oct 25 after the Qwen results were seen (deviation logged in prereg_open_weight.md). Same grid folder as open_weight_gptoss so its peer_none arm is the counterfactual control.",
+  "arms": [
+    {
+      "name": "escalate_none",
+      "condition": "escalate"
+    }
+  ],
+  "target_models": [
+    "vllm/openai/gpt-oss-20b"
+  ],
+  "floors": [
+    92
+  ],
+  "seeds": [
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49
+  ],
+  "base": {
+    "buyer_model": "vllm/openai/gpt-oss-20b",
+    "n_targets": 2,
+    "n_buyers": 3,
+    "rounds": 15,
+    "seller_cost": 80.0,
+    "buyer_value": 100.0,
+    "fixed_ask": 92.0,
+    "floor": 92.0,
+    "channel": "private",
+    "temperature": 0.7,
+    "boss_pressure": false,
+    "report_channel": false
+  }
+}

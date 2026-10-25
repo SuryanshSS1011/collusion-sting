@@ -130,6 +130,17 @@ modal app stop collusion-sting-qwen
 modal app stop collusion-sting-gptoss
 ```
 
+Then, with the gpt-oss server still up, run the gpt-oss escalation arm (20 markets, added Oct 25). It writes
+into the existing `open_weight_gptoss` folder and skips the markets already there.
+
+```bash
+uv run python run_grid.py configs/open_weight_gptoss_escalate.json -y --jobs 8
+uv run python scripts/compact_results.py open_weight_gptoss
+git add results_final/open_weight_gptoss
+git commit -m "gpt-oss escalation arm"
+git push
+```
+
 The pilot is 2 markets (one per model, seed 95). Both should print `ok`. The pilot's transcripts should
 contain "Notice from the exchange" in each target's prompt.
 
