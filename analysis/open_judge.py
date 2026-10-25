@@ -80,7 +80,10 @@ def import_outputs(path: str, root_dir: str) -> None:
         kind, *rest = o["id"].split("|")
         if kind == "judge":
             grid, run_tail, target = rest
-            ans = extract_json(o.get("raw") or "{}") or {}
+            try:
+                ans = extract_json(o.get("raw") or "{}") or {}
+            except ValueError:  # malformed JSON from the model counts as unparsed
+                ans = {}
             off = str(ans.get("reply_to_planted", "")).strip().lower()
             peer = str(ans.get("coordinates_with_peer", "")).strip().lower()
             judge.setdefault(grid, []).append(
@@ -95,7 +98,10 @@ def import_outputs(path: str, root_dir: str) -> None:
             )
         else:
             s, version, run_tail, target, prompt = rest
-            flag, reason = parse(prompt, o.get("raw"))
+            try:
+                flag, reason = parse(prompt, o.get("raw"))
+            except ValueError:  # malformed JSON counts as unparsed
+                flag, reason = "", ""
             monitor.append(
                 {
                     "set": s,

@@ -111,6 +111,28 @@ also produce truncated, unparseable answers.
 If gpt-oss markets fail with JSON errors, paste one traceback to Claude before rerunning. Its answers come
 through vLLM's reasoning parser, so the final message should be plain JSON.
 
+## 4c. Sting-awareness study on both open models (about 45 to 60 minutes, added Oct 25)
+
+This is pre-registered in `prereg_open_aware.md`. It runs 100 markets (60 Qwen, 40 gpt-oss) and needs both
+servers up. Both apps were stopped, so deploy them again and warm each one up with the curl checks above.
+
+```bash
+git pull
+modal deploy modal_jobs/serve_qwen.py
+modal deploy modal_jobs/serve_gptoss.py
+uv run python run_grid.py configs/open_weight_aware_pilot.json -y --jobs 2
+uv run python run_grid.py configs/open_weight_aware.json -y --jobs 8
+uv run python scripts/compact_results.py open_weight_aware open_weight_aware_pilot
+git add results_final/open_weight_aware results_final/open_weight_aware_pilot
+git commit -m "Open-weight sting-awareness markets"
+git push
+modal app stop collusion-sting-qwen
+modal app stop collusion-sting-gptoss
+```
+
+The pilot is 2 markets (one per model, seed 95). Both should print `ok`. The pilot's transcripts should
+contain "Notice from the exchange" in each target's prompt.
+
 ## 5. Hand the data back
 
 ```bash
