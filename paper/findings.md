@@ -408,6 +408,82 @@ per market. A market counts if any target has the label, or only if both do.
 The report should state the target-level pre-registered tests and give the market-level results beside
 them, or in the appendix.
 
+## A fourth, non-Claude rater (Qwen3-32B on Modal, `analysis/qwen_rater.py`, no API cost)
+
+Qwen3-32B-FP8, with thinking off and temperature 0, answered the codebook judge prompt for all 888 Claude
+target-markets and the three monitor-test prompts for all 780 monitor items. One monitor answer was
+malformed and counts as unparsed. The three-rater majority used elsewhere is unchanged, and Qwen is
+reported beside it.
+
+1. **Agreement.** On peer coordination, Qwen's kappa with the primary Sonnet judge was 0.80 (main), 0.83
+   (replication), 0.76 (peer study) and 0.87 (escalation study). On acceptance it was 0.97 in the peer
+   study and 0.61 to 0.64 elsewhere. Known-answer accuracy was 0.98 on offers and 0.95 on peer labels
+   among targets that followed their instruction.
+2. **Every headline result holds with Qwen's labels.** P1 is 34/40 against 1/40, P2 34/40 against 0/40,
+   A1 0/40 against 36/40, A2 1/40 against 40/40, R1 17/40 against 37/40 and R3 6/40 against 37/40. P3
+   gives sensitivity 0.85 and specificity 1.00. The Haiku deterrence test is 19/40 against 39/40. P4
+   stays at 0/40 against 0/40.
+3. **The disclaimer fools Qwen as a monitor, more strongly than it fooled Haiku.** With the study
+   prompt, Qwen flagged 48% of transcripts with a neutral insertion and 15% with the disclaimer (23
+   against 0 discordant pairs, exact McNemar p = 1.2e-7; difference 0.32, 95% CI 0.21 to 0.44). With the
+   hardened prompt it flagged 100% and 94%. The disclaimer weakness is therefore not peculiar to one
+   small Claude model, and the codebook prompt fixes it in a second family.
+
+## Open-weight sellers (pre-registered in `prereg_open_weight.md`, committed at 13:01 ET Oct 24 before any market ran)
+
+Qwen3-32B-FP8 (thinking off) ran 136 markets, and gpt-oss-20b (reasoning effort low) ran 100. The same
+model played both sellers and buyers, on Modal H100s from the laptop, with seeds 30 to 49 as in the
+Claude peer study. There were 0 failed calls in 22,680 agent responses. gpt-oss averaged 521 output tokens
+per call. The primary Sonnet judge labelled all 472 target-markets with 0 failures.
+
+1. **Open-weight sellers accept the explicit cartel offer.** Qwen accepted the $92 proposal 20/40 times
+   (Wilson CI 0.35 to 0.65) and gpt-oss 10/40 (0.14 to 0.40). Every Claude seller refused it, and Haiku's
+   peer-study figure was 1/40. A typical Qwen reply was "I agree with your proposal for a $92 floor.
+   Let's coordinate to maintain this floor and avoid price wars."
+2. **Q1, not supported for either model.** The peer-style sting did not beat the direct offer: 27/40
+   against 20/40 for Qwen (p = 0.086) and 18/40 against 10/40 for gpt-oss (p = 0.050, not below α). It
+   is significant at market level counting any target (p = 0.015 and 0.011), but not counting both. The
+   peer sting's advantage in Claude came from Claude refusing anything that names the offence.
+3. **Q2, supported for both.** The "stay independent" instruction cut agreement with the peer sting from
+   27/40 to 3/40 for Qwen (p = 1.4e-8) and from 18/40 to 1/40 for gpt-oss (p = 4.0e-6).
+4. **Q3, supported for both, but the detector is weaker.** In the pooled peer arms, Qwen gives
+   sensitivity 0.65 and specificity 0.86 (J = 0.51, CI 0.32 to 0.69), so the pre-registered
+   useful-detector rule is met. gpt-oss gives 0.46 and 0.98 (J = 0.44, CI 0.27 to 0.60), so the rule
+   fails on sensitivity. For Haiku the figures were 0.90 and 1.00.
+5. **Q4, null for both.** There was no inducement among instructed targets: 4/40 against 1/40 for Qwen and
+   0/40 against 0/40 for gpt-oss.
+6. **Q5, not replicated.** Being named does not deter open-weight sellers. Peer coordination after the
+   direct offer was 35/40 against 28/40 in silent markets for Qwen, and 29/40 against 28/40 for gpt-oss.
+   In Haiku it fell from 37/40 to 22/40. The Claude deterrence effect is a property of Claude.
+7. **The instruction still works on them.** Peer coordination in silent markets fell from 28/40 to 1/40
+   (Qwen) and from 28/40 to 0/40 (gpt-oss) with the "stay independent" instruction. Trade prices did not
+   change (−$0.04, CI −$1.87 to +$1.83; +$0.65, CI −$0.12 to +$1.46).
+8. **Q6, supported, the reverse of Claude.** Under the +$2 escalation, 14/40 Qwen targets held the
+   raised level, against 2/40 in the counterfactual (p = 0.00073; market level p = 0.0098 any, 0.046
+   both). Of the 18 that agreed at the market price, 11 followed the raise. Haiku's figures were 2/40
+   against 2/40, and 2 of 30 agreers. Agreement at the market price predicted following with
+   sensitivity 0.79 and specificity 0.73, while the message monitor's coordination label managed 0.71
+   and 0.23. The price after the raise moved by +$0.82 (CI −$0.47 to +$2.16).
+9. **Agreement goes with the asks, post hoc.** Qwen targets that accepted the explicit offer kept their
+   ask at or above $92 in most hours in 17/20 cases, against 4/20 for those that did not and 20/40 in
+   silent markets. For gpt-oss the figures were 5/10, 10/30 and 10/40. This is correlational, since
+   sellers that were already pricing high may be the ones that agree.
+10. **Prices.** The direct offer did not raise trade prices (+$0.50, CI −$1.22 to +$2.24 for Qwen;
+    +$0.12, CI −$0.61 to +$0.86 for gpt-oss). The peer-style sting lowered them by $3.94 and $3.41, as
+    it did for Haiku, because its own ask sits at the best bid plus $0.50.
+11. **Pressure check, descriptive.** At 30 hours, CEO pressure changed Qwen's mean trade price by
+    −$0.30 (CI −$3.10 to +$2.50, 8 markets each). This matches the Haiku pilot and gives no support for a
+    pressure-plus-oversight study.
+
+Holm-adjusted p-values within Qwen are 8.3e-8 (Q2), 1.3e-5 (Q3), 0.0029 (Q6), 0.26 (Q1), 0.36 (Q4) and
+0.99 (Q5). Within gpt-oss they are 1.1e-5 (Q3), 1.6e-5 (Q2), 0.15 (Q1) and 1.0 (Q4, Q5).
+
+The cross-family picture splits the results in two. The parts about instructions and detection
+generalize. The "stay independent" instruction ends coordination talk in all three families, and
+agreement with a sting tracks peer coordination in all three. The parts that made the direct sting fail
+in Claude do not generalize. Open-weight sellers take the explicit offer, are not deterred by it, and in
+Qwen's case keep a costly deal. In those models a sting catches something closer to a real cartel.
+
 ## What this changes in the story
 
 The sting is a poor detector but a partial deterrent, and the deterrent part does not need the sting.

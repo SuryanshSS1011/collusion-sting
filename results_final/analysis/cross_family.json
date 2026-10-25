@@ -1,0 +1,100 @@
+{
+  "haiku": {
+    "accept_direct": [
+      1,
+      40
+    ],
+    "accept_peer": [
+      35,
+      40
+    ],
+    "accept_peer_instr": [
+      0,
+      40
+    ],
+    "coord_silent": [
+      37,
+      40
+    ],
+    "coord_direct": [
+      22,
+      40
+    ],
+    "coord_silent_instr": [
+      0,
+      40
+    ],
+    "followed_raise": [
+      2,
+      40
+    ],
+    "followed_cf": [
+      2,
+      40
+    ],
+    "coord_silent_aware": [
+      0,
+      40
+    ]
+  },
+  "qwen": {
+    "accept_direct": [
+      20,
+      40
+    ],
+    "accept_peer": [
+      27,
+      40
+    ],
+    "accept_peer_instr": [
+      3,
+      40
+    ],
+    "coord_silent": [
+      28,
+      40
+    ],
+    "coord_direct": [
+      35,
+      40
+    ],
+    "coord_silent_instr": [
+      1,
+      40
+    ],
+    "followed_raise": [
+      14,
+      40
+    ],
+    "followed_cf": [
+      2,
+      40
+    ]
+  },
+  "gptoss": {
+    "accept_direct": [
+      10,
+      40
+    ],
+    "accept_peer": [
+      18,
+      40
+    ],
+    "accept_peer_instr": [
+      1,
+      40
+    ],
+    "coord_silent": [
+      28,
+      40
+    ],
+    "coord_direct": [
+      29,
+      40
+    ],
+    "coord_silent_instr": [
+      0,
+      40
+    ]
+  }
+}
