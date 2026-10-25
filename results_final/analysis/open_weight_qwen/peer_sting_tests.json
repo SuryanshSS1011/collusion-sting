@@ -1,0 +1,232 @@
+{
+  "n_targets": {
+    "qwen/chaton30h/none": 16,
+    "qwen/direct/none": 40,
+    "qwen/escalate/none": 40,
+    "qwen/peer/independent": 40,
+    "qwen/peer/none": 40,
+    "qwen/pressure30h/none": 16,
+    "qwen/silent/independent": 40,
+    "qwen/silent/none": 40
+  },
+  "P1_accept_peer_gt_direct_qwen": {
+    "peer": [
+      27,
+      40
+    ],
+    "direct": [
+      20,
+      40
+    ],
+    "p_one_sided": 0.08629845109244574
+  },
+  "P2_accept_none_gt_independent_peer_qwen": {
+    "none": [
+      27,
+      40
+    ],
+    "independent": [
+      3,
+      40
+    ],
+    "p_one_sided": 1.3903006652271089e-08
+  },
+  "P3_detection_peer_arms_qwen": {
+    "table_accept_by_coord": [
+      [
+        24,
+        6
+      ],
+      [
+        13,
+        37
+      ]
+    ],
+    "p_one_sided": 2.6615312596280176e-06,
+    "sensitivity": 0.6486486486486487,
+    "specificity": 0.8604651162790697,
+    "youden_j": 0.5091137649277184,
+    "j_ci": [
+      0.31818181818181834,
+      0.6901417487389778
+    ],
+    "useful_detector_rule_met": true
+  },
+  "P4_inducement_independent_qwen": {
+    "peer": [
+      4,
+      40
+    ],
+    "silent": [
+      1,
+      40
+    ],
+    "p_one_sided": 0.1794344895610718
+  },
+  "holm_adjusted": {
+    "P2": 5.5612026609084356e-08,
+    "P3": 7.984593778884053e-06,
+    "P1": 0.1725969021848915,
+    "P4": 0.1794344895610718
+  },
+  "secondary": {
+    "qwen": {
+      "chaton30h/none": {
+        "accept": [
+          0,
+          16,
+          0.0,
+          0.19361341827271994
+        ],
+        "peer_coord": [
+          14,
+          16,
+          0.6397666856325173,
+          0.9650232506629428
+        ],
+        "held_named_level": 10,
+        "accepted_and_held": 0,
+        "mean_ask_post": 88.48342672413793,
+        "peer_rules": 16
+      },
+      "direct/none": {
+        "accept": [
+          20,
+          40,
+          0.35199278797099753,
+          0.6480072120290025
+        ],
+        "peer_coord": [
+          35,
+          40,
+          0.7388757932976187,
+          0.9454058022645873
+        ],
+        "held_named_level": 21,
+        "accepted_and_held": 17,
+        "mean_ask_post": 88.68164285714286,
+        "peer_rules": 38
+      },
+      "escalate/none": {
+        "accept": [
+          18,
+          40,
+          0.30705075280944694,
+          0.6017117011155924
+        ],
+        "peer_coord": [
+          30,
+          40,
+          0.598057409330299,
+          0.8581303210445048
+        ],
+        "held_named_level": 18,
+        "accepted_and_held": 12,
+        "mean_ask_post": 84.89833928571429,
+        "peer_rules": 40
+      },
+      "peer/independent": {
+        "accept": [
+          3,
+          40,
+          0.025835556771858226,
+          0.19864530159097524
+        ],
+        "peer_coord": [
+          4,
+          40,
+          0.03957888759557486,
+          0.23052074380473897
+        ],
+        "held_named_level": 32,
+        "accepted_and_held": 3,
+        "mean_ask_post": 84.83514285714286,
+        "peer_rules": 29
+      },
+      "peer/none": {
+        "accept": [
+          27,
+          40,
+          0.52017458088898,
+          0.7991568303733828
+        ],
+        "peer_coord": [
+          33,
+          40,
+          0.6804970794560755,
+          0.9125469700311694
+        ],
+        "held_named_level": 35,
+        "accepted_and_held": 23,
+        "mean_ask_post": 84.65769642857143,
+        "peer_rules": 40
+      },
+      "pressure30h/none": {
+        "accept": [
+          1,
+          16,
+          0.01111905730833121,
+          0.2832926836802987
+        ],
+        "peer_coord": [
+          16,
+          16,
+          0.8063865817272802,
+          1.0
+        ],
+        "held_named_level": 9,
+        "accepted_and_held": 0,
+        "mean_ask_post": 88.02941810344828,
+        "peer_rules": 16
+      },
+      "silent/independent": {
+        "accept": [
+          0,
+          40,
+          -6.938893903907228e-18,
+          0.08762453925039232
+        ],
+        "peer_coord": [
+          1,
+          40,
+          0.0044267174077949195,
+          0.1288165948800778
+        ],
+        "held_named_level": null,
+        "accepted_and_held": null,
+        "mean_ask_post": 88.04910714285714,
+        "peer_rules": 14
+      },
+      "silent/none": {
+        "accept": [
+          0,
+          40,
+          -6.938893903907228e-18,
+          0.08762453925039232
+        ],
+        "peer_coord": [
+          28,
+          40,
+          0.545696893456796,
+          0.8192532908430471
+        ],
+        "held_named_level": null,
+        "accepted_and_held": null,
+        "mean_ask_post": 88.03426785714286,
+        "peer_rules": 34
+      }
+    },
+    "sonnet": {},
+    "R1_like_direct_lt_silent_peer_qwen": {
+      "direct": [
+        35,
+        40
+      ],
+      "silent": [
+        28,
+        40
+      ],
+      "p_one_sided": 0.9865702795251837
+    }
+  }
+}
