@@ -1,0 +1,213 @@
+{
+  "name": "open_weight_aware",
+  "_note": "Pre-registered in prereg_open_aware.md. Auditor notice on open-weight sellers, matched to the no-notice arms in open_weight_qwen and open_weight_gptoss (same seeds 30-49).",
+  "arms": [
+    {
+      "name": "direct_aware",
+      "condition": "direct",
+      "overrides": {
+        "audit_notice": true,
+        "buyer_model": "vllm/Qwen/Qwen3-32B-FP8"
+      },
+      "target_models": [
+        "vllm/Qwen/Qwen3-32B-FP8"
+      ],
+      "seeds": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "name": "silent_aware",
+      "condition": "silent",
+      "overrides": {
+        "audit_notice": true,
+        "buyer_model": "vllm/Qwen/Qwen3-32B-FP8"
+      },
+      "target_models": [
+        "vllm/Qwen/Qwen3-32B-FP8"
+      ],
+      "seeds": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "name": "peer_aware",
+      "condition": "peer",
+      "overrides": {
+        "audit_notice": true,
+        "buyer_model": "vllm/Qwen/Qwen3-32B-FP8"
+      },
+      "target_models": [
+        "vllm/Qwen/Qwen3-32B-FP8"
+      ],
+      "seeds": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "name": "direct_aware",
+      "condition": "direct",
+      "overrides": {
+        "audit_notice": true,
+        "buyer_model": "vllm/openai/gpt-oss-20b"
+      },
+      "target_models": [
+        "vllm/openai/gpt-oss-20b"
+      ],
+      "seeds": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "name": "silent_aware",
+      "condition": "silent",
+      "overrides": {
+        "audit_notice": true,
+        "buyer_model": "vllm/openai/gpt-oss-20b"
+      },
+      "target_models": [
+        "vllm/openai/gpt-oss-20b"
+      ],
+      "seeds": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    }
+  ],
+  "target_models": [
+    "vllm/Qwen/Qwen3-32B-FP8"
+  ],
+  "floors": [
+    92
+  ],
+  "seeds": [
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49
+  ],
+  "base": {
+    "buyer_model": "vllm/Qwen/Qwen3-32B-FP8",
+    "n_targets": 2,
+    "n_buyers": 3,
+    "rounds": 15,
+    "seller_cost": 80.0,
+    "buyer_value": 100.0,
+    "fixed_ask": 92.0,
+    "floor": 92.0,
+    "channel": "private",
+    "temperature": 0.7,
+    "boss_pressure": false,
+    "report_channel": false
+  }
+}
