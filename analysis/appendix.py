@@ -1,6 +1,6 @@
 """Write the report appendix material straight from the code, so the paper cannot drift from what ran.
 
-uv run python -m analysis.appendix > paper/appendix_scripts.md
+uv run python -m analysis.appendix > analysis/out/appendix_scripts.md
 """
 
 from __future__ import annotations

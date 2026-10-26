@@ -253,7 +253,7 @@ def main() -> None:
     _style()
     root = Path(a.root)
     od = out_dir(root)
-    figdir = Path("paper/figures")
+    figdir = Path("analysis/out/figures")
     figdir.mkdir(parents=True, exist_ok=True)
     t = pd.read_csv(od / "targets.csv")
     main_conds = ["direct", "hint", "benign", "silent"]

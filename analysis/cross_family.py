@@ -134,7 +134,7 @@ def figure(d: dict, path: Path) -> None:
 def main() -> None:
     d = load()
     (A / "cross_family.json").write_text(json.dumps(d, indent=2))
-    figure(d, Path("paper/figures/fig_cross_family.png"))
+    figure(d, Path("analysis/out/figures/fig_cross_family.png"))
 
 
 if __name__ == "__main__":

@@ -342,8 +342,8 @@ def main() -> None:
         summary["known_answer"] = ka_acc.to_dict("records")
         summary["known_answer_compliance"] = ka_items.groupby("arm").complied.agg(["sum", "count"]).to_dict("index")
 
-    Path("paper/figures").mkdir(parents=True, exist_ok=True)
-    fig_label_sources(main_t, repl_t, Path("paper/figures/fig_label_sources.png"))
+    Path("analysis/out/figures").mkdir(parents=True, exist_ok=True)
+    fig_label_sources(main_t, repl_t, Path("analysis/out/figures/fig_label_sources.png"))
     (OUT / "validation.json").write_text(json.dumps(summary, indent=2, default=str))
     pd.set_option("display.width", 200)
     print(agree.filter(regex="scope|label|subset|^n$|kappa").round(2).to_string(index=False))

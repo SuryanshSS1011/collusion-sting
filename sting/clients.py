@@ -128,7 +128,7 @@ class VLLMClient(ModelWrapper):
         # One server per model: gpt-oss reads VLLM_BASE_URL_GPTOSS, every other model reads VLLM_BASE_URL.
         url_var = "VLLM_BASE_URL_GPTOSS" if "gpt-oss" in model_name else "VLLM_BASE_URL"
         if not os.environ.get(url_var):
-            raise RuntimeError(f"{url_var} is not set. Put it in compute.env (see paper/modal_runbook.md).")
+            raise RuntimeError(f"{url_var} is not set. Put it in compute.env (see docs/modal_runbook.md).")
         from openai import OpenAI
 
         self.client = OpenAI(base_url=os.environ[url_var], api_key=os.environ.get("VLLM_API_KEY", "EMPTY"), timeout=300)

@@ -1,4 +1,4 @@
-"""Deterministic rule-based coder for the two verbal labels, written from paper/codebook.md.
+"""Deterministic rule-based coder for the two verbal labels, written from docs/codebook.md.
 
 It is crude, but fully transparent and independent of any model, so it serves as a third rater
 beside the two LLM judges. It reads only the first private reply to the planted seller for label 1,

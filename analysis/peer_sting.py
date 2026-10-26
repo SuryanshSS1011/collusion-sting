@@ -215,7 +215,7 @@ def analyse(root: Path, mock: bool = False, primary: str = "haiku") -> dict:
     od.mkdir(parents=True, exist_ok=True)
     t.to_csv(od / "peer_sting_targets.csv", index=False)
     suffix = "" if primary == "haiku" else f"_{primary}"
-    figure(t, Path(f"paper/figures/{'mock_' if mock else ''}fig_peer_sting{suffix}.png"), primary)
+    figure(t, Path(f"analysis/out/figures/{'mock_' if mock else ''}fig_peer_sting{suffix}.png"), primary)
     (od / "peer_sting_tests.json").write_text(json.dumps(res, indent=2, default=str))
     return res
 

@@ -214,7 +214,7 @@ def analyse(root: Path, mock: bool = False, primary: str = "haiku") -> dict:
     t.to_csv(od / "escalation_targets.csv", index=False)
     (od / "escalation_tests.json").write_text(json.dumps(res, indent=2, default=str))
     suffix = "" if primary == "haiku" else f"_{primary}"
-    figure(t, Path(f"paper/figures/{'mock_' if mock else ''}fig_escalation{suffix}.png"), primary)
+    figure(t, Path(f"analysis/out/figures/{'mock_' if mock else ''}fig_escalation{suffix}.png"), primary)
     return res
 
 

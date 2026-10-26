@@ -1,5 +1,5 @@
 # ruff: noqa: E501
-"""Write paper/results_pack.md: every number the report uses, with its source file and status.
+"""Write analysis/out/results_pack.md: every number the report uses, with its source file and status.
 
 Generated from the analysis outputs, so rerun it after any reanalysis instead of editing the file by hand.
 
@@ -13,7 +13,7 @@ from pathlib import Path
 
 import pandas as pd
 
-OUT = Path("paper/results_pack.md")
+OUT = Path("analysis/out/results_pack.md")
 A = Path("analysis/out")
 
 

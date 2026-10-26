@@ -5,15 +5,15 @@ agents will collude? We put a scripted "sting" seller into a double-auction mark
 vary what it says, and compare what the targets *say* in reply with what they then *do* with their prices
 and with each other.
 
-Apart Research AI Collusion Research Sprint, October 23 to 26, 2026. Tracks 3.2 (trusted agents that
-disrupt collusion) and 2.2 (combining what agents say with what they do).
+Apart Research AI Collusion Research Sprint, October 23 to 26, 2026.
 
 ## Results at a glance
 
 1,037 committed markets across three model families: Claude (Haiku 5.5, Sonnet 5.5) through the Anthropic API,
 and two open-weight models, Qwen3-32B and gpt-oss-20b, served with vLLM on Modal. Every confirmatory test
-was pre-registered and committed before its markets ran. Full numbers, with sources and status tags, are in
-[`paper/findings.md`](paper/findings.md) and [`paper/results_pack.md`](paper/results_pack.md).
+was pre-registered and committed before its markets ran. The tests behind every number are committed in
+`results_final/analysis/`, and `uv run python -m analysis.results_pack` lists each reported number with its
+source file and status (see below).
 
 1. **An explicit cartel offer is a poor detector for Claude.** Claude refused every direct $92/$96 floor
    offer (0/40), yet 57% of targets that refused or ignored the sting were coordinating with the other
@@ -41,6 +41,10 @@ coordination talk, not realized cartel prices.
 
 Each study has a pre-registration, a grid config, committed per-market records in `results_final/<grid>/`
 and analysis outputs in `results_final/analysis/<grid>/`.
+
+The pre-registrations are kept exactly as committed, so they cite some files at their old `paper/` paths:
+`paper/codebook.md`, `paper/design_decisions.md` and `paper/modal_runbook.md` are now in `docs/`, and
+`paper/findings.md` was a set of write-up notes that is not part of this repository.
 
 | Study | Pre-registration | Grid config(s) | Models |
 |---|---|---|---|
@@ -94,8 +98,8 @@ judge labels. Restore it first:
 
 ```bash
 mkdir -p analysis/out && cp -R results_final/analysis/. analysis/out/
-uv run python -m analysis.results_pack                       # rebuild paper/results_pack.md
-uv run python -m analysis.cross_family                       # rebuild the Claude vs open-weight figure
+uv run python -m analysis.results_pack                       # every number, with source -> analysis/out/results_pack.md
+uv run python -m analysis.cross_family                       # Claude vs open-weight figure -> analysis/out/figures/
 uv run python -m analysis.report results_final/main_claude   # recompute the main grid's tables and tests
 ```
 
@@ -114,7 +118,7 @@ Copy `compute.env.example` to `compute.env` (gitignored) and fill in only what y
   uv run python run_grid.py configs/main_claude.json --jobs 4 -y
   ```
 
-- **Open-weight models on Modal.** Follow [`paper/modal_runbook.md`](paper/modal_runbook.md). It deploys
+- **Open-weight models on Modal.** Follow [`docs/modal_runbook.md`](docs/modal_runbook.md). It deploys
   vLLM servers (`modal_jobs/serve_qwen.py`, `modal_jobs/serve_gptoss.py`) that read only a `vllm-key`
   Modal secret, and runs the markets from your laptop against them.
 
@@ -141,7 +145,8 @@ configs/          one JSON per grid
 modal_jobs/       vLLM servers on Modal and the batch prompt runner for the open-weight judge
 analysis/         labelling, validation, tests and figures for every study
 results_final/    committed per-market records and analysis outputs
-paper/            findings, results pack, codebook, design decisions, related work, figures, Modal runbook
+docs/             labelling codebook, design decisions, Modal runbook
+data/modal/       raw prompts and answers of the Qwen3-32B judge run
 prereg*.md        pre-registrations with their deviation logs
 tests/            offline checks of the experimental controls
 third_party/      upstream harness (git submodule, unedited)
@@ -168,5 +173,5 @@ optional compliance-report channel. Everything else was written during the sprin
 ## Dual use
 
 A study of which offers agents accept is also a guide to writing offers they accept, and a published sting
-design could teach colluding agents to screen for decoys. The exact scripts are in `sting/scripts.py` and
-[`paper/appendix_scripts.md`](paper/appendix_scripts.md), so readers can judge both risks.
+design could teach colluding agents to screen for decoys. The exact scripts are in `sting/scripts.py`
+(`uv run python -m analysis.appendix` prints them all), so readers can judge both risks.

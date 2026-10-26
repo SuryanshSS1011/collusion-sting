@@ -1,17 +1,17 @@
 """A non-Claude rater: export prompts for an open-weight judge, then import its answers.
 
-Export (here): writes paper/modal/prompts.jsonl.gz with
+Export (here): writes data/modal/prompts.jsonl.gz with
 1. the codebook judge prompt (the one Opus used) for every target-market in the Claude grids, and
 2. the monitor-test prompts (study, naive and hardened) for every edited transcript.
 
-Run (on a laptop with the Modal endpoint, see paper/modal_runbook.md):
-    uv run python modal_jobs/run_prompts.py paper/modal/prompts.jsonl.gz paper/modal/qwen_outputs.jsonl.gz
+Run (on a laptop with the Modal endpoint, see docs/modal_runbook.md):
+    uv run python modal_jobs/run_prompts.py data/modal/prompts.jsonl.gz data/modal/qwen_outputs.jsonl.gz
 
 Import (here): parses the answers into analysis/out/<grid>/judge_labels_qwen.csv and
 analysis/out/monitor_test/monitor_calls_qwen.csv, in the same formats as the Claude raters.
 
 uv run python -m analysis.open_judge export
-uv run python -m analysis.open_judge import paper/modal/qwen_outputs.jsonl.gz
+uv run python -m analysis.open_judge import data/modal/qwen_outputs.jsonl.gz
 """
 
 from __future__ import annotations
@@ -28,7 +28,7 @@ from analysis.monitor_test import ANSWER_KEY, build_sets, parse, render
 from src.continuous_double_auction.util.json_util import extract_json
 
 GRIDS = ("main_claude", "replication_claude", "known_answer_claude", "peer_sting_claude", "escalate_aware_claude")
-PROMPTS = Path("paper/modal/prompts.jsonl.gz")
+PROMPTS = Path("data/modal/prompts.jsonl.gz")
 
 
 def tail(run: str) -> str:

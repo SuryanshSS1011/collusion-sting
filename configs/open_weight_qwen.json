@@ -1,6 +1,6 @@
 {
   "name": "open_weight_qwen",
-  "_note": "Open-weight replication on Qwen3-32B (served on Modal, run from a laptop; see paper/modal_runbook.md). Core peer-sting arms on the peer study's seeds 30-49, the +$2 escalation, and a 30-hour pressure check from paper/design_decisions.md. Exploratory unless a pre-registration is committed first.",
+  "_note": "Open-weight replication on Qwen3-32B (served on Modal, run from a laptop; see docs/modal_runbook.md). Core peer-sting arms on the peer study's seeds 30-49, the +$2 escalation, and a 30-hour pressure check from docs/design_decisions.md. Exploratory unless a pre-registration is committed first.",
   "arms": [
     {
       "name": "silent_none",

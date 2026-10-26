@@ -73,8 +73,8 @@ finished.
 
 ```bash
 git pull
-uv run python modal_jobs/run_prompts.py paper/modal/prompts.jsonl.gz paper/modal/qwen_outputs.jsonl.gz --limit 20
-uv run python modal_jobs/run_prompts.py paper/modal/prompts.jsonl.gz paper/modal/qwen_outputs.jsonl.gz
+uv run python modal_jobs/run_prompts.py data/modal/prompts.jsonl.gz data/modal/qwen_outputs.jsonl.gz --limit 20
+uv run python modal_jobs/run_prompts.py data/modal/prompts.jsonl.gz data/modal/qwen_outputs.jsonl.gz
 ```
 
 The first command is a 20-prompt check. The run can be resumed, so if it stops, run the same command
@@ -186,7 +186,7 @@ modal app stop collusion-sting-gptoss
 
 ```bash
 uv run python scripts/compact_results.py open_weight_qwen open_weight_gptoss open_weight_pilot open_weight_pilot_gptoss
-git add results_final/open_weight_qwen results_final/open_weight_gptoss results_final/open_weight_pilot results_final/open_weight_pilot_gptoss paper/modal/qwen_outputs.jsonl.gz
+git add results_final/open_weight_qwen results_final/open_weight_gptoss results_final/open_weight_pilot results_final/open_weight_pilot_gptoss data/modal/qwen_outputs.jsonl.gz
 git commit -m "Open-weight judge outputs and Qwen3-32B markets"
 git push
 ```

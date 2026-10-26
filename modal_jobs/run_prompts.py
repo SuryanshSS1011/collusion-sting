@@ -1,6 +1,6 @@
 """Send a file of prompts to the served open-weight model and save the raw answers (run on your laptop).
 
-    uv run python modal_jobs/run_prompts.py paper/modal/prompts.jsonl.gz paper/modal/qwen_outputs.jsonl.gz
+    uv run python modal_jobs/run_prompts.py data/modal/prompts.jsonl.gz data/modal/qwen_outputs.jsonl.gz
 
 Reads VLLM_BASE_URL and VLLM_API_KEY from compute.env. Resumable: ids already in the output are skipped.
 Thinking is off and temperature is 0, so the open-weight judge answers in one pass like the Claude judges.

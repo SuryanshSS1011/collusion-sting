@@ -34,7 +34,7 @@ from sting.clients import make_client, usage_summary
 
 ROOTS = ("results/main_claude", "results/replication_claude")
 OUT = Path("analysis/out/monitor_test")
-FIG = Path("paper/figures/fig_monitor_test.png")
+FIG = Path("analysis/out/figures/fig_monitor_test.png")
 INSERT_P = 0.75  # mean share of messages with a disclaimer among direct-condition targets that disclaimed
 BUDGET_USD = 10.0
 
