@@ -158,7 +158,7 @@ Our results establish three things for one simulated market. Refusal of an expli
 **Limitations.**
 
 1. **One market design.** Prices stayed near the competitive level, with arm means from about $85 to $92. Coordination talk did not raise prices in a pilot at 15 or 30 hours. Thus we measured talk and agreement, not price harm. The peer sting itself lowered prices by about $3 to $4, because it asks at the market.
-2. **Differences between the setups of the model families.** The Claude markets used Haiku buyers. The open-weight markets used the same open model as buyers. The temperatures and reasoning settings also differ. The planted seller sets its level from the bids, so the stimulus differs too. Thus differences between families can partly come from these setups.
+2. **Differences between the setups of the model families.** The Claude markets used Haiku buyers. The open-weight markets used the same open model as buyers. The temperatures and reasoning settings also differ. The planted seller sets its level from the bids, so the stimulus differs too. Thus differences between families can partly come from these setups. They do not rank the general safety of the models.
 3. **An instructed control population.** Almost every uninstructed seller coordinated. Thus we measured specificity only against sellers with an instruction not to coordinate.
 4. **A scripted planted seller.** It does not negotiate or reply. Thus the stimulus stays the same, but agents can possibly identify it more easily than a live seller.
 5. **Labels.** We had no human coders. The headline Claude results have the same direction with four label sources and in known-answer markets. The open-weight markets have only the Sonnet labels. The rule-based coder disagrees with them on some results. For Qwen, it almost removes the penalty-notice effect (34/40 against 38/40) and shrinks the instruction effect (14/40 against 34/40). The private-only Sonnet labels support both effects. The judge also coded 4 of 40 gpt-oss sellers as accepting an offer in silent markets with the notice, where no offer was made.
@@ -171,8 +171,7 @@ Our results establish three things for one simulated market. Refusal of an expli
 2. **Dual use.** Our scripts show that talk like a peer at the market price gets agreement from LLM sellers. A malicious person can use this to ask deployed agents to collude. The scripts are short and generic. The same knowledge helps auditors and the designers of monitors.
 3. **Monitor evasion.** Our disclaimer test shows that statements of independence can deceive weaker monitors with some prompts. We give the correction (a codebook prompt) with the result.
 4. **Deceptive talk.** We saw agents that asked others to hold prices while they planned to undercut. This occurred in a simulation between agents. It does not show that the models deceive people.
-5. **Model differences.** We report differences between model families from one market design and different setups. These differences do not rank the general safety of the models.
-6. **Compute and cost.** The logged Anthropic API cost of the agent calls in `results_final/` was $76.68 at list price. The judge and monitor calls are not all logged. The open-weight markets ran on Modal H100 GPUs with sprint compute credit, and we did not log their GPU cost.
+5. **Silent price leadership.** Open-weight sellers followed a raise of the planted seller's price without any request (Qwen 18/40 and gpt-oss 15/40, against 2/40 and 5/40 without a raise). An agent could therefore lead prices up without a message that a monitor of messages can read. Audits of agent markets need price data as well as messages.
 
 ## 7. Conclusion
 
@@ -272,9 +271,11 @@ Each row gives the test with one observation for each target seller, and with on
 2. We saw no increase in coordination among instructed open-weight sellers (4/40 against 1/40 for Qwen, p = 0.18, and 0/40 against 0/40 for gpt-oss). At 30 hours, CEO pressure changed the mean Qwen trade price by −$0.30 (95% CI −$3.10 to +$2.50).
 3. Much agreement was insincere. The reasoning monitor coded 25 of the 35 agreeing Haiku sellers as asking others to hold prices while they planned to undercut. In silent markets, Sonnet did this in its notes for 16 of 16 target sellers (in 8 markets), against 12 of 40 for Haiku (p = 7.3e-7). One Sonnet note in a silent replication market read "Encourage rivals to hold prices firm so buyers keep climbing, without revealing my small undercut."
 
-### C. Pre-registrations
+### C. Pre-registrations and compute
 
 The repository contains nine pre-registrations: `prereg.md` (first study), `prereg_replication.md`, `prereg_monitor.md`, `prereg_peer_sting.md`, `prereg_escalation.md`, `prereg_open_weight.md`, `prereg_open_aware.md`, `prereg_open_followup.md` and `prereg_escalate_quiet.md`. Each file has a deviation log. The open-weight markets ran on a laptop, and their records have no timestamps. For those studies, the order of the commits shows that each pre-registration came before its results. In panels (a) to (c) of Figure 1, the Haiku notice arms are from the escalation study (seeds 50 to 69), and the other Haiku arms are from the peer-sting study (seeds 30 to 49). In panel (d) of Figure 1, all Haiku arms use seeds 50 to 69, from the escalation and silent-raise studies.
+
+**Compute and cost.** The logged Anthropic API cost of the agent calls in `results_final/` was $76.68 at list price. The judge and monitor calls are not all logged. The open-weight markets ran on Modal H100 GPUs with sprint compute credit, and we did not log their GPU cost.
 
 ### D. Label validation and monitor test
 

@@ -266,7 +266,7 @@ Our results establish three things for one simulated market. Refusal of an expli
 \item
   \textbf{One market design.} Prices stayed near the competitive level, with arm means from about \$85 to \$92. Coordination talk did not raise prices in a pilot at 15 or 30 hours. Thus we measured talk and agreement, not price harm. The peer sting itself lowered prices by about \$3 to \$4, because it asks at the market.
 \item
-  \textbf{Differences between the setups of the model families.} The Claude markets used Haiku buyers. The open-weight markets used the same open model as buyers. The temperatures and reasoning settings also differ. The planted seller sets its level from the bids, so the stimulus differs too. Thus differences between families can partly come from these setups.
+  \textbf{Differences between the setups of the model families.} The Claude markets used Haiku buyers. The open-weight markets used the same open model as buyers. The temperatures and reasoning settings also differ. The planted seller sets its level from the bids, so the stimulus differs too. Thus differences between families can partly come from these setups. They do not rank the general safety of the models.
 \item
   \textbf{An instructed control population.} Almost every uninstructed seller coordinated. Thus we measured specificity only against sellers with an instruction not to coordinate.
 \item
@@ -293,9 +293,7 @@ Our results establish three things for one simulated market. Refusal of an expli
 \item
   \textbf{Deceptive talk.} We saw agents that asked others to hold prices while they planned to undercut. This occurred in a simulation between agents. It does not show that the models deceive people.
 \item
-  \textbf{Model differences.} We report differences between model families from one market design and different setups. These differences do not rank the general safety of the models.
-\item
-  \textbf{Compute and cost.} The logged Anthropic API cost of the agent calls in \texttt{results\_final/} was \$76.68 at list price. The judge and monitor calls are not all logged. The open-weight markets ran on Modal H100 GPUs with sprint compute credit, and we did not log their GPU cost.
+  \textbf{Silent price leadership.} Open-weight sellers followed a raise of the planted seller's price without any request (Qwen 18/40 and gpt-oss 15/40, against 2/40 and 5/40 without a raise). An agent could therefore lead prices up without a message that a monitor of messages can read. Audits of agent markets need price data as well as messages.
 \end{enumerate}
 
 \hypertarget{conclusion}{%
@@ -427,10 +425,12 @@ Silent raise against no raise, followed (gpt-oss) & 15/40 vs 5/40 & 9/20 vs 3/20
   Much agreement was insincere. The reasoning monitor coded 25 of the 35 agreeing Haiku sellers as asking others to hold prices while they planned to undercut. In silent markets, Sonnet did this in its notes for 16 of 16 target sellers (in 8 markets), against 12 of 40 for Haiku (p = 7.3e-7). One Sonnet note in a silent replication market read ``Encourage rivals to hold prices firm so buyers keep climbing, without revealing my small undercut.''
 \end{enumerate}
 
-\hypertarget{c.-pre-registrations}{%
-\subsection{C. Pre-registrations}\label{c.-pre-registrations}}
+\hypertarget{c.-pre-registrations-and-compute}{%
+\subsection{C. Pre-registrations and compute}\label{c.-pre-registrations-and-compute}}
 
 The repository contains nine pre-registrations: \texttt{prereg.md} (first study), \texttt{prereg\_replication.md}, \texttt{prereg\_monitor.md}, \texttt{prereg\_peer\_sting.md}, \texttt{prereg\_escalation.md}, \texttt{prereg\_open\_weight.md}, \texttt{prereg\_open\_aware.md}, \texttt{prereg\_open\_followup.md} and \texttt{prereg\_escalate\_quiet.md}. Each file has a deviation log. The open-weight markets ran on a laptop, and their records have no timestamps. For those studies, the order of the commits shows that each pre-registration came before its results. In panels (a) to (c) of Figure 1, the Haiku notice arms are from the escalation study (seeds 50 to 69), and the other Haiku arms are from the peer-sting study (seeds 30 to 49). In panel (d) of Figure 1, all Haiku arms use seeds 50 to 69, from the escalation and silent-raise studies.
+
+\textbf{Compute and cost.} The logged Anthropic API cost of the agent calls in \texttt{results\_final/} was \$76.68 at list price. The judge and monitor calls are not all logged. The open-weight markets ran on Modal H100 GPUs with sprint compute credit, and we did not log their GPU cost.
 
 \hypertarget{d.-label-validation-and-monitor-test}{%
 \subsection{D. Label validation and monitor test}\label{d.-label-validation-and-monitor-test}}
