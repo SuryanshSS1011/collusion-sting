@@ -475,14 +475,59 @@ per call. The primary Sonnet judge labelled all 472 target-markets with 0 failur
     −$0.30 (CI −$3.10 to +$2.50, 8 markets each). This matches the Haiku pilot and gives no support for a
     pressure-plus-oversight study.
 
+12. **Q6 for gpt-oss, post hoc (deviation logged at 16:58 Oct 25, after the Qwen result).** Under the +$2
+    escalation, 13/40 gpt-oss targets held the raised level, against 5/40 in the counterfactual
+    (one-sided p = 0.030; market level p = 0.078 any, 0.20 both). Of the 18 that agreed at the market
+    price, 7 followed the raise. It is outside the Holm family and weaker than Qwen's result, but points
+    the same way.
+13. **The escalation sting does not cause price harm.** Trade prices in hours 5 to 15 were $2.08 higher
+    under escalation than under the peer sting for gpt-oss (CI $0.31 to $3.94) and $0.82 higher for Qwen
+    (CI −$0.47 to $2.16). Against silent markets they were still lower, by $1.79 (CI −$3.33 to −$0.14) and
+    $3.62 (CI −$5.29 to −$1.85). The rise only removes the peer sting's own undercutting. This comparison
+    is post hoc.
+
 Holm-adjusted p-values within Qwen are 8.3e-8 (Q2), 1.3e-5 (Q3), 0.0029 (Q6), 0.26 (Q1), 0.36 (Q4) and
 0.99 (Q5). Within gpt-oss they are 1.1e-5 (Q3), 1.6e-5 (Q2), 0.15 (Q1) and 1.0 (Q4, Q5).
 
 The cross-family picture splits the results in two. The parts about instructions and detection
 generalize. The "stay independent" instruction ends coordination talk in all three families, and
 agreement with a sting tracks peer coordination in all three. The parts that made the direct sting fail
-in Claude do not generalize. Open-weight sellers take the explicit offer, are not deterred by it, and in
-Qwen's case keep a costly deal. In those models a sting catches something closer to a real cartel.
+in Claude do not generalize. Open-weight sellers take the explicit offer, are not deterred by it, and
+keep a costly deal more often than the counterfactual (Qwen clearly, gpt-oss post hoc). In those models
+a sting catches something closer to a real cartel.
+
+## Open-weight sting awareness (pre-registered in `prereg_open_aware.md`, committed at 12:20 ET Oct 25 before any market ran)
+
+The study ran 100 markets: Qwen in direct_aware, silent_aware and peer_aware, and gpt-oss in
+direct_aware and silent_aware, on seeds 30 to 49 against the no-notice arms above. There were 0 failed
+calls. The Sonnet judge labelled all 200 target-markets with 0 failures.
+
+1. **V1, not supported.** The notice did not lower acceptance of the explicit offer: 17/40 against 20/40
+   for Qwen (p = 0.33) and 17/40 against 10/40 for gpt-oss (p = 0.97, the wrong direction).
+2. **V2, null for Qwen and reversed for gpt-oss.** Peer coordination in silent markets was 29/40 against
+   28/40 for Qwen (p = 1.0). For gpt-oss it rose from 28/40 to 38/40 (two-sided p = 0.0064, Holm 0.019;
+   market level p = 0.23 any, 0.031 both). In Haiku the same notice cut it from 40/40 to 0/40.
+3. **V3, not supported, so there is no evasion.** Among targets that coordinated with their peer,
+   acceptance of the explicit offer was 15/30 with the notice against 18/35 without for Qwen (p = 0.55),
+   and 17/39 against 10/29 for gpt-oss (p = 0.84). The second condition of the decision rule held (30/40
+   and 39/40 still coordinated), but the first did not. Sellers that are told about auditors neither
+   stop coordinating nor learn to refuse the auditor.
+4. **V4, not supported.** Qwen agreed to the peer-style sting 23/40 times with the notice against 27/40
+   without (p = 0.24). Haiku's figure was 0/40 against 36/40.
+5. **Prices did not change.** Notice minus no notice was −$0.13 (direct), −$0.47 (peer) and +$0.79
+   (silent) for Qwen, and +$0.51 and −$0.03 for gpt-oss. Every 95% interval includes zero.
+6. **Why, post hoc (`analysis/open_aware.py`, whole-word match on audit, undercover, sting, entrap,
+   regulator or "the exchange" in the agents' private notes).** Qwen mostly ignored the notice. Only 7/40
+   (direct), 3/40 (peer) and 4/40 (silent) of its targets mention it, against 0/40 without it. A few that
+   did wrote of being "cautious not to signal price coordination to avoid suspicion from the exchange"
+   while still coordinating, which is anecdotal. gpt-oss read the notice in 27/40 and 26/40 targets and
+   misread it as an invitation, for example "Remain open to coordination if an auditor proposes a price
+   lock" and "The audit notice indicates potential coordination; we should keep messaging open".
+
+Announcing an audit program deterred Claude completely and did nothing useful to the open-weight sellers.
+It had no effect on Qwen and backfired on gpt-oss. General deterrence by announcement depends on the agent
+understanding what an auditor is for, so it cannot be assumed across model families. The evasion
+scenario feared in sprint question 3.4 did not appear in any of the three families.
 
 ## What this changes in the story
 

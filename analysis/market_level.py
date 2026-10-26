@@ -80,16 +80,18 @@ def open_weight() -> dict:
         for name, col, a, b, alt in specs:
             if {a, b} <= set(d[d.model == m].arm):
                 res[f"{m} {name}"] = test(d, col, {"arm": a, "model": m}, {"arm": b, "model": m}, alt)
-    esc = out_dir(Path("results/open_weight_qwen")) / "escalation_targets.csv"
-    if esc.exists():
+    for m, root in (("qwen", "results/open_weight_qwen"), ("gptoss", "results/open_weight_gptoss")):
+        esc = out_dir(Path(root)) / "escalation_targets.csv"
+        if not esc.exists():
+            continue
         e = pd.read_csv(esc, keep_default_na=False)
         e["arm"] = e.run.map(lambda r: Path(r).parent.name)
         e = e[e.arm.isin(["escalate_none", "peer_none"])].copy()
         truthy = lambda v: str(v).strip().lower() in ("true", "1", "1.0")
         e["f"] = [truthy(f) if a == "escalate_none" else truthy(c) for a, f, c in zip(e.arm, e.followed, e.cf_escalate_followed)]
-        e["model"] = "qwen"
-        res["qwen Q6 followed escalate_none > peer_none counterfactual"] = test(
-            e, "f", {"arm": "escalate_none", "model": "qwen"}, {"arm": "peer_none", "model": "qwen"}, "greater"
+        e["model"] = m
+        res[f"{m} Q6 followed escalate_none > peer_none counterfactual"] = test(
+            e, "f", {"arm": "escalate_none", "model": m}, {"arm": "peer_none", "model": m}, "greater"
         )
     return res
 
