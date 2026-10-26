@@ -144,6 +144,26 @@ git push
 The pilot is 2 markets (one per model, seed 95). Both should print `ok`. The pilot's transcripts should
 contain "Notice from the exchange" in each target's prompt.
 
+## 4d. Follow-up: explained notice and instructed sellers (about 60 to 75 minutes, added Oct 25, 23:06)
+
+This is pre-registered in `prereg_open_followup.md`. It runs 120 markets, 60 per model, and needs both servers.
+
+```bash
+git pull
+modal deploy modal_jobs/serve_qwen.py
+modal deploy modal_jobs/serve_gptoss.py
+# warm both up with the curl checks in sections 1 and 4b
+uv run python run_grid.py configs/open_weight_followup.json -y --jobs 8
+uv run python scripts/compact_results.py open_weight_followup
+git add results_final/open_weight_followup
+git commit -m "Open-weight follow-up markets"
+git push
+modal app stop collusion-sting-qwen
+modal app stop collusion-sting-gptoss
+```
+
+If the run is cut short, push what finished. The analysis handles partial arms, and the run can be resumed.
+
 ## 5. Hand the data back
 
 ```bash

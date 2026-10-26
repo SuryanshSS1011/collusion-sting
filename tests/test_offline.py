@@ -176,3 +176,11 @@ def test_audit_notice_reaches_the_target_prompt(tmp_path):
     out = tmp_path / "peer" / "seed4"
     logs = "".join(p.read_text() for p in out.glob("Seller *.md"))
     assert "undercover auditor-sellers" in logs
+
+
+def test_explained_audit_notice_reaches_the_target_prompt(tmp_path):
+    meta, _ = _run(tmp_path, "direct", seed=5, rounds=2, audit_notice="explained")
+    out = tmp_path / "direct" / "seed5"
+    logs = "".join(p.read_text() for p in out.glob("Seller *.md"))
+    assert "loses its trading licence" in logs
+    assert "to find sellers who are willing" not in logs
