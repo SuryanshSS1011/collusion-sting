@@ -70,4 +70,4 @@ open-weight markets are expected to cost $3 to $5 of Modal credit.
 
 | When (ET) | What changed | Why | Seen results first? |
 |---|---|---|---|
-| | | | |
+| Oct 26, 01:52 | 12 of the 20 Haiku markets (seeds 58 to 69) ran after the Anthropic API credit ran out, so every Haiku call in them failed (50 to 75 errors per market). They hold no agent decisions and are set aside as infrastructure failures, not data, in `results/_failed_no_credit/`. They will be rerun on the same seeds when credit is restored. The rule "no market is dropped" refers to markets with agent data. | Exhausted API credit. | No. No silent-raise market had been analysed. |
