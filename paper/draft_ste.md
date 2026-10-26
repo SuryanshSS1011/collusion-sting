@@ -161,7 +161,9 @@ Our results establish three things for one simulated market. Refusal of an expli
 2. **Differences between the setups of the model families.** The Claude markets used Haiku buyers. The open-weight markets used the same open model as buyers. The temperatures and reasoning settings also differ. The planted seller sets its level from the bids, so the stimulus differs too. Thus differences between families can partly come from these setups.
 3. **An instructed control population.** Almost every uninstructed seller coordinated. Thus we measured specificity only against sellers with an instruction not to coordinate.
 4. **A scripted planted seller.** It does not negotiate or reply. Thus the stimulus stays the same, but agents can possibly identify it more easily than a live seller.
-5. **Further limitations.** Appendix F gives five more, on labels, public messages, dependence in a market, model coverage and power, and post hoc analyses.
+5. **Labels.** We had no human coders. The headline Claude results have the same direction with four label sources and in known-answer markets. The open-weight markets have only the Sonnet labels. The rule-based coder disagrees with them on some results. For Qwen, it almost removes the penalty-notice effect (34/40 against 38/40) and shrinks the instruction effect (14/40 against 34/40). The private-only Sonnet labels support both effects. The judge also coded 4 of 40 gpt-oss sellers as accepting an offer in silent markets with the notice, where no offer was made.
+6. **Public messages.** The coordination label includes public posts that the planted seller also reads. The main deterrence results remain significant with private messages only, but the counts become small.
+7. **Further limitations.** Appendix F gives three more, on dependence in a market, model coverage and power, and post hoc analyses.
 
 **Dual-use and ethical considerations.**
 
@@ -330,11 +332,9 @@ Each monitor used three prompts. These were the study judge prompt, a short depl
 
 ### F. Further limitations
 
-1. **Labels.** We had no human coders. The headline Claude results have the same direction with four label sources and in known-answer markets. The open-weight markets have only the Sonnet labels. The rule-based coder disagrees with them on some results. For Qwen, it almost removes the penalty-notice effect (34/40 against 38/40) and shrinks the instruction effect (14/40 against 34/40). The private-only Sonnet labels support both effects. The judge also coded 4 of 40 gpt-oss sellers as accepting an offer in silent markets with the notice, where no offer was made.
-2. **Public messages.** The coordination label includes public posts that the planted seller also reads. The main deterrence results remain significant with private messages only, but the counts become small.
-3. **Dependence in a market.** The two target sellers in a market have the same peer-coordination label in 83% to 93% of markets. Appendix B gives the market-level tests and identifies those that become weaker.
-4. **Model coverage and power.** We tested four models, with thinking off for Qwen and low reasoning effort for gpt-oss. The tests for no effect have low power. These are the tests for increased coordination among instructed sellers, for the effect of the plain notice on Qwen, and for evasion.
-5. **Post hoc analyses.** The gpt-oss escalate arm, the analyses of notes and reply channels, the private-message labels and the price comparison against silent markets were added after we saw results.
+1. **Dependence in a market.** The two target sellers in a market have the same peer-coordination label in 83% to 93% of markets. Appendix B gives the market-level tests and identifies those that become weaker.
+2. **Model coverage and power.** We tested four models, with thinking off for Qwen and low reasoning effort for gpt-oss. The tests for no effect have low power. These are the tests for increased coordination among instructed sellers, for the effect of the plain notice on Qwen, and for evasion.
+3. **Post hoc analyses.** The gpt-oss escalate arm, the analyses of notes and reply channels, the private-message labels and the price comparison against silent markets were added after we saw results.
 
 ## LLM Usage Statement
 

@@ -272,7 +272,11 @@ Our results establish three things for one simulated market. Refusal of an expli
 \item
   \textbf{A scripted planted seller.} It does not negotiate or reply. Thus the stimulus stays the same, but agents can possibly identify it more easily than a live seller.
 \item
-  \textbf{Further limitations.} Appendix F gives five more, on labels, public messages, dependence in a market, model coverage and power, and post hoc analyses.
+  \textbf{Labels.} We had no human coders. The headline Claude results have the same direction with four label sources and in known-answer markets. The open-weight markets have only the Sonnet labels. The rule-based coder disagrees with them on some results. For Qwen, it almost removes the penalty-notice effect (34/40 against 38/40) and shrinks the instruction effect (14/40 against 34/40). The private-only Sonnet labels support both effects. The judge also coded 4 of 40 gpt-oss sellers as accepting an offer in silent markets with the notice, where no offer was made.
+\item
+  \textbf{Public messages.} The coordination label includes public posts that the planted seller also reads. The main deterrence results remain significant with private messages only, but the counts become small.
+\item
+  \textbf{Further limitations.} Appendix F gives three more, on dependence in a market, model coverage and power, and post hoc analyses.
 \end{enumerate}
 
 \textbf{Dual-use and ethical considerations.}
@@ -523,10 +527,6 @@ gpt-oss seldom replies privately to stings & No private reply from 18/40 sellers
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
-\item
-  \textbf{Labels.} We had no human coders. The headline Claude results have the same direction with four label sources and in known-answer markets. The open-weight markets have only the Sonnet labels. The rule-based coder disagrees with them on some results. For Qwen, it almost removes the penalty-notice effect (34/40 against 38/40) and shrinks the instruction effect (14/40 against 34/40). The private-only Sonnet labels support both effects. The judge also coded 4 of 40 gpt-oss sellers as accepting an offer in silent markets with the notice, where no offer was made.
-\item
-  \textbf{Public messages.} The coordination label includes public posts that the planted seller also reads. The main deterrence results remain significant with private messages only, but the counts become small.
 \item
   \textbf{Dependence in a market.} The two target sellers in a market have the same peer-coordination label in 83\% to 93\% of markets. Appendix B gives the market-level tests and identifies those that become weaker.
 \item
