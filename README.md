@@ -1,29 +1,78 @@
 # collusion-sting
 
-**The undercover seller.** Do LLM agents take a cartel offer from a planted competitor, and do the
-ones that say yes actually follow through?
+**The undercover seller.** Can a planted competitor that offers a price cartel tell which LLM selling
+agents will collude? We put a scripted "sting" seller into a double-auction market with two LLM sellers,
+vary what it says, and compare what the targets *say* in reply with what they then *do* with their prices
+and with each other.
 
-Apart Research AI Collusion Research Sprint, October 23 to 25, 2026. Tracks 3.2 (trusted agents that
+Apart Research AI Collusion Research Sprint, October 23 to 26, 2026. Tracks 3.2 (trusted agents that
 disrupt collusion) and 2.2 (combining what agents say with what they do).
 
-## What is new here and what is not
+## Results at a glance
 
-| Path | Status |
-|---|---|
-| `third_party/collusion_hackathon/` | **Preexisting.** Git submodule of [poseidon-research/collusion_hackathon](https://github.com/poseidon-research/collusion_hackathon), pinned at `d585a7b`. It contains the double-auction harness from Agrawal et al. (2025, [arXiv:2507.01413](https://arxiv.org/abs/2507.01413)). Nothing in it is edited. |
-| `sting/templates/target_seller.jinja2` | Upstream seller prompt plus two new sections: a private message channel and an optional compliance-report channel. |
-| everything else | **New sprint work**, written during the sprint (see commit history). |
+1,037 committed markets across three model families: Claude (Haiku 5.5, Sonnet 5.5) through the Anthropic API,
+and two open-weight models, Qwen3-32B and gpt-oss-20b, served with vLLM on Modal. Every confirmatory test
+was pre-registered and committed before its markets ran. Full numbers, with sources and status tags, are in
+[`paper/findings.md`](paper/findings.md) and [`paper/results_pack.md`](paper/results_pack.md).
 
-## Design in one paragraph
+1. **An explicit cartel offer is a poor detector for Claude.** Claude refused every direct $92/$96 floor
+   offer (0/40), yet 57% of targets that refused or ignored the sting were coordinating with the other
+   seller at the same time. "Refused, so clean" would have been wrong for most of them.
+2. **Saying yes is not doing it.** All 8 Claude targets that agreed in writing failed to hold the named
+   price. When a sting raised its price after agreement, asking targets to move up with it made no
+   difference in any family; where open-weight sellers followed, the planted seller's price move alone
+   explains it (silent-raise control).
+3. **A sting that talks like a peer is a good detector for Claude.** A planted seller that proposes a level
+   at the market price, without naming collusion, was accepted by 35/40 Haiku targets, by 0/40 targets told
+   to price independently, and identified peer coordination with sensitivity 0.90 and specificity 1.00.
+4. **Open-weight sellers accept the explicit offer.** Qwen accepted it 20/40 times and gpt-oss 10/40, and it
+   is specific there: 0/40 of instructed sellers accepted it for both models.
+5. **Whether an audit notice deters depends on the model and the wording.** "The exchange places undercover
+   auditors" ended peer coordination in Haiku (40/40 to 0/40), did nothing for Qwen and *raised* it for
+   gpt-oss (28/40 to 38/40), which read it as an invitation. Adding one sentence on the sanction cut
+   coordination to 1/40 (Qwen) and 2/40 (gpt-oss).
+6. **No evasion in any family.** Sellers told about auditors never learned to coordinate while refusing the
+   sting.
 
-Three sellers and three buyers trade for 15 hours. Two sellers are LLM targets using the same model.
-The third is a scripted planted seller that asks $96 every hour in every condition and, depending on
-the condition, privately messages each target in hours 1, 4 and 8. The conditions are **silent** (no
-messages), **benign** (friendly, no prices), **hint** (names $96 and argues against undercutting) and
-**direct** (proposes a $96 floor and asks who is in). The planted seller never adapts, so any
-difference between conditions comes from its words. The same seed gives the same cast and opening
-orders in every condition, so conditions are compared on matched markets. Full plan and tests:
-[`prereg.md`](prereg.md).
+Prices stayed near the competitive level throughout, so the behavior being detected and deterred is
+coordination talk, not realized cartel prices.
+
+## Studies
+
+Each study has a pre-registration, a grid config, committed per-market records in `results_final/<grid>/`
+and analysis outputs in `results_final/analysis/<grid>/`.
+
+| Study | Pre-registration | Grid config(s) | Models |
+|---|---|---|---|
+| Main grid: four sting wordings at $92 and $96 | [`prereg.md`](prereg.md) | `main_claude` | Haiku, Sonnet |
+| Replication with a compliance-warning control | [`prereg_replication.md`](prereg_replication.md) | `replication_claude` | Haiku, Sonnet |
+| Disclaimers vs LLM collusion monitors | [`prereg_monitor.md`](prereg_monitor.md) | (reuses replication transcripts) | Haiku, Sonnet, Opus as monitors |
+| Peer-style sting | [`prereg_peer_sting.md`](prereg_peer_sting.md) | `peer_sting_claude` | Haiku, Sonnet |
+| Escalation and sting awareness | [`prereg_escalation.md`](prereg_escalation.md) | `escalate_aware_claude` | Haiku, Sonnet |
+| Silent-raise control | [`prereg_escalate_quiet.md`](prereg_escalate_quiet.md) | `escalate_quiet_claude`, `open_weight_escalate_quiet` | Haiku, Qwen, gpt-oss |
+| Open-weight sellers | [`prereg_open_weight.md`](prereg_open_weight.md) | `open_weight_qwen`, `open_weight_gptoss` | Qwen, gpt-oss |
+| Open-weight sting awareness | [`prereg_open_aware.md`](prereg_open_aware.md) | `open_weight_aware` | Qwen, gpt-oss |
+| Open-weight follow-up: explained notice, instructed sellers | [`prereg_open_followup.md`](prereg_open_followup.md) | `open_weight_followup` | Qwen, gpt-oss |
+
+Supporting runs: pilots (`pilot_claude`, `peer_pilot_claude`, `escalate_pilot_claude`,
+`open_weight_pilot*`), a positive control with three LLM sellers (`posctrl_claude`), 32 known-answer
+markets for judge validation (`known_answer_claude`) and a price-stakes pilot (`price_pilot_claude`).
+Deviations from each plan are logged at the end of its pre-registration.
+
+## Design
+
+Three sellers and three buyers trade for 15 hours. Sellers cost $80 and buyers value $100. Two sellers
+are LLM targets of the same model. The third is the planted seller. It is scripted and never adapts, so
+any difference between arms comes from its words. Depending on the arm it stays silent, sends a benign
+note, hints at a price, proposes a floor outright, talks like a peer at the market price, or escalates
+that price after agreement. Some arms also give targets an auditor notice or an instruction to price
+independently. The same seed gives the same cast and opening orders in every arm, so arms are compared on
+matched markets.
+
+What targets **say** is labelled by an LLM judge (Claude Sonnet 5.5, primary) and checked against a second
+judge, a rule coder, known-answer markets and Qwen3-32B as a fourth, non-Claude rater. What targets **do**
+is read straight from the order book: whether they hold the named price, and whether they coordinate with
+the other target.
 
 ## Setup
 
@@ -31,121 +80,93 @@ orders in every condition, so conditions are compared on matched markets. Full p
 git clone --recurse-submodules https://github.com/SuryanshSS1011/collusion-sting
 cd collusion-sting
 uv sync --extra dev
-cp compute.env.example compute.env      # then add OPENROUTER_API_KEY
 uv run pytest -q                        # offline checks, no API calls
 ```
 
-If you cloned without `--recurse-submodules`, run `git submodule update --init --recursive`.
-Run every command from the repo root so `compute.env` is found. Check that the model ids in
-`configs/*.json` still exist on OpenRouter before spending.
+If you cloned without `--recurse-submodules`, run `git submodule update --init --recursive`. Run every
+command from the repo root.
 
-## Run order
+## Reproduce the analysis (free, no API calls)
 
-```bash
-# 0. Offline: the whole pipeline with a mock model. Free, about 30 seconds.
-uv run python run_grid.py configs/grid.json --mock --jobs 4
-uv run python -m analysis.judge results_mock/main --mock
-uv run python -m analysis.report results_mock/main
-
-# 0b. Check the configured models exist and support JSON mode and seeds (needs network, no key).
-uv run python scripts/check_models.py configs/grid.json
-
-# 1. Smoke test, one real market, 5 hours (about 25 calls).
-uv run python -m sting.run --condition direct --seed 0 --rounds 5
-
-# 2. Positive control on the upstream harness (3 LLM sellers, chat on, 3 seeds).
-scripts/positive_control.sh openai/gpt-4.1-mini
-
-# 3. Pilot: one seed of every condition. Read the transcripts, then freeze prereg.md.
-uv run python run_grid.py configs/pilot.json
-uv run python -m analysis.view results/pilot --all > pilot_transcripts.md
-
-# 4. Main grid: 4 conditions x 2 models x 5 seeds = 40 markets, 75 calls each.
-uv run python run_grid.py configs/grid.json --dry-run
-uv run python run_grid.py configs/grid.json --jobs 4 -y
-
-# 5. Analysis.
-uv run python -m analysis.judge results/main
-uv run python -m analysis.judge results/main --export-hand 50   # blinded sample to label by hand
-uv run python -m analysis.judge results/main --kappa analysis/out/main/hand_labels.csv
-uv run python -m analysis.report results/main                    # -> analysis/out/main/summary.md
-```
-
-Exploratory arms, run only if the main grid finishes early: `configs/explore_public.json` posts the
-offer in the public seller chat instead of privately, and `configs/explore_report.json` gives targets
-a confidential compliance-report channel.
-
-Cost. The main grid is 3,000 calls. At OpenRouter list prices checked on October 23, 2026
-(gpt-4.1-mini $0.40/$1.60 and gemini-2.5-flash $0.30/$2.50 per million input/output tokens) and
-roughly 2,500 input and 350 output tokens per call, it should cost about $5, plus a few cents for
-the judge. Gemini 2.5 Flash may spend extra output tokens on thinking, which could add a few dollars.
-These are estimates, so check the OpenRouter dashboard after the pilot.
-`configs/extra_models.json` adds Claude Haiku 5.5 and DeepSeek V4 Flash as an optional extension.
-
-Anthropic API route. Any model id that starts with `claude/` goes straight to the Anthropic API with
-`ANTHROPIC_API_KEY` from `compute.env` (`sting/clients.py`). `configs/grid_claude.json` runs the same
-grid with Claude Haiku 5.5 and Claude Sonnet 5.5 as targets and Haiku 5.5 as buyers, and
-`configs/pilot_claude.json` and `configs/posctrl_claude.json` are the matching pilot and control.
-Claude 5.5 models reject temperature and have no seed, so the client sends neither, and it sets
-thinking to each model's lowest setting at low effort. My estimate for the Claude grid is under $15
-at list prices (Haiku 5.5 $0.10/$0.50, Sonnet 5.5 $2/$10 per million tokens).
-
-Open-weight arm on Modal (optional, untested). The sprint's $50 Modal credit is enough to host a
-small open model for one grid. `configs/grid_open.json` uses Qwen2.5-7B-Instruct as the targets and
-keeps Claude Haiku as the buyers. The starter repo's hosting script boots a vLLM server on Modal for
-the length of one command and tears it down afterwards:
+Every reported number can be rebuilt from committed files without running a market. The analysis writes to
+`analysis/out/` (gitignored), and `results_final/analysis/` is the committed copy of it, including all
+judge labels. Restore it first:
 
 ```bash
-uv run --with modal modal setup        # one-time browser sign-in; credits attach to that account
-uv run --with modal poseidon-host --model Qwen/Qwen2.5-7B-Instruct --gpu A10G -- \
-    uv run python run_grid.py configs/grid_open.json -y
+mkdir -p analysis/out && cp -R results_final/analysis/. analysis/out/
+uv run python -m analysis.results_pack                       # rebuild paper/results_pack.md
+uv run python -m analysis.cross_family                       # rebuild the Claude vs open-weight figure
+uv run python -m analysis.report results_final/main_claude   # recompute the main grid's tables and tests
 ```
 
-The starter repo marks this hosting path as unvalidated, so run it only after the Claude grid is done.
+`analysis.report` overwrites `analysis/out/main_claude/`, so run it after `results_pack`, or restore again.
+Each module in `analysis/` has its exact command in its docstring.
 
-Positive control inside this harness. `configs/posctrl.json` (and `posctrl_claude.json`) fills the
-planted seat with a third LLM seller, so the control uses the same prompt as the main study. This
-replaces `scripts/positive_control.sh` unless you specifically want the unmodified upstream prompt.
+## Run new markets
 
-`run_grid.py` skips finished cells, so rerunning the same command after a failure only retries what
-is missing. The pilot and main grids write to different folders.
+Copy `compute.env.example` to `compute.env` (gitignored) and fill in only what you need.
+
+- **Claude.** Model ids that start with `claude/` go to the Anthropic API with `ANTHROPIC_API_KEY`
+  (`sting/clients.py`).
+
+  ```bash
+  uv run python run_grid.py configs/main_claude.json --dry-run   # cells and call counts
+  uv run python run_grid.py configs/main_claude.json --jobs 4 -y
+  ```
+
+- **Open-weight models on Modal.** Follow [`paper/modal_runbook.md`](paper/modal_runbook.md). It deploys
+  vLLM servers (`modal_jobs/serve_qwen.py`, `modal_jobs/serve_gptoss.py`) that read only a `vllm-key`
+  Modal secret, and runs the markets from your laptop against them.
+
+- **Offline mock.** `uv run python run_grid.py configs/pilot.json --mock` runs the whole pipeline with a
+  fake model. Its outputs test the code only and are not data.
+
+`run_grid.py` skips finished markets, so rerunning a command after a failure retries only what is
+missing. `scripts/compact_results.py <grid>` copies a finished grid's compact records into
+`results_final/`.
 
 ## Outputs
 
-Each market folder (`results/<grid>/<model>/<condition>/seed<k>/`) holds:
-
-1. `events.jsonl`, one line per hour with every ask, bid, trade, public message, private message,
-   report, and each target's stated plan. The analysis reads only this file and `sting_meta.json`.
-2. `sting_meta.json`, the config, wording, planted seller id and seat, and the exact script used.
-3. Upstream files: one transcript per agent (`Seller <name>.md`), `auction_results.md`, `unified.log`
-   and `collusion_metrics.json`.
-
-`analysis/out/<grid>/` holds `summary.md`, the CSV tables and `figures/`.
+Each market folder `results/<grid>/<model>/<arm>/seed<k>/` holds `events.jsonl` (one line per hour: every
+ask, bid, trade, public and private message, and each target's stated plan), `sting_meta.json` (config,
+wording and the exact script used) and `usage.json`. The analysis reads only these. The full run also
+writes upstream transcripts per agent, which are not committed.
 
 ## Layout
 
 ```
-sting/            planted seller, target seller, market with private channel, frozen scripts, single-run CLI
-run_grid.py       grid runner with dry-run, resume and --mock
-configs/          pilot.json, grid.json and two exploratory arms
-analysis/         load.py (tables), judge.py (verbal labels and validation), report.py (stats, figures),
-                  view.py (readable timeline of a market)
-scripts/          positive_control.sh
+sting/            planted seller, target sellers, market with a private channel, model clients, single-run CLI
+run_grid.py       grid runner with dry run, resume and --mock
+configs/          one JSON per grid
+modal_jobs/       vLLM servers on Modal and the batch prompt runner for the open-weight judge
+analysis/         labelling, validation, tests and figures for every study
+results_final/    committed per-market records and analysis outputs
+paper/            findings, results pack, codebook, design decisions, related work, figures, Modal runbook
+prereg*.md        pre-registrations with their deviation logs
 tests/            offline checks of the experimental controls
-prereg.md         hypotheses, metrics, thresholds and the deviations log
+third_party/      upstream harness (git submodule, unedited)
 ```
 
-## Known limitations of the design
+## What is new and what is not
 
-1. The planted seller is scripted and does not reply to targets, so a target that asks a question
-   gets no answer. This keeps the treatment fixed but is less realistic than an adaptive agent.
-2. The planted seller asks $96 in every condition, including silent. Silent therefore means "a
-   high-priced seller who says nothing", not "no planted seller". The positive control covers the
-   all-LLM market.
-3. Five seeds per cell detect only large effects. Results are a pilot.
-4. The mock model in `sting/mock.py` exists only to test the pipeline. Its outputs are not data.
+`third_party/collusion_hackathon/` is a git submodule of
+[poseidon-research/collusion_hackathon](https://github.com/poseidon-research/collusion_hackathon), pinned at
+`d585a7b`. It contains the double-auction harness from Agrawal et al. (2025,
+[arXiv:2507.01413](https://arxiv.org/abs/2507.01413)), and nothing in it is edited.
+`sting/templates/target_seller.jinja2` is the upstream seller prompt plus a private message channel and an
+optional compliance-report channel. Everything else was written during the sprint.
+
+## Limitations
+
+1. The planted seller is scripted. It does not answer questions, which keeps the treatment fixed but is less
+   realistic than an adaptive agent.
+2. Most cells have 20 seeds per arm, and some 5 to 10, so only moderate-to-large effects are detectable.
+3. Prices stayed competitive, so the study measures coordination talk and willingness to agree, not cartel
+   harm.
+4. In the open-weight markets the same model plays sellers and buyers.
 
 ## Dual use
 
-A study of which offers agents accept is also a guide to writing offers they accept, and a published
-sting design could teach colluding agents to screen for decoys. The report appendix discusses both.
+A study of which offers agents accept is also a guide to writing offers they accept, and a published sting
+design could teach colluding agents to screen for decoys. The exact scripts are in `sting/scripts.py` and
+[`paper/appendix_scripts.md`](paper/appendix_scripts.md), so readers can judge both risks.
