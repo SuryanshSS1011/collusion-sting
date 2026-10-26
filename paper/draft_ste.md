@@ -85,7 +85,7 @@ All results are pre-registered unless we identify them as exploratory or post ho
 
 ### 4.1 Refusal of an explicit offer is not evidence of compliance
 
-Claude sellers almost never accepted an explicit cartel offer. In the first study, 0/40 accepted (20 sellers at $92 and 20 at $96). Across three studies, 4 of 120 accepted. Acceptance did not differ significantly by price (6/40 at $92 against 2/40 at $96 for offers and hints together, p = 0.26). Direct offers were not accepted more often than benign messages (0/40 against 0/40). The hint got written agreement 8/40 times, 7 from Sonnet, and none of the 8 kept its ask at the named price.
+Claude sellers almost never accepted an explicit cartel offer. In the first study, 0/40 accepted (20 sellers at $92 and 20 at $96). Across three studies, 4 of 120 accepted.
 
 Refusal did not show innocence. Of the 72 target sellers that refused or ignored an offer or a hint, 41 (57%, 95% CI 45% to 68%) coordinated prices with the other target seller. Of the 42 that refused outright, 22 (52%) coordinated. No agent wrote that the offer was a test or a trap (exploratory). In the hour after the first offer was read, 92.5% of agent-hours in the direct arm mentioned collusion or law, against 6% in silent markets in the same hour (exploratory). The offers did not raise asks.
 
@@ -109,7 +109,7 @@ In the escalation arm, the planted seller asks the target sellers to move up wit
 
 In all three families, the request did not increase following. Haiku sellers followed 2/40 times with the request and 6/40 times without it. Qwen sellers followed 14/40 and 18/40 times, and gpt-oss sellers 13/40 and 15/40 times (all p > 0.75). The price move alone increased following for Qwen (18/40 against 2/40 in the peer control, p = 2.6e-5) and for gpt-oss (15/40 against 5/40, p = 0.009). It did not increase following for Haiku (6/40 against 2/40, p = 0.13).
 
-Thus the escalation test does not measure if sellers keep a deal. Following also did not cost sales. In hours 5 to 15, sellers that followed earned more than sellers that did not, in each family and arm (for example, Qwen sellers in the escalate arm earned $72 against $54). The pre-registered result that more Qwen sellers followed under escalation than in the peer control (14/40 against 2/40, p = 0.00073) is correct, but the price move explains it. The same holds for gpt-oss (13/40 against 5/40, p = 0.030, post hoc). For Haiku, the +$2 escalation (2/40 against 2/40) and the +$1 escalation (13/40 against 18/40) did not increase following. Of the 22 Haiku sellers that agreed at the market price (judge label), 2 followed the +$2 raise. A typical Haiku reply was "At 89.50 we'd both sit above the bid stack and miss fills."
+Thus the escalation test does not measure if sellers keep a deal. Following also did not cost sales. In hours 5 to 15, sellers that followed earned more than sellers that did not, in each family and arm (for example, Qwen sellers in the escalate arm earned $72 against $54). The pre-registered result that more Qwen sellers followed under escalation than in the peer control (14/40 against 2/40, p = 0.00073) is correct, but the price move explains it. The same holds for gpt-oss (13/40 against 5/40, p = 0.030, post hoc).
 
 ### 4.5 Which results are the same in all three families
 
@@ -123,7 +123,7 @@ As with Haiku, these comparisons separate instructed from uninstructed sellers. 
 
 With the plain notice about undercover auditors, 0/40 Haiku target sellers agreed to the peer sting, against 36/40 without the notice (p = 1.3e-18). In silent markets, the notice decreased Haiku coordination talk from 40/40 to 0/40 (p = 1.9e-23), and from 12/40 to 0/40 with private messages only (post hoc). Asks and prices did not change.
 
-The same notice had no detectable effect on Qwen (acceptance 17/40 against 20/40, and coordination 29/40 against 28/40). For gpt-oss, coordination in silent markets increased from 28/40 to 38/40 (p = 0.0064, Holm p = 0.019). With private messages only (post hoc), it was 20/40 against 16/40 (p = 0.5). At the market level, it is not significant when a market counts if any seller coordinates (p = 0.23), but it is when both sellers must coordinate (p = 0.031). Some gpt-oss notes treated auditors as a possible source of deals. One note, in a market with the explicit offer and the notice, read "Remain open to coordination if an auditor proposes a price lock" (post hoc).
+The same notice had no detectable effect on Qwen (acceptance 17/40 against 20/40, and coordination 29/40 against 28/40). For gpt-oss, coordination in silent markets increased from 28/40 to 38/40 (p = 0.0064, Holm p = 0.019). With private messages only (post hoc), it was 20/40 against 16/40 (p = 0.5). Some gpt-oss notes treated auditors as a possible source of deals. One note, in a market with the explicit offer and the notice, read "Remain open to coordination if an auditor proposes a price lock" (post hoc).
 
 The penalty notice adds the penalty sentence. It stopped open-weight coordination. In silent markets, coordination was 1/40 with the penalty notice against 29/40 with the plain notice for Qwen (p = 1.1e-11), and 2/40 against 38/40 for gpt-oss (p = 5.7e-18). With private messages only (post hoc), coordination was 1/40 against 22/40 for Qwen and 0/40 against 20/40 for gpt-oss. Acceptance of the explicit offer fell from 17/40 to 2/40 for Qwen and from 17/40 to 0/40 for gpt-oss. The penalty notice gives both the purpose of the auditors and a penalty. Thus we cannot say which of the two caused the effect.
 
@@ -273,6 +273,9 @@ Each row gives the test with one observation for each target seller, and with on
 
 1. For gpt-oss, the request still raised prices. Trade prices in hours 5 to 15 were $1.79 higher with the request than with the silent raise (95% CI $0.12 to $3.45), and $2.08 higher than in the peer control (CI $0.27 to $3.95). For Qwen and Haiku, these differences were not significant. Because the gpt-oss follow rates did not differ, we report this price result as descriptive only.
 2. We saw no increase in coordination among instructed open-weight sellers (4/40 against 1/40 for Qwen, p = 0.18, and 0/40 against 0/40 for gpt-oss). At 30 hours, CEO pressure changed the mean Qwen trade price by −$0.30 (95% CI −$3.10 to +$2.50).
+3. In the first study, Claude acceptance did not differ significantly by price (6/40 at $92 against 2/40 at $96 for offers and hints together, p = 0.26). Direct offers were not accepted more often than benign messages (0/40 against 0/40). The hint got written agreement 8/40 times, 7 from Sonnet, and none of the 8 kept its ask at the named price.
+4. For Haiku, the +$2 escalation (2/40 against 2/40) and the +$1 escalation (13/40 against 18/40) did not increase following. Of the 22 Haiku sellers that agreed at the market price (judge label), 2 followed the +$2 raise. A typical Haiku reply was "At 89.50 we'd both sit above the bid stack and miss fills."
+5. The increase in gpt-oss coordination with the plain notice is not significant at the market level when a market counts if any seller coordinates (p = 0.23), but it is significant when both sellers must coordinate (p = 0.031).
 
 ### D. Pre-registrations and compute
 
