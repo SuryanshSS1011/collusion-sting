@@ -60,8 +60,9 @@ def table(rows, caption, k):
     lines.append(r"\toprule")
     lines.append(" & ".join(r"\textbf{" + cell(c) + "}" for c in head) + r" \\")
     lines.append(r"\midrule")
-    for r in body:
-        lines.append(" & ".join(cell(c) for c in r) + r" \\")
+    for j, r in enumerate(body):
+        sep = r" \\ \addlinespace[1.5pt]" if k < 2 and j < len(body) - 1 else r" \\"
+        lines.append(" & ".join(cell(c) for c in r) + sep)
     lines.append(r"\bottomrule")
     lines.append(r"\end{tabularx}")
     lines.append(r"\caption{" + pandoc(caption).strip() + "}")
