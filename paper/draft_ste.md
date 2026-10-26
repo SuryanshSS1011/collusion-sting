@@ -260,7 +260,7 @@ Suryansh Sijwali designed the study, ran the experiments, analyzed the results a
 3. **Monitor evasion.** Our disclaimer test shows that statements of independence can deceive weaker monitors with some prompts. We give the correction (a codebook prompt) with the result.
 4. **Deceptive talk.** We saw agents that asked others to hold prices while they planned to undercut. This occurred in a simulation between agents. It does not show that the models deceive people.
 5. **Model differences.** We report differences between model families from one market design and different setups. These differences do not rank the general safety of the models.
-6. **Compute and cost.** The logged Anthropic API cost of the agent calls in `results_final/` was $76.68 at list price. The judge and monitor calls are not all logged. The Modal GPU cost was [fill in from the Modal dashboard].
+6. **Compute and cost.** The logged Anthropic API cost of the agent calls in `results_final/` was $76.68 at list price. The judge and monitor calls are not all logged. The open-weight markets ran on Modal H100 GPUs with sprint compute credit, and we did not log their GPU cost.
 
 ### B. Planted-seller scripts
 
