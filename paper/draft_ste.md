@@ -230,26 +230,25 @@ Suryansh Sijwali designed the study, ran the experiments, analyzed the results a
 7. Connor, J. M. (2007). Global Price Fixing. Springer. https://doi.org/10.1007/3-540-34222-2
 8. Dietrich, J. (2026). Can Multi-Agent LLMs Identify Their Peers? Stylometric Fingerprinting in Role-Constrained Political Analysis. https://arxiv.org/abs/2606.09854
 9. Dijkstra, P. T., Haan, M. A., and Schoonbeek, L. (2021). Leniency Programs and the Design of Antitrust: Experimental Evidence with Free-Form Communication. Review of Industrial Organization. https://doi.org/10.1007/s11151-020-09789-5
-10. Farrell, J., and Rabin, M. (1996). Cheap Talk. Journal of Economic Perspectives. https://www.aeaweb.org/articles?id=10.1257/jep.10.3.103
-11. Fish, S., Gonczarowski, Y. A., and Shorrer, R. I. (2024). Algorithmic Collusion by Large Language Models. https://arxiv.org/abs/2404.00806
-12. Garra, A. (2026). Mitigating Emergent Collusion in LLM Pricing Agents. arXiv:2609.13037. https://arxiv.org/abs/2609.13037
-13. Hammond, S. D. (2005). Caught in the Act: Inside an International Cartel. Speech at the OECD Competition Committee, Paris. U.S. Department of Justice, Antitrust Division. https://www.justice.gov/archives/atr/file/517861/dl
-14. Hinloopen, J., and Soetevent, A. R. (2008). Laboratory Evidence on the Effectiveness of Corporate Leniency Programs. RAND Journal of Economics. https://doi.org/10.1111/j.0741-6261.2008.00030.x
-15. Kale, N., Zhang, C. B. C., Zhu, K., Aich, A., Rodriguez, P., Scale Red Team, et al. (2025). Reliable Weak-to-Strong Monitoring of LLM Agents. arXiv:2508.19461. https://arxiv.org/abs/2508.19461
-16. Keppo, J., Li, Y., Tsoukalas, G., and Yuan, N. (2026). On the Fragility of AI Agent Collusion. https://arxiv.org/abs/2603.20281
-17. Korbak, T., Balesni, M., Barnes, E., Bengio, Y., Benton, J., Bloom, J., et al. (2025). Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety. arXiv:2507.11473. https://arxiv.org/abs/2507.11473
-18. Kutasov, J., Sun, Y., Colognese, P., van der Weij, T., Petrini, L., Zhang, C. B. C., et al. (2025). SHADE-Arena: Evaluating Sabotage and Monitoring in LLM Agents. arXiv:2506.15740. https://arxiv.org/abs/2506.15740
-19. Lee, D., and Park, H. (2026). Faithful yet Collusive: Why Chain-of-Thought Monitoring Cannot Detect Collusion in LLM Pricing Agents under Oligopolistic Competition. arXiv:2609.18346. https://arxiv.org/abs/2609.18346
-20. Liu, Q., Chen, X., Zhao, Z., Zheng, Y., Yu, D., Zhang, Z., et al. (2026). Breaking the Secret: Economic Interventions for Combating Collusion in Embodied Multi-Agent Systems. https://arxiv.org/abs/2604.23511
-21. Marks, S., Treutlein, J., Bricken, T., Lindsey, J., Marcus, J., Mishra-Sharma, S., et al. (2025). Auditing language models for hidden objectives. arXiv:2503.10965. https://arxiv.org/abs/2503.10965
-22. Nakamura, M., Kumar, A., Das, S., Abdelnabi, S., Mahmud, S., Fioretto, F., et al. (2026). Colosseum: Auditing Collusion in Cooperative Multi-Agent Systems. Advances in Neural Information Processing Systems. https://arxiv.org/abs/2602.15198
-23. Needham, J., Edkins, G., Pimpale, G., Bartsch, H., and Hobbhahn, M. (2025). Large Language Models Often Know When They Are Being Evaluated. arXiv:2505.23836. https://arxiv.org/abs/2505.23836
-24. Shi, X., Zhang, Y., and Yang, D. (2026). Emergent Collusion in Long-Horizon LLM Agent Interaction. https://arxiv.org/abs/2609.24967
-25. Tao, Y., Zheng, X., Yang, S., Tao, M., and Wang, X. (2026). GroupGuard: A Framework for Modeling and Defending Collusive Attacks in Multi-Agent Systems. https://arxiv.org/abs/2603.13940
-26. Taylor, J., Black, S., Bowen, D., Read, T., Golechha, S., Zelenka-Martin, A., et al. (2025). Auditing Games for Sandbagging. arXiv:2512.07810. https://arxiv.org/abs/2512.07810
-27. Wehner, J., and Kraprayoon, J. (2026). Honeypots for AI Agent Insider Threats. Institute for AI Policy and Strategy. https://www.iaps.ai/research/honeypots-for-ai-agent-insider-threats
-28. Zeng, X., and Rudzicz, F. (2026). Voluntary Collusion with Secret Tools in Competing LLM Agents. https://arxiv.org/abs/2605.27593
-29. Zhou, Y., Ye, W., Liu, Y., Dong, Z., Yao, J., and Ge, J. (2026). Style Over Substance: Content-Invariant Wrappers Flip LLM Safety-Judge Verdicts. arXiv:2609.08236. https://arxiv.org/abs/2609.08236
+10. Fish, S., Gonczarowski, Y. A., and Shorrer, R. I. (2024). Algorithmic Collusion by Large Language Models. https://arxiv.org/abs/2404.00806
+11. Garra, A. (2026). Mitigating Emergent Collusion in LLM Pricing Agents. arXiv:2609.13037. https://arxiv.org/abs/2609.13037
+12. Hammond, S. D. (2005). Caught in the Act: Inside an International Cartel. Speech at the OECD Competition Committee, Paris. U.S. Department of Justice, Antitrust Division. https://www.justice.gov/archives/atr/file/517861/dl
+13. Hinloopen, J., and Soetevent, A. R. (2008). Laboratory Evidence on the Effectiveness of Corporate Leniency Programs. RAND Journal of Economics. https://doi.org/10.1111/j.0741-6261.2008.00030.x
+14. Kale, N., Zhang, C. B. C., Zhu, K., Aich, A., Rodriguez, P., Scale Red Team, et al. (2025). Reliable Weak-to-Strong Monitoring of LLM Agents. arXiv:2508.19461. https://arxiv.org/abs/2508.19461
+15. Keppo, J., Li, Y., Tsoukalas, G., and Yuan, N. (2026). On the Fragility of AI Agent Collusion. https://arxiv.org/abs/2603.20281
+16. Korbak, T., Balesni, M., Barnes, E., Bengio, Y., Benton, J., Bloom, J., et al. (2025). Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety. arXiv:2507.11473. https://arxiv.org/abs/2507.11473
+17. Kutasov, J., Sun, Y., Colognese, P., van der Weij, T., Petrini, L., Zhang, C. B. C., et al. (2025). SHADE-Arena: Evaluating Sabotage and Monitoring in LLM Agents. arXiv:2506.15740. https://arxiv.org/abs/2506.15740
+18. Lee, D., and Park, H. (2026). Faithful yet Collusive: Why Chain-of-Thought Monitoring Cannot Detect Collusion in LLM Pricing Agents under Oligopolistic Competition. arXiv:2609.18346. https://arxiv.org/abs/2609.18346
+19. Liu, Q., Chen, X., Zhao, Z., Zheng, Y., Yu, D., Zhang, Z., et al. (2026). Breaking the Secret: Economic Interventions for Combating Collusion in Embodied Multi-Agent Systems. https://arxiv.org/abs/2604.23511
+20. Marks, S., Treutlein, J., Bricken, T., Lindsey, J., Marcus, J., Mishra-Sharma, S., et al. (2025). Auditing language models for hidden objectives. arXiv:2503.10965. https://arxiv.org/abs/2503.10965
+21. Nakamura, M., Kumar, A., Das, S., Abdelnabi, S., Mahmud, S., Fioretto, F., et al. (2026). Colosseum: Auditing Collusion in Cooperative Multi-Agent Systems. Advances in Neural Information Processing Systems. https://arxiv.org/abs/2602.15198
+22. Needham, J., Edkins, G., Pimpale, G., Bartsch, H., and Hobbhahn, M. (2025). Large Language Models Often Know When They Are Being Evaluated. arXiv:2505.23836. https://arxiv.org/abs/2505.23836
+23. Shi, X., Zhang, Y., and Yang, D. (2026). Emergent Collusion in Long-Horizon LLM Agent Interaction. https://arxiv.org/abs/2609.24967
+24. Tao, Y., Zheng, X., Yang, S., Tao, M., and Wang, X. (2026). GroupGuard: A Framework for Modeling and Defending Collusive Attacks in Multi-Agent Systems. https://arxiv.org/abs/2603.13940
+25. Taylor, J., Black, S., Bowen, D., Read, T., Golechha, S., Zelenka-Martin, A., et al. (2025). Auditing Games for Sandbagging. arXiv:2512.07810. https://arxiv.org/abs/2512.07810
+26. Wehner, J., and Kraprayoon, J. (2026). Honeypots for AI Agent Insider Threats. Institute for AI Policy and Strategy. https://www.iaps.ai/research/honeypots-for-ai-agent-insider-threats
+27. Zeng, X., and Rudzicz, F. (2026). Voluntary Collusion with Secret Tools in Competing LLM Agents. https://arxiv.org/abs/2605.27593
+28. Zhou, Y., Ye, W., Liu, Y., Dong, Z., Yao, J., and Ge, J. (2026). Style Over Substance: Content-Invariant Wrappers Flip LLM Safety-Judge Verdicts. arXiv:2609.08236. https://arxiv.org/abs/2609.08236
 
 ## Appendix (optional)
 
