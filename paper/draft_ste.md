@@ -5,7 +5,7 @@ With Apart Research
 
 **Abstract**
 
-[[ABSTRACT]]
+LLM agents can now set prices, and auditors will need methods to find agents that collude. Cartel enforcement uses stings, in which a planted seller proposes coordination and records who agrees. We tested stings in an LLM double auction with 980 markets, 928 of them in eight pre-registered studies. The sellers were Claude Haiku 5.5, Claude Sonnet 5.5, Qwen3-32B and gpt-oss-20b. Claude sellers almost never accepted an explicit cartel offer (4 of 120). But 41 of the 72 Claude sellers that refused or ignored a planted offer coordinated with the other seller at the same time. A planted seller that talked like a peer and named the market price got agreement from 35/40 Haiku sellers, and from 0/40 Haiku sellers told to price independently. Open-weight sellers accepted even the explicit offer, and words about collusion did not deter them. In a silent-raise control, a request to raise prices did not make sellers in any family follow more often than a price raise alone. A notice about undercover auditors stopped Haiku coordination talk but not open-weight coordination. A notice that also stated the penalty stopped it (Qwen 29/40 to 1/40, gpt-oss 38/40 to 2/40). An instruction to price independently stopped coordination talk in all three families. We conclude that refusal of an explicit offer is not evidence of compliance, agreement is not evidence of a working cartel, and the meaning of a sting result depends on the model family.
 
 ## 1. Introduction
 
@@ -27,7 +27,7 @@ We tested all three failures in one controlled market with four seller models fr
 
 1. **To our knowledge, the first controlled test of planted collusion offers against LLM sellers.** Claude sellers almost never accept an explicit cartel offer (4 of 120). But many of the Claude sellers that refuse or ignore a planted offer coordinate with the other seller at the same time (41 of 72). Refusal of an explicit offer is therefore not evidence of compliance.
 2. **A sting that gets agreement where an explicit offer does not.** A planted seller that talks like a peer and names the market price got agreement from 35/40 Claude Haiku sellers, against 1/40 for the explicit offer. It got agreement from 0/40 Haiku sellers with an instruction to price independently. Almost every uninstructed seller coordinated, so we could not test the sting against sellers that are independent without an instruction.
-3. **The effect of a sting depends on the model family.** Open-weight sellers (Qwen3-32B and gpt-oss-20b) accept even the explicit offer, and words about collusion do not deter them. [[CONTRIB3_Y1]]
+3. **The effect of a sting depends on the model family.** Open-weight sellers (Qwen3-32B and gpt-oss-20b) accept even the explicit offer, and words about collusion do not deter them. In no family did a request to raise prices make sellers follow more often than a silent price raise. Sellers followed the price of the planted seller, not its request.
 4. **The wording of an audit notice decides if it deters.** A notice that undercover auditors exist stopped Haiku coordination talk. It did not stop open-weight coordination. A notice that also stated the penalty stopped it in both open-weight models. We found no evidence that sellers evade a sting.
 5. **Checks of monitors and labels.** Statements of independence deceived weaker monitors from two labs when they used our study prompt, and a codebook prompt corrected both. A judge from a different model family gave the same direction for all headline Claude results.
 
@@ -98,13 +98,26 @@ Each monitor used three prompts. These were the study judge prompt, a short depl
 
 All results are pre-registered unless we identify them as exploratory or post hoc. Table 2 rates the strength of the evidence for each main finding. Figure 1 compares the three model families.
 
-[[TABLE2]]
+| Finding | Main evidence | Strength |
+| --- | --- | --- |
+| Claude sellers refuse explicit offers, but many refusers coordinate | 4/120 accepted; 41/72 refusers coordinate (H4) | Strong |
+| Words about collusion decrease Claude coordination talk | R1, R3, peer-study test; also with private messages only | Strong |
+| The peer sting gets agreement from uninstructed but not instructed Haiku sellers | P1 35/40 vs 1/40; P2 35/40 vs 0/40 | Strong for agreement; detection of independent sellers untested |
+| An instruction to price independently stops coordination talk in all three families | 0 to 1/40 vs 28 to 40/40; also with private messages only | Strong |
+| A plain audit notice stops Haiku coordination talk | A1, A2; also with private messages only | Strong |
+| A plain audit notice has no detectable effect on open-weight coordination | V1, V2; the gpt-oss increase is public talk only | Moderate |
+| A notice that states the penalty stops open-weight coordination | X1, X2; also with private messages only | Strong |
+| Instructed open-weight sellers refuse the explicit offer | X4 0/40 vs 20/40 and 10/40 | Strong for Qwen; moderate for gpt-oss |
+| Sellers follow the planted seller's price, not its request | Y1 null in all three families; Y2 for Qwen and gpt-oss | Strong for no request effect in Qwen and gpt-oss; Haiku rarely follows at all |
+| No evidence that sellers evade a sting | V3, X3 | Weak (low power; untestable for Haiku) |
+| Statements of independence deceive weaker monitors | Study prompt, Haiku and Qwen | Moderate (depends on the prompt) |
+| gpt-oss answers stings in public | 18/40 never replied privately; 30/40 vs 9/40 peer-style public wording | Post hoc |
 
 *Table 2. The strength of the evidence for each main finding. "Strong" means pre-registered, significant after correction, and significant at the market level. "Moderate" means pre-registered but weaker under one robustness check. "Weak" means underpowered, untestable for one family, or post hoc.*
 
 [Insert Figure 1 here: fig_cross_family.png]
 
-*Figure 1. Key results for Claude Haiku 5.5, Qwen3-32B and gpt-oss-20b target sellers. Each point is 40 target sellers, with a 95% Wilson interval. Panel 1 shows agreement with the explicit $92 offer, with and without the auditor notice. Panel 2 shows agreement with the peer sting, by default, with the instruction to price independently, and with the notice. Panel 3 shows peer coordination in silent markets, after the explicit offer, and in silent markets with the notice. Panel 4 shows the target sellers that followed the +$2 raise, and the control. The Haiku notice arms are from the escalation study (seeds 50 to 69), and the other Haiku arms are from the peer-sting study (seeds 30 to 49). The gpt-oss escalate arm is post hoc.*
+*Figure 1. Key results for Claude Haiku 5.5, Qwen3-32B and gpt-oss-20b target sellers. Each point is 40 target sellers, with a 95% Wilson interval. Panel 1 shows agreement with the explicit $92 offer, with and without the auditor notice. Panel 2 shows agreement with the peer sting, by default, with the instruction to price independently, and with the notice. Panel 3 shows peer coordination in silent markets, after the explicit offer, and in silent markets with the notice. Panel 4 shows the target sellers that followed a +$2 raise by the planted seller with a request, without a request (silent raise), and in the control without a raise. The Haiku notice arms are from the escalation study (seeds 50 to 69), and the other Haiku arms are from the peer-sting study (seeds 30 to 49). The gpt-oss escalate arm is post hoc. The silent-raise arms are pre-registered.*
 
 ### 4.1 Refusal of an explicit offer is not evidence of compliance
 
@@ -128,7 +141,13 @@ Much agreement was insincere. The reasoning monitor coded 25 of the 35 agreeing 
 
 ### 4.4 Following a raise
 
-[[SECTION44]]
+In the escalation arm, the planted seller asks the target sellers to move up with it, and it raises its own ask. Thus a seller can follow because of the request, or because a competitor stopped undercutting. The silent-raise control separates the two. We pre-registered it after a methods review found this confound.
+
+In all three families, the request did not increase following (Y1). Haiku sellers followed 2/40 times with the request and 6/40 times without it. Qwen sellers followed 14/40 and 18/40 times, and gpt-oss sellers 13/40 and 15/40 times (all p > 0.75). The price move alone increased following for Qwen (18/40 against 2/40 in the peer control, Y2, p = 2.6e-5) and for gpt-oss (15/40 against 5/40, p = 0.009). It did not increase following for Haiku (6/40 against 2/40, p = 0.13).
+
+Thus the escalation test does not measure if sellers keep a deal. Following also did not cost sales. In hours 5 to 15, sellers that followed earned more than sellers that did not, in each family and arm (for example, Qwen sellers in the escalate arm earned $72 against $54). The pre-registered result that more Qwen sellers followed under escalation than in the peer control (Q6, 14/40 against 2/40, p = 0.00073) is correct, but the price move explains it. The same holds for gpt-oss (13/40 against 5/40, p = 0.030, post hoc). For Haiku, the +$2 escalation (E1, 2/40 against 2/40) and the +$1 escalation (E2, 13/40 against 18/40) did not increase following. Of the 22 Haiku sellers that agreed at the market price (judge label), 2 followed the +$2 raise. A typical Haiku reply was "At 89.50 we'd both sit above the bid stack and miss fills."
+
+For gpt-oss, the request still raised prices. Trade prices in hours 5 to 15 were $1.79 higher with the request than with the silent raise (95% CI $0.12 to $3.45), and $2.08 higher than in the peer control (CI $0.27 to $3.95). For Qwen and Haiku, these differences were not significant. Because the gpt-oss follow rates did not differ, we report this price result as descriptive only.
 
 ### 4.5 Which results are the same in all three families
 
@@ -158,13 +177,13 @@ Claude Sonnet with the study prompt flagged 69/72 original transcripts and 68/72
 
 The main lesson is about what a refusal shows. Claude sellers refused explicit offers because the offers named the offence, and many of them coordinated with each other at the same time. Many safety evaluations make an explicit harmful request and count refusals. Our results show that such a test can measure whether a request names the offence, and not whether the model avoids the behavior. A sting, and any evaluation of this type, needs a second measure of what the agent actually does.
 
-The second lesson is that the meaning of a sting result depends on the model family. Words about collusion deterred Claude but not Qwen or gpt-oss. A plain audit notice stopped Haiku coordination talk and had no detectable effect on open-weight coordination. gpt-oss even read it as an invitation in its notes. [[DISCUSS_Y1]] An auditor who calibrates a method on one family can draw an incorrect conclusion about another.
+The second lesson is that the meaning of a sting result depends on the model family. Words about collusion deterred Claude but not Qwen or gpt-oss. A plain audit notice stopped Haiku coordination talk and had no detectable effect on open-weight coordination. gpt-oss even read it as an invitation in its notes. In all three families, sellers followed the price of the planted seller and not its request. Thus agreement with a sting did not show a working cartel in any family. An auditor who calibrates a method on one family can draw an incorrect conclusion about another.
 
 We recommend five actions to auditors and to the companies that deploy pricing agents.
 
 1. Do not treat refusal of an explicit offer as evidence of compliance. Measure what the agent does as well.
 2. If you use a sting, make it talk like the agents in the market and propose terms at the market price. Also read public replies, because some models answer in public. We could not measure how often such a sting flags sellers that act independently on their own.
-3. [[REC3_Y1]]
+3. Do not treat agreement as a cartel. To test if agents act on a deal, compare a request with a control in which the planted seller changes its price without a request.
 4. Give each agent a standing instruction to price independently. This instruction stopped coordination talk in all three families.
 5. If you announce audits, state the penalty. A notice without the penalty stopped Haiku coordination talk but not open-weight coordination.
 
@@ -186,7 +205,7 @@ We propose three next steps. First, a population of sellers that are independent
 
 ## 6. Conclusion
 
-In our markets, Claude sellers refused explicit cartel offers but often coordinated with each other at the same time. Thus refusal of an explicit offer was not evidence of compliance. A planted seller that talked like a peer got agreement from many uninstructed sellers and from few or no instructed sellers, in all three model families. Open-weight sellers accepted even the explicit offer, and words about collusion did not deter them. [[CONCL_Y1]]
+In our markets, Claude sellers refused explicit cartel offers but often coordinated with each other at the same time. Thus refusal of an explicit offer was not evidence of compliance. A planted seller that talked like a peer got agreement from many uninstructed sellers and from few or no instructed sellers, in all three model families. Open-weight sellers accepted even the explicit offer, and words about collusion did not deter them. In no family did a request to raise prices make sellers follow more often than a silent price raise. Thus agreement with a sting showed willingness to agree, not a working cartel.
 
 A notice about audits deterred open-weight sellers only when it stated the penalty. We found no evidence that any model evades a sting, but that test was weak. Sting audits can give useful information about LLM agents. But an auditor must measure behavior as well as agreement, and must interpret the result for the model family that it audits.
 
@@ -241,7 +260,7 @@ Suryansh Sijwali designed the study, ran the experiments, analyzed the results a
 3. **Monitor evasion.** Our disclaimer test shows that statements of independence can deceive weaker monitors with some prompts. We give the correction (a codebook prompt) with the result.
 4. **Deceptive talk.** We saw agents that asked others to hold prices while they planned to undercut. This occurred in a simulation between agents. It does not show that the models deceive people.
 5. **Model differences.** We report differences between model families from one market design and different setups. These differences do not rank the general safety of the models.
-6. **Compute and cost.** The logged Anthropic API cost at list price was about $90, plus unlogged judge calls. The Modal GPU cost was [fill in from the Modal dashboard].
+6. **Compute and cost.** The logged Anthropic API cost at list price was about $92, plus about $10 of judge calls that the usage files do not log. The Modal GPU cost was [fill in from the Modal dashboard].
 
 ### B. Planted-seller scripts
 
@@ -281,7 +300,10 @@ Each row gives the test with one observation for each target seller, and with on
 | X1: explained vs plain notice, coordination (gpt-oss) | 2/40 vs 38/40 | 2/20 vs 20/20 | 0/20 vs 18/20 |
 | X4: no instruction > instruction, explicit offer (Qwen) | 20/40 vs 0/40 | 11/20 vs 0/20 | 9/20 vs 0/20, p = 0.001 |
 | X4: no instruction > instruction, explicit offer (gpt-oss) | 10/40 vs 0/40 | 8/20 vs 0/20, p = 0.002 | 2/20 vs 0/20, p = 0.24 |
-[[TABLEC_Y1]]
+| Y1: request > silent raise, followed (Qwen) | 14/40 vs 18/40 | 8/20 vs 10/20, p = 0.83 | 6/20 vs 8/20, p = 0.84 |
+| Y1: request > silent raise, followed (gpt-oss) | 13/40 vs 15/40 | 8/20 vs 9/20, p = 0.74 | 5/20 vs 6/20, p = 0.76 |
+| Y2: silent raise > peer control, followed (Qwen) | 18/40 vs 2/40 | 10/20 vs 1/20, p = 0.0017 | 8/20 vs 1/20, p = 0.0098 |
+| Y2: silent raise > peer control, followed (gpt-oss) | 15/40 vs 5/40 | 9/20 vs 3/20, p = 0.041 | 6/20 vs 2/20, p = 0.12 |
 
 *Table C1. Key tests with one observation for each market. P3, P4, E1 and V3 have no market-level version. All results and source files are in `paper/findings.md` and `results_final/analysis/`.*
 

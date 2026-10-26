@@ -559,6 +559,23 @@ seller, is reported to the exchange and loses its trading licence."
 7. **Descriptive.** gpt-oss silent_aware has 4/40 accept labels with a silent planted seller. These are targets
    that wrote to the planted seller unprompted; they are not used in any test.
 
+## Silent-raise control (pre-registered in `prereg_escalate_quiet.md`, committed at 01:14 ET Oct 26 before any market ran)
+
+60 markets: escalatequiet_none for Haiku (seeds 50 to 69), Qwen and gpt-oss (seeds 30 to 49). 12 Haiku markets were
+lost to exhausted API credit and rerun on the same seeds (deviation logged). 0 agent errors in the final data.
+
+1. **Y1, not supported in any family.** The request did not increase following. Haiku 2/40 with the request
+   against 6/40 with the silent raise (p = 0.97), Qwen 14/40 against 18/40 (p = 0.87), gpt-oss 13/40 against
+   15/40 (p = 0.76). Holm p = 1.0 for all three.
+2. **Y2, supported for Qwen and gpt-oss.** The silent raise alone increased following against the peer control:
+   Qwen 18/40 against 2/40 (p = 2.6e-5; market level 0.0017 any, 0.0098 both), gpt-oss 15/40 against 5/40
+   (p = 0.009; 0.041 any, 0.12 both). Haiku 6/40 against 2/40 (p = 0.13).
+3. **Following was not costly.** Followers earned more than non-followers in every arm and family.
+4. **Prices.** gpt-oss trade prices in hours 5 to 15 were $1.79 higher with the request than with the silent raise
+   (CI $0.12 to $3.45). Qwen and Haiku differences were not significant.
+5. **Interpretation.** Q6 (Qwen 14/40 against 2/40) and the post hoc gpt-oss escalation result are explained by the
+   planted seller's price move, not by keeping a deal. The escalation test does not measure commitment.
+
 ## What this changes in the story
 
 The sting is a poor detector but a partial deterrent, and the deterrent part does not need the sting.

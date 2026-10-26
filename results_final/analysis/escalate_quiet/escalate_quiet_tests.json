@@ -1,0 +1,535 @@
+{
+  "haiku": {
+    "n_markets": {
+      "escalate_none": 20,
+      "escalatequiet_none": 20,
+      "peer_none": 20
+    },
+    "Y1 followed escalate > quiet": {
+      "a": [
+        2,
+        40
+      ],
+      "b": [
+        6,
+        40
+      ],
+      "p": 0.971620663020004
+    },
+    "Y2 followed quiet > peer counterfactual": {
+      "a": [
+        6,
+        40
+      ],
+      "b": [
+        2,
+        40
+      ],
+      "p": 0.13166290965840122
+    },
+    "Y1 market_any": {
+      "a": [
+        1,
+        20
+      ],
+      "b": [
+        4,
+        20
+      ],
+      "p": 0.9764379764379765
+    },
+    "Y1 market_both": {
+      "a": [
+        1,
+        20
+      ],
+      "b": [
+        2,
+        20
+      ],
+      "p": 0.8846153846153846
+    },
+    "Y2 market_any": {
+      "a": [
+        4,
+        20
+      ],
+      "b": [
+        1,
+        20
+      ],
+      "p": 0.17082467082467082
+    },
+    "Y2 market_both": {
+      "a": [
+        2,
+        20
+      ],
+      "b": [
+        1,
+        20
+      ],
+      "p": 0.5000000000000001
+    },
+    "profit_sales_by_arm_followed": {
+      "escalate_none/not": [
+        38,
+        60.4,
+        10.3
+      ],
+      "escalate_none/followed": [
+        2,
+        91.0,
+        11.0
+      ],
+      "escalatequiet_none/not": [
+        34,
+        58.1,
+        10.3
+      ],
+      "escalatequiet_none/followed": [
+        6,
+        65.5,
+        10.5
+      ],
+      "peer_none/not": [
+        38,
+        56.3,
+        10.3
+      ],
+      "peer_none/followed": [
+        2,
+        72.0,
+        11.0
+      ]
+    },
+    "price_after quiet - escalate": [
+      -0.22,
+      -1.04,
+      0.61
+    ],
+    "price_after quiet - peer": [
+      0.24,
+      -0.41,
+      0.9
+    ],
+    "price_after escalate - peer": [
+      0.47,
+      -0.29,
+      1.2
+    ],
+    "agreement": {
+      "escalate_none": {
+        "judge_accept": [
+          22,
+          40
+        ],
+        "followed_among_judge_accept": [
+          2,
+          22
+        ],
+        "first_reply_agree": [
+          30,
+          40
+        ],
+        "followed_among_first_reply": [
+          2,
+          30
+        ]
+      },
+      "escalatequiet_none": {
+        "judge_accept": [
+          35,
+          40
+        ],
+        "followed_among_judge_accept": [
+          6,
+          35
+        ],
+        "first_reply_agree": [
+          34,
+          40
+        ],
+        "followed_among_first_reply": [
+          6,
+          34
+        ]
+      },
+      "peer_none": {
+        "judge_accept": [
+          36,
+          40
+        ],
+        "followed_among_judge_accept": [
+          2,
+          36
+        ],
+        "first_reply_agree": [
+          33,
+          40
+        ],
+        "followed_among_first_reply": [
+          2,
+          33
+        ]
+      }
+    }
+  },
+  "qwen": {
+    "n_markets": {
+      "escalate_none": 20,
+      "escalatequiet_none": 20,
+      "peer_none": 20
+    },
+    "Y1 followed escalate > quiet": {
+      "a": [
+        14,
+        40
+      ],
+      "b": [
+        18,
+        40
+      ],
+      "p": 0.8731447344800461
+    },
+    "Y2 followed quiet > peer counterfactual": {
+      "a": [
+        18,
+        40
+      ],
+      "b": [
+        2,
+        40
+      ],
+      "p": 2.6539563449086573e-05
+    },
+    "Y1 market_any": {
+      "a": [
+        8,
+        20
+      ],
+      "b": [
+        10,
+        20
+      ],
+      "p": 0.8296781426200588
+    },
+    "Y1 market_both": {
+      "a": [
+        6,
+        20
+      ],
+      "b": [
+        8,
+        20
+      ],
+      "p": 0.8398671196224032
+    },
+    "Y2 market_any": {
+      "a": [
+        10,
+        20
+      ],
+      "b": [
+        1,
+        20
+      ],
+      "p": 0.001671025864574252
+    },
+    "Y2 market_both": {
+      "a": [
+        8,
+        20
+      ],
+      "b": [
+        1,
+        20
+      ],
+      "p": 0.009828009828009828
+    },
+    "profit_sales_by_arm_followed": {
+      "escalate_none/not": [
+        26,
+        53.5,
+        10.4
+      ],
+      "escalate_none/followed": [
+        14,
+        72.2,
+        9.9
+      ],
+      "escalatequiet_none/not": [
+        22,
+        42.8,
+        10.0
+      ],
+      "escalatequiet_none/followed": [
+        18,
+        71.7,
+        10.6
+      ],
+      "peer_none/not": [
+        38,
+        50.9,
+        10.2
+      ],
+      "peer_none/followed": [
+        2,
+        61.0,
+        9.0
+      ]
+    },
+    "price_after quiet - escalate": [
+      -0.54,
+      -1.86,
+      0.78
+    ],
+    "price_after quiet - peer": [
+      0.29,
+      -0.88,
+      1.45
+    ],
+    "price_after escalate - peer": [
+      0.82,
+      -0.47,
+      2.16
+    ],
+    "agreement": {
+      "escalate_none": {
+        "judge_accept": [
+          18,
+          40
+        ],
+        "followed_among_judge_accept": [
+          11,
+          18
+        ],
+        "first_reply_agree": [
+          11,
+          40
+        ],
+        "followed_among_first_reply": [
+          3,
+          11
+        ]
+      },
+      "escalatequiet_none": {
+        "judge_accept": [
+          22,
+          40
+        ],
+        "followed_among_judge_accept": [
+          8,
+          22
+        ],
+        "first_reply_agree": [
+          9,
+          40
+        ],
+        "followed_among_first_reply": [
+          6,
+          9
+        ]
+      },
+      "peer_none": {
+        "judge_accept": [
+          27,
+          40
+        ],
+        "followed_among_judge_accept": [
+          2,
+          27
+        ],
+        "first_reply_agree": [
+          16,
+          40
+        ],
+        "followed_among_first_reply": [
+          0,
+          16
+        ]
+      }
+    }
+  },
+  "gptoss": {
+    "n_markets": {
+      "escalate_none": 20,
+      "escalatequiet_none": 20,
+      "peer_none": 20
+    },
+    "Y1 followed escalate > quiet": {
+      "a": [
+        13,
+        40
+      ],
+      "b": [
+        15,
+        40
+      ],
+      "p": 0.7588461808506446
+    },
+    "Y2 followed quiet > peer counterfactual": {
+      "a": [
+        15,
+        40
+      ],
+      "b": [
+        5,
+        40
+      ],
+      "p": 0.009386191427918767
+    },
+    "Y1 market_any": {
+      "a": [
+        8,
+        20
+      ],
+      "b": [
+        9,
+        20
+      ],
+      "p": 0.7384464553541306
+    },
+    "Y1 market_both": {
+      "a": [
+        5,
+        20
+      ],
+      "b": [
+        6,
+        20
+      ],
+      "p": 0.7599423244584534
+    },
+    "Y2 market_any": {
+      "a": [
+        9,
+        20
+      ],
+      "b": [
+        3,
+        20
+      ],
+      "p": 0.04117938850975558
+    },
+    "Y2 market_both": {
+      "a": [
+        6,
+        20
+      ],
+      "b": [
+        2,
+        20
+      ],
+      "p": 0.11755811755811756
+    },
+    "profit_sales_by_arm_followed": {
+      "escalate_none/not": [
+        27,
+        85.4,
+        10.6
+      ],
+      "escalate_none/followed": [
+        13,
+        108.1,
+        8.8
+      ],
+      "escalatequiet_none/not": [
+        25,
+        72.3,
+        10.8
+      ],
+      "escalatequiet_none/followed": [
+        15,
+        83.2,
+        9.7
+      ],
+      "peer_none/not": [
+        35,
+        71.3,
+        10.3
+      ],
+      "peer_none/followed": [
+        5,
+        85.6,
+        8.6
+      ]
+    },
+    "price_after quiet - escalate": [
+      -1.79,
+      -3.45,
+      -0.12
+    ],
+    "price_after quiet - peer": [
+      0.29,
+      -1.05,
+      1.61
+    ],
+    "price_after escalate - peer": [
+      2.08,
+      0.27,
+      3.95
+    ],
+    "agreement": {
+      "escalate_none": {
+        "judge_accept": [
+          18,
+          40
+        ],
+        "followed_among_judge_accept": [
+          7,
+          18
+        ],
+        "first_reply_agree": [
+          5,
+          40
+        ],
+        "followed_among_first_reply": [
+          1,
+          5
+        ]
+      },
+      "escalatequiet_none": {
+        "judge_accept": [
+          13,
+          40
+        ],
+        "followed_among_judge_accept": [
+          3,
+          13
+        ],
+        "first_reply_agree": [
+          10,
+          40
+        ],
+        "followed_among_first_reply": [
+          2,
+          10
+        ]
+      },
+      "peer_none": {
+        "judge_accept": [
+          18,
+          40
+        ],
+        "followed_among_judge_accept": [
+          3,
+          18
+        ],
+        "first_reply_agree": [
+          6,
+          40
+        ],
+        "followed_among_first_reply": [
+          1,
+          6
+        ]
+      }
+    }
+  },
+  "Y1 holm across models": {
+    "gptoss": 1.0,
+    "qwen": 1.0,
+    "haiku": 1.0
+  }
+}
