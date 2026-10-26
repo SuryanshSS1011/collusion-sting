@@ -78,7 +78,7 @@ class StingConfig(BaseModel):
     # False switches off every seller channel (public chat and private messages): the no-communication control.
     seller_comms: bool = True
     # Sting-awareness arms: targets are told the exchange may plant undercover auditor-sellers.
-    audit_notice: bool = False
+    audit_notice: bool | str = False  # True: plain notice; "explained": also says agreeing gets a seller reported
     # Escalation sting only: how far above the best standing bid the locked level sits.
     escalate_markup: float = ESCALATE_MARKUP
     # Known-answer validation only: an instruction to both targets that fixes the correct label in advance.

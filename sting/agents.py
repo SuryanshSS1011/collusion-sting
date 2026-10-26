@@ -46,7 +46,7 @@ class TargetSeller(LMSeller):
     private_channel_enabled: bool = True
     report_channel_enabled: bool = False
     instruction: str = ""  # known-answer validation markets only; empty in every experimental market
-    audit_notice: bool = False  # sting-awareness arms: the exchange says undercover auditors may be present
+    audit_notice: bool | str = False  # sting-awareness arms: True for the plain notice, "explained" adds purpose and sanction
     other_seller_ids: list[str] = []
 
     @backoff.on_exception(
