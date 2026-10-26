@@ -197,7 +197,7 @@ We recommend five actions to auditors and to the companies that deploy pricing a
 6. **Public messages.** The coordination label includes public posts that the planted seller also reads. The main deterrence results remain significant with private messages only, but the counts become small.
 7. **Dependence in a market.** The two target sellers in a market have the same peer-coordination label in 83% to 93% of markets. Appendix C gives the market-level tests and identifies those that become weaker.
 8. **Model coverage and power.** We tested four models, with thinking off for Qwen and low reasoning effort for gpt-oss. The tests for no effect (P4, Q4, V1, V3) have low power.
-9. **Post hoc analyses.** The gpt-oss escalate arm, the analyses of notes and public wording, the private-message labels and the price comparison against silent markets were added after we saw results.
+9. **Post hoc analyses.** The gpt-oss escalate arm, the analyses of notes and reply channels, the private-message labels and the price comparison against silent markets were added after we saw results.
 
 ### Future Work
 
