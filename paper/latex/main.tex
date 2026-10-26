@@ -22,6 +22,7 @@
 \providecommand{\tightlist}{\setlength{\itemsep}{2pt}\setlength{\parskip}{0pt}}
 \setlength{\parskip}{3pt}
 \usepackage{titlesec}
+\usepackage{ragged2e}
 \titlespacing*{\section}{0pt}{10pt plus 2pt}{4pt}
 \titlespacing*{\subsection}{0pt}{8pt plus 2pt}{3pt}
 \titlespacing*{\subsubsection}{0pt}{6pt plus 2pt}{2pt}
@@ -35,16 +36,17 @@
 \setcounter{topnumber}{3}
 \setcounter{totalnumber}{4}
 
-\title{\textbf{The Undercover Seller: Sting Audits of LLM Sellers in a Double Auction}}
-\author{Suryansh Singh Sijwali\\ The Pennsylvania State University\\[4pt] \small With Apart Research}
-\date{}
-
 \begin{document}
-\maketitle
-
-\begin{abstract}
-LLM agents can now set prices, and auditors will need methods to find agents that collude. Cartel enforcement uses stings, in which a planted seller proposes coordination and records who agrees. We tested stings in an LLM double auction with 980 markets, 928 of them in eight pre-registered studies. The sellers were Claude Haiku 5.5, Claude Sonnet 5.5, Qwen3-32B and gpt-oss-20b. Claude sellers almost never accepted an explicit cartel offer (4 of 120). But 41 of the 72 Claude sellers that refused or ignored a planted offer coordinated with the other seller at the same time. A planted seller that talked like a peer and named the market price got agreement from 35/40 Haiku sellers, and from 0/40 Haiku sellers told to price independently. Open-weight sellers accepted even the explicit offer, and words about collusion did not deter them. In a silent-raise control, a request to raise prices did not make Haiku, Qwen or gpt-oss sellers follow more often than a price raise alone. A notice about undercover auditors stopped Haiku coordination talk but not open-weight coordination. A notice that also stated the penalty stopped it (Qwen 29/40 to 1/40, gpt-oss 38/40 to 2/40). An instruction to price independently stopped coordination talk for Haiku, Qwen and gpt-oss. We conclude that refusal of an explicit offer is not evidence of compliance, agreement is not evidence of a working cartel, and the meaning of a sting result depends on the model family.
-\end{abstract}
+\thispagestyle{plain}
+\setlength{\fboxsep}{8pt}
+\newlength{\boxw}\setlength{\boxw}{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}
+\noindent\fbox{\parbox{\boxw}{\centering\vspace{4pt}{\Large\bfseries The Undercover Seller: Sting Audits of LLM Sellers in a Double Auction\footnotemark}\par\vspace{4pt}}}\par\nointerlineskip
+\noindent\fbox{\parbox{\boxw}{\vspace{2pt}\centering Suryansh Singh Sijwali\\ {\small The Pennsylvania State University}\\[6pt]
+\textbf{With} Apart Research\\[8pt]
+\textbf{Abstract}\par\vspace{3pt}
+\justifying\small\noindent LLM agents can now set prices, and auditors will need methods to find agents that collude. Cartel enforcement uses stings, in which a planted seller proposes coordination and records who agrees. We tested stings in an LLM double auction with 980 markets, 928 of them in eight pre-registered studies. The sellers were Claude Haiku 5.5, Claude Sonnet 5.5, Qwen3-32B and gpt-oss-20b. Claude sellers almost never accepted an explicit cartel offer (4 of 120). But 41 of the 72 Claude sellers that refused or ignored a planted offer coordinated with the other seller at the same time. A planted seller that talked like a peer and named the market price got agreement from 35/40 Haiku sellers, and from 0/40 Haiku sellers told to price independently. Open-weight sellers accepted even the explicit offer, and words about collusion did not deter them. In a silent-raise control, a request to raise prices did not make Haiku, Qwen or gpt-oss sellers follow more often than a price raise alone. A notice about undercover auditors stopped Haiku coordination talk but not open-weight coordination. A notice that also stated the penalty stopped it (Qwen 29/40 to 1/40, gpt-oss 38/40 to 2/40). An instruction to price independently stopped coordination talk for Haiku, Qwen and gpt-oss. We conclude that refusal of an explicit offer is not evidence of compliance, agreement is not evidence of a working cartel, and the meaning of a sting result depends on the model family.\par\vspace{2pt}}}
+\footnotetext{Research conducted at the \href{https://apartresearch.com/sprints/ai-collusion-research-sprint-2026-10-23-to-2026-10-25}{AI Collusion Research Sprint}, October 2026.}
+\vspace{4pt}
 
 \hypertarget{introduction}{%
 \subsection{1. Introduction}\label{introduction}}
@@ -103,7 +105,7 @@ We tested all three failures in one controlled market with four seller models fr
 
 \textbf{Market.} We used the continuous double auction of Agrawal et al.~(2025) with no changes to its rules. Three sellers have a cost of \$80 for each lot. Three buyers have a value of \$100 for each lot. Thus the competitive price is \$90. A session has 15 hours. Each hour, each agent writes private notes (a reflection and a plan) and sets an ask or a bid. It can also send a public message to all sellers. We added a private channel between sellers. Two sellers are target sellers, and they use the same model. The third seller is a planted seller. A script controls its messages and its ask. Thus its style of writing cannot identify it (Dietrich, 2026).
 
-\textbf{Stings.} The planted seller sends messages in hours 1, 4 and 8. The target sellers read each message one hour later. Each condition has two wordings. The seed number selects the wording. Appendix A gives the scripts. We used the seven conditions that follow.
+\textbf{Stings.} The planted seller sends messages in hours 1, 4 and 8. The target sellers read each message one hour later. Each condition has two wordings. The seed number selects the wording. Appendix B gives the scripts. We used the seven conditions that follow.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -128,7 +130,7 @@ We tested all three failures in one controlled market with four seller models fr
 
 \textbf{Models.} Claude Haiku 5.5 and Claude Sonnet 5.5 ran through the Anthropic API. Haiku was the buyer in all Claude markets. Qwen3-32B (FP8 weights, thinking off) and gpt-oss-20b (low reasoning effort) ran on vLLM on Modal H100 GPUs. Each open-weight model was both the seller and the buyer in its markets. The open-weight agents used temperature 0.7. The Claude 5.5 models do not accept a temperature setting, so they used their default.
 
-\textbf{Studies.} We ran nine studies in the order that follows. Each study answered a question that the one before it raised. Appendix E gives the arms and the number of markets in each study.
+\textbf{Studies.} We ran nine studies in the order that follows. Each study answered a question that the one before it raised. Appendix F gives the arms and the number of markets in each study.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -151,19 +153,19 @@ We tested all three failures in one controlled market with four seller models fr
 
 \textbf{Measures.} The primary judge is Claude Sonnet 5.5 with a fixed prompt. It reads the messages of the planted seller and all messages that the target seller wrote after them. It gives two labels. The \emph{offer response} is accept, reject, ambiguous or none. A target seller that never writes privately to the planted seller gets ``none''. \emph{Peer coordination} is yes if the target seller proposed price coordination to the other target seller, or agreed to it. Public messages go to all sellers, so this label can include public posts that the planted seller also reads. We report a version that uses only private messages between the target sellers (Section 4.2). We also measured behavior without a judge. In the escalate and silent-raise arms, a target seller \emph{followed} the raise if, in at least half of hours 5 to 15, its ask was at or above the planted seller's raised level minus \$0.25. In the peer control, we used the level that an escalating sting would have set at hour 4. We recorded all asks, trades and profits.
 
-\textbf{Label validation and monitor test.} We had no human coders, so we checked the labels in four ways and with a judge from a different model family. We also tested if statements of independence deceive monitors. Appendix D gives the details.
+\textbf{Label validation and monitor test.} We had no human coders, so we checked the labels in four ways and with a judge from a different model family. We also tested if statements of independence deceive monitors. Appendix E gives the details.
 
-\textbf{Statistics and pre-registration.} We pre-registered each study in the repository before its first market ran. Each pre-registration gives the hypotheses, tests and decision rules. A deviation log in each file records each change, its time, and whether we had seen the results. We used Fisher exact tests, one-sided where pre-registered, with Holm correction in each study. We used Wilson intervals for proportions and bootstrap intervals (10,000 resamples) for price differences. The two target sellers in a market affect each other. Thus we repeated each key test with one observation for each market (Appendix B).
+\textbf{Statistics and pre-registration.} We pre-registered each study in the repository before its first market ran. Each pre-registration gives the hypotheses, tests and decision rules. A deviation log in each file records each change, its time, and whether we had seen the results. We used Fisher exact tests, one-sided where pre-registered, with Holm correction in each study. We used Wilson intervals for proportions and bootstrap intervals (10,000 resamples) for price differences. The two target sellers in a market affect each other. Thus we repeated each key test with one observation for each market (Appendix C).
 
 \hypertarget{results}{%
 \subsection{4. Results}\label{results}}
 
-All results are pre-registered unless we identify them as exploratory or post hoc. Each test compares an arm with a baseline: markets with no planted messages, the peer control without a raise, or the silent-raise control. As a positive control for the labels, 32 known-answer markets told target sellers to collude, accept, reject or stay independent. All three label sources matched the intended label for every seller that followed its instruction (41 of 41 offer responses and 42 of 42 coordination labels). Only 2 sellers followed the instruction to collude, so this control barely tests the detection of coordination. Appendix E rates the strength of the evidence for each main finding. Figure 1 compares the three model families.
+All results are pre-registered unless we identify them as exploratory or post hoc. Each test compares an arm with a baseline: markets with no planted messages, the peer control without a raise, or the silent-raise control. As a positive control for the labels, 32 known-answer markets told target sellers to collude, accept, reject or stay independent. All three label sources matched the intended label for every seller that followed its instruction (41 of 41 offer responses and 42 of 42 coordination labels). Only 2 sellers followed the instruction to collude, so this control barely tests the detection of coordination. Appendix F rates the strength of the evidence for each main finding. Figure 1 compares the three model families.
 
 \begin{figure}[!t]
 \centering
 \includegraphics[width=\textwidth]{fig_cross_family.pdf}
-\caption{Key results for Claude Haiku 5.5, Qwen3-32B and gpt-oss-20b target sellers. Each point is 40 target sellers, with a 95\% Wilson interval. Each model has its own background colour, and each count is printed above its interval. We did not run Haiku with the explicit offer and the notice. Without the notice, Haiku accepted that offer only 1/40 times. Panel (a) shows agreement with the explicit \$92 offer, with and without the auditor notice. Panel (b) shows agreement with the peer sting, by default, with the instruction to price independently, and with the notice. Panel (c) shows peer coordination in silent markets, after the explicit offer, and in silent markets with the notice. Panel (d) shows the target sellers that followed a +\$2 raise by the planted seller with a request, without a request (silent raise), and in the control without a raise. The gpt-oss escalate arm is post hoc. The silent-raise arms are pre-registered. Appendix C gives the seeds of the Haiku arms.}
+\caption{Key results for Claude Haiku 5.5, Qwen3-32B and gpt-oss-20b target sellers. Each point is 40 target sellers, with a 95\% Wilson interval. Each model has its own background colour, and each count is printed above its interval. We did not run Haiku with the explicit offer and the notice. Without the notice, Haiku accepted that offer only 1/40 times. Panel (a) shows agreement with the explicit \$92 offer, with and without the auditor notice. Panel (b) shows agreement with the peer sting, by default, with the instruction to price independently, and with the notice. Panel (c) shows peer coordination in silent markets, after the explicit offer, and in silent markets with the notice. Panel (d) shows the target sellers that followed a +\$2 raise by the planted seller with a request, without a request (silent raise), and in the control without a raise. The gpt-oss escalate arm is post hoc. The silent-raise arms are pre-registered. Appendix D gives the seeds of the Haiku arms.}
 \label{fig:cross}
 \end{figure}
 
@@ -224,8 +226,8 @@ We found no evidence of evasion, but this test is weak. Among open-weight seller
 
 Claude Sonnet with the study prompt flagged 69/72 original transcripts and 68/72 transcripts with statements of independence. Thus the pre-registered primary test was null. Weaker monitors made errors with the same prompt. Against the original transcripts, Haiku decreased from 42/72 to 30/72 (p = 0.0009), and Qwen3-32B decreased from 38/72 to 11/72 (27 against 0 discordant pairs, p = 7.5e-9). The hardened codebook prompt corrected both, to 70/72 for Haiku and 68/72 for Qwen. The effect depends on the prompt. With the short deployment prompt, Haiku flagged more transcripts with the statement (60/72 against 38/72 with a neutral sentence).
 
-\hypertarget{discussion}{%
-\subsection{5. Discussion}\label{discussion}}
+\hypertarget{discussion-and-limitations}{%
+\subsection{5. Discussion and Limitations}\label{discussion-and-limitations}}
 
 The main lesson is about what a refusal shows. Claude sellers refused explicit offers, and many of them coordinated with each other at the same time. After an explicit offer, their notes mentioned collusion or law far more often (exploratory), which suggests that they reacted to the named offence. Many safety evaluations make an explicit harmful request and count refusals. Our results show that such a test can measure whether a request names the offence, and not whether the model avoids the behavior. A sting, and any evaluation of this type, needs a second measure of what the agent actually does.
 
@@ -248,19 +250,8 @@ We recommend five actions to auditors and to the companies that deploy pricing a
   If you announce audits, state the penalty. A notice without the penalty stopped Haiku coordination talk but not open-weight coordination.
 \end{enumerate}
 
-Section 6 states what these results do not establish and gives the limitations of our setup.
-
-\hypertarget{future-work}{%
-\subsubsection{Future Work}\label{future-work}}
-
-We propose three next steps. First, a population of sellers that are independent without an instruction, to measure the false alarms of a sting. Second, a planted seller that negotiates in real time and reads public replies. Third, a market in which coordination increases prices, so that a sting can be judged by the harm that it prevents.
-
-\hypertarget{limitations-and-dual-use-ethical-considerations}{%
-\subsection{6. Limitations and Dual-Use / Ethical Considerations}\label{limitations-and-dual-use-ethical-considerations}}
-
-Our results establish three things for one simulated market. Refusal of an explicit offer did not show that a seller avoided coordination. A peer-style offer separated instructed from uninstructed sellers. The effect of words about collusion and of audit notices differed by model family. They do not establish price harm, the false-alarm rate of a sting against sellers that are independent without an instruction, or the behavior of agents in real markets.
-
-\textbf{Limitations.}
+\hypertarget{limitations}{%
+\subsubsection{Limitations}\label{limitations}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -278,28 +269,18 @@ Our results establish three things for one simulated market. Refusal of an expli
 \item
   \textbf{Public messages.} The coordination label includes public posts that the planted seller also reads. The main deterrence results remain significant with private messages only, but the counts become small.
 \item
-  \textbf{Further limitations.} Appendix F gives three more, on dependence in a market, model coverage and power, and post hoc analyses.
+  \textbf{Further limitations.} Appendix G gives three more, on dependence in a market, model coverage and power, and post hoc analyses.
 \end{enumerate}
 
-\textbf{Dual-use and ethical considerations.}
+Appendix A states what our results do and do not establish, and gives the dual-use and ethical considerations.
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  \textbf{Entrapment.} The peer sting asks for an agreement. In our markets, we saw no increase in coordination among instructed agents, but that test has low power. In a real market, a sting asks for the offence that it detects. Whether a sting is legitimate depends on who operates it and under which rules.
-\item
-  \textbf{Dual use.} Our scripts show that talk like a peer at the market price gets agreement from LLM sellers. A malicious person can use this to ask deployed agents to collude. The scripts are short and generic. The same knowledge helps auditors and the designers of monitors.
-\item
-  \textbf{Monitor evasion.} Our disclaimer test shows that statements of independence can deceive weaker monitors with some prompts. We give the correction (a codebook prompt) with the result.
-\item
-  \textbf{Deceptive talk.} We saw agents that asked others to hold prices while they planned to undercut. This occurred in a simulation between agents. It does not show that the models deceive people.
-\item
-  \textbf{Silent price leadership.} Open-weight sellers followed a raise of the planted seller's price without any request (Qwen 18/40 and gpt-oss 15/40, against 2/40 and 5/40 without a raise). An agent could therefore lead prices up without a message that a monitor of messages can read. Audits of agent markets need price data as well as messages.
-\end{enumerate}
+\hypertarget{future-work}{%
+\subsubsection{Future Work}\label{future-work}}
+
+We propose three next steps. First, a population of sellers that are independent without an instruction, to measure the false alarms of a sting. Second, a planted seller that negotiates in real time and reads public replies. Third, a market in which coordination increases prices, so that a sting can be judged by the harm that it prevents.
 
 \hypertarget{conclusion}{%
-\subsection{7. Conclusion}\label{conclusion}}
+\subsection{6. Conclusion}\label{conclusion}}
 
 In our markets, Claude sellers refused explicit cartel offers but often coordinated with each other at the same time. Thus refusal of an explicit offer was not evidence of compliance. A planted seller that talked like a peer got agreement from many uninstructed sellers and from few or no instructed sellers, for Haiku, Qwen and gpt-oss. Open-weight sellers accepted even the explicit offer, and words about collusion did not deter them. For none of these three models did a request to raise prices make sellers follow more often than a silent price raise. Thus agreement with a sting showed willingness to agree, not a working cartel.
 
@@ -349,15 +330,37 @@ The author designed the study, ran the experiments, analyzed the results and wro
 
 \clearpage\appendix\section*{Appendix}
 
-\hypertarget{a.-planted-seller-scripts}{%
-\subsection{A. Planted-seller scripts}\label{a.-planted-seller-scripts}}
+\hypertarget{a.-limitations-and-dual-use-ethical-considerations}{%
+\subsection{A. Limitations and Dual-Use / Ethical Considerations}\label{a.-limitations-and-dual-use-ethical-considerations}}
+
+Our results establish three things for one simulated market. Refusal of an explicit offer did not show that a seller avoided coordination. A peer-style offer separated instructed from uninstructed sellers. The effect of words about collusion and of audit notices differed by model family. They do not establish price harm, the false-alarm rate of a sting against sellers that are independent without an instruction, or the behavior of agents in real markets. Section 5 gives the limitations of our setup, and Appendix G gives three more.
+
+\textbf{Dual-use and ethical considerations.}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Entrapment.} The peer sting asks for an agreement. In our markets, we saw no increase in coordination among instructed agents, but that test has low power. In a real market, a sting asks for the offence that it detects. Whether a sting is legitimate depends on who operates it and under which rules.
+\item
+  \textbf{Dual use.} Our scripts show that talk like a peer at the market price gets agreement from LLM sellers. A malicious person can use this to ask deployed agents to collude. The scripts are short and generic. The same knowledge helps auditors and the designers of monitors.
+\item
+  \textbf{Monitor evasion.} Our disclaimer test shows that statements of independence can deceive weaker monitors with some prompts. We give the correction (a codebook prompt) with the result.
+\item
+  \textbf{Deceptive talk.} We saw agents that asked others to hold prices while they planned to undercut. This occurred in a simulation between agents. It does not show that the models deceive people.
+\item
+  \textbf{Silent price leadership.} Open-weight sellers followed a raise of the planted seller's price without any request (Qwen 18/40 and gpt-oss 15/40, against 2/40 and 5/40 without a raise). An agent could therefore lead prices up without a message that a monitor of messages can read. Audits of agent markets need price data as well as messages.
+\end{enumerate}
+
+\hypertarget{b.-planted-seller-scripts}{%
+\subsection{B. Planted-seller scripts}\label{b.-planted-seller-scripts}}
 
 Messages are sent in hours 1, 4 and 8. Wording A is for even seeds and wording B is for odd seeds. \$\{floor\} is the offer price. \$\{level\} and \$\{bid\} are set each hour from the order book.
 
 \begin{table}[!htb]
 \centering
 \scriptsize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.0}
-\renewcommand{\thetable}{A1}
+\renewcommand{\thetable}{B1}
 \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{1.65cm}>{\raggedright\arraybackslash}p{6.0cm}XX}
 \toprule
 \textbf{Condition} & \textbf{Hour 1} & \textbf{Hour 4} & \textbf{Hour 8} \\
@@ -378,15 +381,15 @@ warning B & FYI, the exchange posted a notice today that coordinating prices bet
 \end{table}
 \addtocounter{table}{-1}
 
-\hypertarget{b.-market-level-tests}{%
-\subsection{B. Market-level tests}\label{b.-market-level-tests}}
+\hypertarget{c.-market-level-tests}{%
+\subsection{C. Market-level tests}\label{c.-market-level-tests}}
 
 Each row gives the test with one observation for each target seller, and with one observation for each market. A market is positive if any target seller has the label, or only if both target sellers have it.
 
 \begin{table}[!htb]
 \centering
 \scriptsize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.0}
-\renewcommand{\thetable}{B1}
+\renewcommand{\thetable}{C1}
 \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{6.6cm}>{\raggedright\arraybackslash}p{3.2cm}XX}
 \toprule
 \textbf{Test} & \textbf{Target sellers} & \textbf{Markets, any} & \textbf{Markets, both} \\
@@ -425,15 +428,15 @@ Silent raise against no raise, followed (gpt-oss) & 15/40 vs 5/40 & 9/20 vs 3/20
   We saw no increase in coordination among instructed open-weight sellers (4/40 against 1/40 for Qwen, p = 0.18, and 0/40 against 0/40 for gpt-oss). At 30 hours, CEO pressure changed the mean Qwen trade price by −\$0.30 (95\% CI −\$3.10 to +\$2.50).
 \end{enumerate}
 
-\hypertarget{c.-pre-registrations-and-compute}{%
-\subsection{C. Pre-registrations and compute}\label{c.-pre-registrations-and-compute}}
+\hypertarget{d.-pre-registrations-and-compute}{%
+\subsection{D. Pre-registrations and compute}\label{d.-pre-registrations-and-compute}}
 
 The repository contains nine pre-registrations: \texttt{prereg.md} (first study), \texttt{prereg\_replication.md}, \texttt{prereg\_monitor.md}, \texttt{prereg\_peer\_sting.md}, \texttt{prereg\_escalation.md}, \texttt{prereg\_open\_weight.md}, \texttt{prereg\_open\_aware.md}, \texttt{prereg\_open\_followup.md} and \texttt{prereg\_escalate\_quiet.md}. Each file has a deviation log. The open-weight markets ran on a laptop, and their records have no timestamps. For those studies, the order of the commits shows that each pre-registration came before its results. In panels (a) to (c) of Figure 1, the Haiku notice arms are from the escalation study (seeds 50 to 69), and the other Haiku arms are from the peer-sting study (seeds 30 to 49). In panel (d) of Figure 1, all Haiku arms use seeds 50 to 69, from the escalation and silent-raise studies.
 
 \textbf{Compute and cost.} The logged Anthropic API cost of the agent calls in \texttt{results\_final/} was \$76.68 at list price. The judge and monitor calls are not all logged. The open-weight markets ran on Modal H100 GPUs with sprint compute credit, and we did not log their GPU cost.
 
-\hypertarget{d.-label-validation-and-monitor-test}{%
-\subsection{D. Label validation and monitor test}\label{d.-label-validation-and-monitor-test}}
+\hypertarget{e.-label-validation-and-monitor-test}{%
+\subsection{E. Label validation and monitor test}\label{e.-label-validation-and-monitor-test}}
 
 \textbf{Label validation.} We had no human coders. After we saw the main Sonnet-judged results, we recorded the four checks that follow, before any of their data existed.
 
@@ -469,13 +472,13 @@ Each monitor used three prompts. These were the study judge prompt, a short depl
 
 \textbf{Qwen as a judge.} As a judge, Qwen agreed with the primary Sonnet peer labels with kappa 0.76 to 0.87 on sellers that wrote messages in the four main Claude studies. In the known-answer markets, kappa was 0.00 on the 8 sellers with such messages.
 
-\hypertarget{e.-studies-and-strength-of-evidence}{%
-\subsection{E. Studies and strength of evidence}\label{e.-studies-and-strength-of-evidence}}
+\hypertarget{f.-studies-and-strength-of-evidence}{%
+\subsection{F. Studies and strength of evidence}\label{f.-studies-and-strength-of-evidence}}
 
 \begin{table}[H]
 \centering
 \footnotesize
-\renewcommand{\thetable}{E1}
+\renewcommand{\thetable}{F1}
 \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{3.0cm}X>{\raggedleft\arraybackslash}p{1.1cm}}
 \toprule
 \textbf{Study} & \textbf{Seller models} & \textbf{What the study varies} & \textbf{Markets} \\
@@ -498,7 +501,7 @@ Label validation & Haiku, Sonnet & Instructions that fix the correct label & 32 
 \begin{table}[H]
 \centering
 \footnotesize
-\renewcommand{\thetable}{E2}
+\renewcommand{\thetable}{F2}
 \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{5.6cm}X>{\raggedright\arraybackslash}p{3.5cm}}
 \toprule
 \textbf{Finding} & \textbf{Evidence (target sellers)} & \textbf{Strength} \\
@@ -521,14 +524,14 @@ gpt-oss seldom replies privately to stings & No private reply from 18/40 sellers
 \end{table}
 \addtocounter{table}{-1}
 
-\hypertarget{f.-further-limitations}{%
-\subsection{F. Further limitations}\label{f.-further-limitations}}
+\hypertarget{g.-further-limitations}{%
+\subsection{G. Further limitations}\label{g.-further-limitations}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  \textbf{Dependence in a market.} The two target sellers in a market have the same peer-coordination label in 83\% to 93\% of markets. Appendix B gives the market-level tests and identifies those that become weaker.
+  \textbf{Dependence in a market.} The two target sellers in a market have the same peer-coordination label in 83\% to 93\% of markets. Appendix C gives the market-level tests and identifies those that become weaker.
 \item
   \textbf{Model coverage and power.} We tested four models, with thinking off for Qwen and low reasoning effort for gpt-oss. The tests for no effect have low power. These are the tests for increased coordination among instructed sellers, for the effect of the plain notice on Qwen, and for evasion.
 \item

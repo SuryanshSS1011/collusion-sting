@@ -22,6 +22,7 @@
 \providecommand{\tightlist}{\setlength{\itemsep}{2pt}\setlength{\parskip}{0pt}}
 \setlength{\parskip}{3pt}
 \usepackage{titlesec}
+\usepackage{ragged2e}
 \titlespacing*{\section}{0pt}{10pt plus 2pt}{4pt}
 \titlespacing*{\subsection}{0pt}{8pt plus 2pt}{3pt}
 \titlespacing*{\subsubsection}{0pt}{6pt plus 2pt}{2pt}
@@ -35,16 +36,17 @@
 \setcounter{topnumber}{3}
 \setcounter{totalnumber}{4}
 
-\title{\textbf{@@TITLE@@}}
-\author{Suryansh Singh Sijwali\\ The Pennsylvania State University\\[4pt] \small With Apart Research}
-\date{}
-
 \begin{document}
-\maketitle
-
-\begin{abstract}
-@@ABSTRACT@@
-\end{abstract}
+\thispagestyle{plain}
+\setlength{\fboxsep}{8pt}
+\newlength{\boxw}\setlength{\boxw}{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}
+\noindent\fbox{\parbox{\boxw}{\centering\vspace{4pt}{\Large\bfseries @@TITLE@@\footnotemark}\par\vspace{4pt}}}\par\nointerlineskip
+\noindent\fbox{\parbox{\boxw}{\vspace{2pt}\centering Suryansh Singh Sijwali\\ {\small The Pennsylvania State University}\\[6pt]
+\textbf{With} Apart Research\\[8pt]
+\textbf{Abstract}\par\vspace{3pt}
+\justifying\small\noindent @@ABSTRACT@@\par\vspace{2pt}}}
+\footnotetext{Research conducted at the \href{https://apartresearch.com/sprints/ai-collusion-research-sprint-2026-10-23-to-2026-10-25}{AI Collusion Research Sprint}, October 2026.}
+\vspace{4pt}
 
 @@BODY@@
 
