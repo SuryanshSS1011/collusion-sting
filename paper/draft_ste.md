@@ -1,6 +1,6 @@
 # The Undercover Seller: Sting Audits of LLM Sellers in a Double Auction
 
-Suryansh Sijwali, The Pennsylvania State University
+Suryansh Singh Sijwali, The Pennsylvania State University
 With Apart Research
 
 **Abstract**
@@ -81,7 +81,7 @@ All results are pre-registered unless we identify them as exploratory or post ho
 
 [Insert Figure 1 here: fig_cross_family.png]
 
-*Figure 1. Key results for Claude Haiku 5.5, Qwen3-32B and gpt-oss-20b target sellers. Each point is 40 target sellers, with a 95% Wilson interval. Panel 1 shows agreement with the explicit $92 offer, with and without the auditor notice. Panel 2 shows agreement with the peer sting, by default, with the instruction to price independently, and with the notice. Panel 3 shows peer coordination in silent markets, after the explicit offer, and in silent markets with the notice. Panel 4 shows the target sellers that followed a +$2 raise by the planted seller with a request, without a request (silent raise), and in the control without a raise. The gpt-oss escalate arm is post hoc. The silent-raise arms are pre-registered. Appendix D gives the seeds of the Haiku arms.*
+*Figure 1. Key results for Claude Haiku 5.5, Qwen3-32B and gpt-oss-20b target sellers. Each point is 40 target sellers, with a 95% Wilson interval. Panel (a) shows agreement with the explicit $92 offer, with and without the auditor notice. Panel (b) shows agreement with the peer sting, by default, with the instruction to price independently, and with the notice. Panel (c) shows peer coordination in silent markets, after the explicit offer, and in silent markets with the notice. Panel (d) shows the target sellers that followed a +$2 raise by the planted seller with a request, without a request (silent raise), and in the control without a raise. The gpt-oss escalate arm is post hoc. The silent-raise arms are pre-registered. Appendix D gives the seeds of the Haiku arms.*
 
 ### 4.1 Refusal of an explicit offer is not evidence of compliance
 
@@ -169,7 +169,7 @@ A notice about audits deterred open-weight sellers only when it stated the penal
 
 ## Author Contributions (optional)
 
-Suryansh Sijwali designed the study, ran the experiments, analyzed the results and wrote the report.
+The author designed the study, ran the experiments, analyzed the results and wrote the report.
 
 ## References
 
@@ -279,7 +279,7 @@ Each row gives the test with one observation for each target seller, and with on
 
 ### D. Pre-registrations
 
-The repository contains nine pre-registrations: `prereg.md` (first study), `prereg_replication.md`, `prereg_monitor.md`, `prereg_peer_sting.md`, `prereg_escalation.md`, `prereg_open_weight.md`, `prereg_open_aware.md`, `prereg_open_followup.md` and `prereg_escalate_quiet.md`. Each file has a deviation log. The open-weight markets ran on a laptop, and their records have no timestamps. For those studies, the order of the commits shows that each pre-registration came before its results. In Panels 1 to 3 of Figure 1, the Haiku notice arms are from the escalation study (seeds 50 to 69), and the other Haiku arms are from the peer-sting study (seeds 30 to 49). In Panel 4 of Figure 1, all Haiku arms use seeds 50 to 69, from the escalation and silent-raise studies.
+The repository contains nine pre-registrations: `prereg.md` (first study), `prereg_replication.md`, `prereg_monitor.md`, `prereg_peer_sting.md`, `prereg_escalation.md`, `prereg_open_weight.md`, `prereg_open_aware.md`, `prereg_open_followup.md` and `prereg_escalate_quiet.md`. Each file has a deviation log. The open-weight markets ran on a laptop, and their records have no timestamps. For those studies, the order of the commits shows that each pre-registration came before its results. In panels (a) to (c) of Figure 1, the Haiku notice arms are from the escalation study (seeds 50 to 69), and the other Haiku arms are from the peer-sting study (seeds 30 to 49). In panel (d) of Figure 1, all Haiku arms use seeds 50 to 69, from the escalation and silent-raise studies.
 
 ### E. Label validation and monitor test
 

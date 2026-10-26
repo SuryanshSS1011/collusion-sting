@@ -109,7 +109,7 @@ def main():
         body = body.replace(f"@@TABLE{i}@@", table(rows, cap, i))
     fig = "\n".join([
         r"\begin{figure}[!t]", r"\centering",
-        r"\includegraphics[width=\textwidth]{fig_cross_family.png}",
+        r"\includegraphics[width=0.86\textwidth]{fig_cross_family.pdf}",
         r"\caption{" + pandoc(fig_cap.group(1)).strip() + "}", r"\label{fig:cross}", r"\end{figure}"])
     body = body.replace("@@FIGURE@@", fig)
 
