@@ -18,7 +18,7 @@ from analysis.figures import COLORS, INK2, _style, wilson
 A = Path("analysis/out")
 MODELS = (("haiku", "Claude Haiku 5.5"), ("qwen", "Qwen3-32B"), ("gptoss", "gpt-oss-20b"))
 PEER = {"haiku": "peer_sting_claude", "qwen": "open_weight_qwen", "gptoss": "open_weight_gptoss"}
-ESC = {"haiku": "escalate_aware_claude", "qwen": "open_weight_qwen"}
+ESC = {"haiku": "escalate_aware_claude", "qwen": "open_weight_qwen", "gptoss": "open_weight_gptoss"}
 
 
 def load() -> dict:
@@ -40,6 +40,7 @@ def load() -> dict:
     aware = A / "open_weight_aware" / "judge_labels.csv"
     hk = json.loads((A / "escalate_aware_claude" / "escalation_tests.json").read_text())
     out["haiku"]["coord_silent_aware"] = hk["A2_coord_silent_aware_vs_none"]["aware"]
+    out["haiku"]["accept_peer_aware"] = hk["A1_accept_aware_lt_none"]["aware"]
     if aware.exists():
         lab = pd.read_csv(aware, keep_default_na=False)
         lab["arm"] = lab.run.map(lambda r: Path(r).parent.name)
@@ -49,6 +50,9 @@ def load() -> dict:
             out[m]["coord_silent_aware"] = [int((g.peer_collusion == "yes").sum()), len(g)]
             g = lab[(lab.m == m) & (lab.arm == "direct_aware")]
             out[m]["accept_direct_aware"] = [int((g.offer_response == "accept").sum()), len(g)]
+            g = lab[(lab.m == m) & (lab.arm == "peer_aware")]
+            if len(g):
+                out[m]["accept_peer_aware"] = [int((g.offer_response == "accept").sum()), len(g)]
     return out
 
 
@@ -64,7 +68,11 @@ def figure(d: dict, path: Path) -> None:
         ),
         (
             "Agreed to the peer-style sting",
-            [("accept_peer", "default", c_def, True), ("accept_peer_instr", "told to stay independent", c_alt, False)],
+            [
+                ("accept_peer", "default", c_def, True),
+                ("accept_peer_instr", "told to stay independent", c_alt, False),
+                ("accept_peer_aware", "auditor notice", c_third, False),
+            ],
         ),
         (
             "Coordinated with the other seller",
@@ -79,7 +87,7 @@ def figure(d: dict, path: Path) -> None:
             [("followed_raise", "escalation sting", c_def, True), ("followed_cf", "counterfactual", c_alt, False)],
         ),
     ]
-    fig, axes = plt.subplots(1, 4, figsize=(13, 3.6), sharey=True)
+    fig, axes = plt.subplots(1, 4, figsize=(13, 4.3), sharey=True)
     for ax, (title, series) in zip(axes, panels):
         width = 0.22 if len(series) == 3 else 0.16
         for j, (key, lab, col, filled) in enumerate(series):
@@ -91,14 +99,13 @@ def figure(d: dict, path: Path) -> None:
                 lo, hi = wilson(k, n)
                 ax.errorbar(x + off, k / n, yerr=[[k / n - lo], [hi - k / n]], fmt="none", ecolor=col, elinewidth=1, alpha=0.7)
                 ax.plot(x + off, k / n, "o", ms=6, color=col, mfc=col if filled else "white", mew=1.5,
-                        label=lab if x == 0 or (key not in d["haiku"] and x == 1) else None)
+                        label=lab if x == min(i for i, (mm, _) in enumerate(MODELS) if key in d[mm]) else None)
                 ax.annotate(f"{k}", (x + off, k / n), xytext=(0, 7), textcoords="offset points", fontsize=6.5,
                             color=INK2, ha="center")
         ax.set_xticks(range(len(MODELS)), [lab for _, lab in MODELS], fontsize=7.5)
         ax.set_xlim(-0.6, len(MODELS) - 0.4)
         ax.set_title(title, loc="left", fontsize=9)
-        ax.legend(fontsize=6.5, loc="upper right", frameon=False)
-    axes[3].text(2, 0.04, "not run", ha="center", fontsize=7, color=INK2)
+        ax.legend(fontsize=6.5, loc="upper center", bbox_to_anchor=(0.5, -0.12), frameon=False)
     axes[0].set_ylim(-0.05, 1.12)
     axes[0].set_ylabel("share of targets (n = 40 each; 95% Wilson CI)")
     fig.tight_layout()

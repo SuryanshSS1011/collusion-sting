@@ -35,6 +35,10 @@
     "coord_silent_aware": [
       0,
       40
+    ],
+    "accept_peer_aware": [
+      0,
+      40
     ]
   },
   "qwen": {
@@ -69,6 +73,18 @@
     "followed_cf": [
       2,
       40
+    ],
+    "coord_silent_aware": [
+      29,
+      40
+    ],
+    "accept_direct_aware": [
+      17,
+      40
+    ],
+    "accept_peer_aware": [
+      23,
+      40
     ]
   },
   "gptoss": {
@@ -94,6 +110,22 @@
     ],
     "coord_silent_instr": [
       0,
+      40
+    ],
+    "followed_raise": [
+      13,
+      40
+    ],
+    "followed_cf": [
+      5,
+      40
+    ],
+    "coord_silent_aware": [
+      38,
+      40
+    ],
+    "accept_direct_aware": [
+      17,
       40
     ]
   }

@@ -72,4 +72,4 @@ credit. Labelling 200 target-markets with Sonnet is expected to cost about $1.
 
 | When (ET) | What changed | Why | Seen results first? |
 |---|---|---|---|
-| | | | |
+| Oct 25, 23:05 | Added two post hoc descriptives in `analysis/open_aware.py`: the share of targets whose private notes mention auditors (whole-word regex), and quotes from those notes. No test was changed. | To explain why the notice had no effect on Qwen and the reverse effect on gpt-oss. | Yes. V1 to V4 had been computed. |
