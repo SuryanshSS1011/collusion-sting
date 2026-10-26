@@ -13,10 +13,10 @@ MD = (HERE.parent / "draft_ste.md").read_text()
 
 # Column layouts for the four tables, in order of appearance.
 SPECS = [
-    (r">{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{3.0cm}X>{\raggedleft\arraybackslash}p{1.1cm}", r"\small", None),
-    (r">{\raggedright\arraybackslash}p{4.8cm}X>{\raggedright\arraybackslash}p{3.5cm}", r"\small", None),
-    (r">{\raggedright\arraybackslash}p{1.2cm}>{\centering\arraybackslash}p{1.0cm}XXX", r"\scriptsize", "B1"),
-    (r">{\raggedright\arraybackslash}p{4.6cm}>{\raggedright\arraybackslash}p{2.7cm}XX", r"\footnotesize", "C1"),
+    (r">{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{3.0cm}X>{\raggedleft\arraybackslash}p{1.1cm}", r"\small", None, "!htb"),
+    (r">{\raggedright\arraybackslash}p{5.6cm}X>{\raggedright\arraybackslash}p{3.5cm}", r"\footnotesize", None, "!t"),
+    (r">{\raggedright\arraybackslash}p{1.65cm}>{\raggedright\arraybackslash}p{6.0cm}XX", r"\scriptsize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.0}", "B1", "!htb"),
+    (r">{\raggedright\arraybackslash}p{6.6cm}>{\raggedright\arraybackslash}p{3.2cm}XX", r"\scriptsize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.0}", "C1", "!htb"),
 ]
 
 
@@ -49,9 +49,11 @@ def pandoc(md: str) -> str:
 
 
 def table(rows, caption, k):
-    spec, size, label = SPECS[k]
+    spec, size, label, pos = SPECS[k]
+    if label == "B1":
+        rows = [[f"{r[0]} {r[1]}" if i else r[0]] + r[2:] for i, r in enumerate(rows)]
     head, body = rows[0], rows[1:]
-    lines = [r"\begin{table}[H]", r"\centering", size]
+    lines = [r"\begin{table}[" + pos + "]", r"\centering", size]
     if label:
         lines.append(r"\renewcommand{\thetable}{" + label + "}")
     lines.append(r"\begin{tabularx}{\linewidth}{" + spec + "}")
@@ -105,7 +107,7 @@ def main():
     for i, (rows, cap) in enumerate(tables):
         body = body.replace(f"@@TABLE{i}@@", table(rows, cap, i))
     fig = "\n".join([
-        r"\begin{figure}[H]", r"\centering",
+        r"\begin{figure}[!t]", r"\centering",
         r"\includegraphics[width=\textwidth]{fig_cross_family.png}",
         r"\caption{" + pandoc(fig_cap.group(1)).strip() + "}", r"\label{fig:cross}", r"\end{figure}"])
     body = body.replace("@@FIGURE@@", fig)

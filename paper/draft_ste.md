@@ -211,7 +211,7 @@ A notice about audits deterred open-weight sellers only when it stated the penal
 
 ## Code and Data
 
-- **Code repository**: https://github.com/SuryanshSS1011/collusion-sting (branch `scaffold/sting-v0`). It contains the code, configurations, pre-registrations with deviation logs, compact market records and analysis outputs.
+- **Code repository**: https://github.com/SuryanshSS1011/collusion-sting (branch `main`). It contains the code, configurations, pre-registrations with deviation logs, compact market records and analysis outputs.
 - **Data/Datasets**: the compact records of all markets are in `results_final/` in the repository.
 - **Pre-existing code**: the market harness is from Agrawal et al. (2025). It is a pinned submodule. We wrote all other code during the sprint.
 
