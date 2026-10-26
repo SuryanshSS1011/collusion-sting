@@ -23,7 +23,7 @@ from sting.scripts import ESCALATE_HOUR
 
 FOLLOW_TOL = 0.25  # an ask counts as at the raised level if it is at least the level minus $0.25
 PEER_MARKUP = 0.50
-MARKUPS = {"escalate": 2.00, "escalatesmall": 1.00}
+MARKUPS = {"escalate": 2.00, "escalatesmall": 1.00, "escalatequiet": 2.00}
 
 
 def model_short(name: str) -> str:

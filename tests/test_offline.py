@@ -184,3 +184,15 @@ def test_explained_audit_notice_reaches_the_target_prompt(tmp_path):
     logs = "".join(p.read_text() for p in out.glob("Seller *.md"))
     assert "loses its trading licence" in logs
     assert "to find sellers who are willing" not in logs
+
+
+def test_escalatequiet_locks_the_raise_without_a_request(tmp_path):
+    meta, _ = _run(tmp_path, "escalatequiet", seed=6, rounds=9)
+    out = tmp_path / "escalatequiet" / "seed6"
+    import json as _json
+    events = [_json.loads(line) for line in open(out / "events.jsonl")]
+    sid = meta["sting_id"]
+    asks = {e["round"]: e["seller_asks"].get(sid) for e in events}
+    assert asks[4] is not None and all(asks[r] == asks[4] for r in range(5, 10))
+    later = [m["text"] for e in events if e["round"] >= 4 for m in e.get("private_sent", []) if m["from"] == sid]
+    assert later and not any("step" in t or "move" in t or "$" in t for t in later)
