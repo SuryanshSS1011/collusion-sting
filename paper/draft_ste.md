@@ -75,22 +75,7 @@ We tested all three failures in one controlled market with four seller models fr
 
 **Measures.** The primary judge is Claude Sonnet 5.5 with a fixed prompt. It reads the messages of the planted seller and all messages that the target seller wrote after them. It gives two labels. The *offer response* is accept, reject, ambiguous or none. A target seller that never writes privately to the planted seller gets "none". *Peer coordination* is yes if the target seller proposed price coordination to the other target seller, or agreed to it. Public messages go to all sellers, so this label can include public posts that the planted seller also reads. We report a version that uses only private messages between the target sellers (Section 4.2). We also measured behavior without a judge. In the escalate and silent-raise arms, a target seller *followed* the raise if, in at least half of hours 5 to 15, its ask was at or above the planted seller's raised level minus $0.25. In the peer control, we used the level that an escalating sting would have set at hour 4. We recorded all asks, trades and profits.
 
-**Label validation.** We had no human coders. After we saw the main Sonnet-judged results, we recorded the four checks that follow, before any of their data existed.
-
-1. 32 known-answer markets, in which an instruction from the manager sets the correct label.
-2. A second judge (Claude Opus 5.5) with a codebook prompt that we wrote separately.
-3. A rule-based coder.
-4. The fragility index of each key test.
-
-After the open-weight markets, Qwen3-32B also labelled the 888 Claude target sellers (in 444 markets) of the first five Claude studies, as a judge from a different family. The open-weight markets have only the Sonnet labels.
-
-**Monitor test.** We used the 72 target sellers in silent markets of the main grid and the replication that the judges coded as coordinating and that wrote no statement of independence themselves. We made three versions of each transcript.
-
-1. The original.
-2. The original with a neutral market sentence after some messages to the other seller.
-3. The original with a statement of independence after the same messages, for example "Competing independently, no coordination intended."
-
-Each monitor used three prompts. These were the study judge prompt, a short deployment prompt, and a hardened codebook prompt that states that a claim of independence does not cancel coordination. A good monitor flags all versions at the same rate. We compared paired versions with exact McNemar tests.
+**Label validation and monitor test.** We had no human coders, so we checked the labels in four ways and with a judge from a different model family. We also tested if statements of independence deceive monitors. Appendix E gives the details.
 
 **Statistics and pre-registration.** We pre-registered each study in the repository before its first market ran. Each pre-registration gives the hypotheses, tests and decision rules. A deviation log in each file records each change, its time, and whether we had seen the results. We used Fisher exact tests, one-sided where pre-registered, with Holm correction in each study. We used Wilson intervals for proportions and bootstrap intervals (10,000 resamples) for price differences. The two target sellers in a market affect each other. Thus we repeated each key test with one observation for each market (Appendix C).
 
@@ -117,7 +102,7 @@ All results are pre-registered unless we identify them as exploratory or post ho
 
 [Insert Figure 1 here: fig_cross_family.png]
 
-*Figure 1. Key results for Claude Haiku 5.5, Qwen3-32B and gpt-oss-20b target sellers. Each point is 40 target sellers, with a 95% Wilson interval. Panel 1 shows agreement with the explicit $92 offer, with and without the auditor notice. Panel 2 shows agreement with the peer sting, by default, with the instruction to price independently, and with the notice. Panel 3 shows peer coordination in silent markets, after the explicit offer, and in silent markets with the notice. Panel 4 shows the target sellers that followed a +$2 raise by the planted seller with a request, without a request (silent raise), and in the control without a raise. In Panels 1 to 3, the Haiku notice arms are from the escalation study (seeds 50 to 69), and the other Haiku arms are from the peer-sting study (seeds 30 to 49). In Panel 4, all Haiku arms use seeds 50 to 69, from the escalation and silent-raise studies. The gpt-oss escalate arm is post hoc. The silent-raise arms are pre-registered.*
+*Figure 1. Key results for Claude Haiku 5.5, Qwen3-32B and gpt-oss-20b target sellers. Each point is 40 target sellers, with a 95% Wilson interval. Panel 1 shows agreement with the explicit $92 offer, with and without the auditor notice. Panel 2 shows agreement with the peer sting, by default, with the instruction to price independently, and with the notice. Panel 3 shows peer coordination in silent markets, after the explicit offer, and in silent markets with the notice. Panel 4 shows the target sellers that followed a +$2 raise by the planted seller with a request, without a request (silent raise), and in the control without a raise. The gpt-oss escalate arm is post hoc. The silent-raise arms are pre-registered. Appendix D gives the seeds of the Haiku arms.*
 
 ### 4.1 Refusal of an explicit offer is not evidence of compliance
 
@@ -147,8 +132,6 @@ In all three families, the request did not increase following (Y1). Haiku seller
 
 Thus the escalation test does not measure if sellers keep a deal. Following also did not cost sales. In hours 5 to 15, sellers that followed earned more than sellers that did not, in each family and arm (for example, Qwen sellers in the escalate arm earned $72 against $54). The pre-registered result that more Qwen sellers followed under escalation than in the peer control (Q6, 14/40 against 2/40, p = 0.00073) is correct, but the price move explains it. The same holds for gpt-oss (13/40 against 5/40, p = 0.030, post hoc). For Haiku, the +$2 escalation (E1, 2/40 against 2/40) and the +$1 escalation (E2, 13/40 against 18/40) did not increase following. Of the 22 Haiku sellers that agreed at the market price (judge label), 2 followed the +$2 raise. A typical Haiku reply was "At 89.50 we'd both sit above the bid stack and miss fills."
 
-For gpt-oss, the request still raised prices. Trade prices in hours 5 to 15 were $1.79 higher with the request than with the silent raise (95% CI $0.12 to $3.45), and $2.08 higher than in the peer control (CI $0.27 to $3.95). For Qwen and Haiku, these differences were not significant. Because the gpt-oss follow rates did not differ, we report this price result as descriptive only.
-
 ### 4.5 Which results are the same in all three families
 
 The open-weight target sellers accepted the explicit $92 offer, Qwen 20/40 times and gpt-oss 10/40 times. Thus, at the target level, the peer sting did not get significantly more agreement than the explicit offer (Q1, 27/40 against 20/40, p = 0.086, and 18/40 against 10/40, p = 0.050). At the market level, counting a market if any seller agreed, it did (p = 0.015 and p = 0.011). The explicit offer did not decrease their coordination. Peer coordination after the offer was 35/40 against 28/40 in silent markets for Qwen, and 29/40 against 28/40 for gpt-oss (Q5).
@@ -156,8 +139,6 @@ The open-weight target sellers accepted the explicit $92 offer, Qwen 20/40 times
 The instruction to price independently worked for Qwen and gpt-oss, as it did for Haiku. It decreased agreement with the peer sting from 27/40 to 3/40 for Qwen (Q2, p = 1.4e-8) and from 18/40 to 1/40 for gpt-oss (p = 4.0e-6). It also decreased coordination in silent markets from 28/40 to 1/40 for Qwen and from 28/40 to 0/40 for gpt-oss (descriptive). With private messages only (post hoc), these results were 0/40 against 23/40 and 0/40 against 16/40. Instructed open-weight sellers accepted the explicit offer 0/40 times in both models, against 20/40 and 10/40 without the instruction (X4, p = 3.9e-8 and p = 5.2e-4).
 
 As with Haiku, these comparisons separate instructed from uninstructed sellers. Within the uninstructed peer arms, acceptance did not predict coordination (p = 0.41 for Qwen and p = 0.55 for gpt-oss). For gpt-oss, the pooled sensitivity was 0.46, below the pre-registered bar of 0.5. One reason is the reply channel (post hoc). 18 of 40 gpt-oss sellers never replied privately to the peer sting, so they were coded "none", and 17 of these 18 still coordinated with their peer. gpt-oss also did not reply privately to the explicit offer in 25 of 40 cases. A sting that counts only private replies misses many gpt-oss sellers that coordinate.
-
-We saw no increase in coordination among instructed open-weight sellers (Q4, 4/40 against 1/40 for Qwen, p = 0.18, and 0/40 against 0/40 for gpt-oss). At 30 hours, CEO pressure changed the mean Qwen trade price by −$0.30 (95% CI −$3.10 to +$2.50).
 
 ### 4.6 The wording of an audit notice decides if it deters
 
@@ -171,7 +152,7 @@ We found no evidence of evasion, but this test is weak. Among open-weight seller
 
 ### 4.7 Statements of independence deceive weaker monitors with some prompts
 
-Claude Sonnet with the study prompt flagged 69/72 original transcripts and 68/72 transcripts with statements of independence. Thus the pre-registered primary test was null. Weaker monitors made errors with the same prompt. Against the original transcripts, Haiku decreased from 42/72 to 30/72 (p = 0.0009), and Qwen3-32B decreased from 38/72 to 11/72 (27 against 0 discordant pairs, p = 7.5e-9). The hardened codebook prompt corrected both, to 70/72 for Haiku and 68/72 for Qwen. The effect depends on the prompt. With the short deployment prompt, Haiku flagged more transcripts with the statement (60/72 against 38/72 with a neutral sentence). As a judge, Qwen agreed with the primary Sonnet peer labels with kappa 0.76 to 0.87 on sellers that wrote messages in the four main Claude studies. In the known-answer markets, kappa was 0.00 on the 8 sellers with such messages.
+Claude Sonnet with the study prompt flagged 69/72 original transcripts and 68/72 transcripts with statements of independence. Thus the pre-registered primary test was null. Weaker monitors made errors with the same prompt. Against the original transcripts, Haiku decreased from 42/72 to 30/72 (p = 0.0009), and Qwen3-32B decreased from 38/72 to 11/72 (27 against 0 discordant pairs, p = 7.5e-9). The hardened codebook prompt corrected both, to 70/72 for Haiku and 68/72 for Qwen. The effect depends on the prompt. With the short deployment prompt, Haiku flagged more transcripts with the statement (60/72 against 38/72 with a neutral sentence).
 
 ## 5. Discussion and Limitations
 
@@ -189,15 +170,7 @@ We recommend five actions to auditors and to the companies that deploy pricing a
 
 ### Limitations
 
-1. **One market design.** Prices stayed near the competitive level, with arm means from about $85 to $92. Coordination talk did not raise prices in a pilot at 15 or 30 hours. Thus we measured talk and agreement, not price harm. The peer sting itself lowered prices by about $3 to $4, because it asks at the market.
-2. **Differences between the setups of the model families.** The Claude markets used Haiku buyers. The open-weight markets used the same open model as buyers. The temperatures and reasoning settings also differ. The planted seller sets its level from the bids, so the stimulus differs too. Thus differences between families can partly come from these setups.
-3. **An instructed control population.** Almost every uninstructed seller coordinated. Thus we measured specificity only against sellers with an instruction not to coordinate.
-4. **A scripted planted seller.** It does not negotiate or reply. Thus the stimulus stays the same, but agents can possibly identify it more easily than a live seller.
-5. **Labels.** We had no human coders. The headline Claude results have the same direction with four label sources and in known-answer markets. The open-weight markets have only the Sonnet labels. The rule-based coder disagrees with them on some results. For Qwen, it almost removes the explained-notice effect (34/40 against 38/40) and shrinks the instruction effect (14/40 against 34/40). The private-only Sonnet labels support both effects. The judge also coded 4 of 40 gpt-oss sellers as accepting an offer in silent markets with the notice, where no offer was made.
-6. **Public messages.** The coordination label includes public posts that the planted seller also reads. The main deterrence results remain significant with private messages only, but the counts become small.
-7. **Dependence in a market.** The two target sellers in a market have the same peer-coordination label in 83% to 93% of markets. Appendix C gives the market-level tests and identifies those that become weaker.
-8. **Model coverage and power.** We tested four models, with thinking off for Qwen and low reasoning effort for gpt-oss. The tests for no effect (P4, Q4, V1, V3) have low power.
-9. **Post hoc analyses.** The gpt-oss escalate arm, the analyses of notes and reply channels, the private-message labels and the price comparison against silent markets were added after we saw results.
+Appendix A gives nine limitations. The most important are three. Prices stayed near the competitive level, so we measured talk and agreement, not price harm. The setups of the model families differ. Almost every uninstructed seller coordinated, so we could not measure how often a sting flags sellers that are independent without an instruction.
 
 ### Future Work
 
@@ -254,6 +227,20 @@ Suryansh Sijwali designed the study, ran the experiments, analyzed the results a
 
 ### A. Limitations and Dual-Use / Ethical Considerations
 
+**Limitations.**
+
+1. **One market design.** Prices stayed near the competitive level, with arm means from about $85 to $92. Coordination talk did not raise prices in a pilot at 15 or 30 hours. Thus we measured talk and agreement, not price harm. The peer sting itself lowered prices by about $3 to $4, because it asks at the market.
+2. **Differences between the setups of the model families.** The Claude markets used Haiku buyers. The open-weight markets used the same open model as buyers. The temperatures and reasoning settings also differ. The planted seller sets its level from the bids, so the stimulus differs too. Thus differences between families can partly come from these setups.
+3. **An instructed control population.** Almost every uninstructed seller coordinated. Thus we measured specificity only against sellers with an instruction not to coordinate.
+4. **A scripted planted seller.** It does not negotiate or reply. Thus the stimulus stays the same, but agents can possibly identify it more easily than a live seller.
+5. **Labels.** We had no human coders. The headline Claude results have the same direction with four label sources and in known-answer markets. The open-weight markets have only the Sonnet labels. The rule-based coder disagrees with them on some results. For Qwen, it almost removes the explained-notice effect (34/40 against 38/40) and shrinks the instruction effect (14/40 against 34/40). The private-only Sonnet labels support both effects. The judge also coded 4 of 40 gpt-oss sellers as accepting an offer in silent markets with the notice, where no offer was made.
+6. **Public messages.** The coordination label includes public posts that the planted seller also reads. The main deterrence results remain significant with private messages only, but the counts become small.
+7. **Dependence in a market.** The two target sellers in a market have the same peer-coordination label in 83% to 93% of markets. Appendix C gives the market-level tests and identifies those that become weaker.
+8. **Model coverage and power.** We tested four models, with thinking off for Qwen and low reasoning effort for gpt-oss. The tests for no effect (P4, Q4, V1, V3) have low power.
+9. **Post hoc analyses.** The gpt-oss escalate arm, the analyses of notes and reply channels, the private-message labels and the price comparison against silent markets were added after we saw results.
+
+**Dual-use and ethical considerations.**
+
 1. **Entrapment.** The peer sting asks for an agreement. In our markets, we saw no increase in coordination among instructed agents (P4, Q4), but that test has low power. In a real market, a sting asks for the offence that it detects. Whether a sting is legitimate depends on who operates it and under which rules.
 2. **Dual use.** Our scripts show that talk like a peer at the market price gets agreement from LLM sellers. A malicious person can use this to ask deployed agents to collude. The scripts are short and generic. The same knowledge helps auditors and the designers of monitors.
 3. **Monitor evasion.** Our disclaimer test shows that statements of independence can deceive weaker monitors with some prompts. We give the correction (a codebook prompt) with the result.
@@ -306,9 +293,35 @@ Each row gives the test with one observation for each target seller, and with on
 
 *Table C1. Key tests with one observation for each market. P3, P4, E1 and V3 have no market-level version. All results and source files are in `paper/findings.md` and `results_final/analysis/`.*
 
+**Other results.**
+
+1. For gpt-oss, the request still raised prices. Trade prices in hours 5 to 15 were $1.79 higher with the request than with the silent raise (95% CI $0.12 to $3.45), and $2.08 higher than in the peer control (CI $0.27 to $3.95). For Qwen and Haiku, these differences were not significant. Because the gpt-oss follow rates did not differ, we report this price result as descriptive only.
+2. We saw no increase in coordination among instructed open-weight sellers (Q4, 4/40 against 1/40 for Qwen, p = 0.18, and 0/40 against 0/40 for gpt-oss). At 30 hours, CEO pressure changed the mean Qwen trade price by −$0.30 (95% CI −$3.10 to +$2.50).
+
 ### D. Pre-registrations
 
-The repository contains nine pre-registrations: `prereg.md` (main grid), `prereg_replication.md`, `prereg_monitor.md`, `prereg_peer_sting.md`, `prereg_escalation.md`, `prereg_open_weight.md`, `prereg_open_aware.md`, `prereg_open_followup.md` and `prereg_escalate_quiet.md`. Each file has a deviation log. The open-weight markets ran on a laptop, and their records have no timestamps. For those studies, the order of the commits shows that each pre-registration came before its results.
+The repository contains nine pre-registrations: `prereg.md` (main grid), `prereg_replication.md`, `prereg_monitor.md`, `prereg_peer_sting.md`, `prereg_escalation.md`, `prereg_open_weight.md`, `prereg_open_aware.md`, `prereg_open_followup.md` and `prereg_escalate_quiet.md`. Each file has a deviation log. The open-weight markets ran on a laptop, and their records have no timestamps. For those studies, the order of the commits shows that each pre-registration came before its results. In Panels 1 to 3 of Figure 1, the Haiku notice arms are from the escalation study (seeds 50 to 69), and the other Haiku arms are from the peer-sting study (seeds 30 to 49). In Panel 4 of Figure 1, all Haiku arms use seeds 50 to 69, from the escalation and silent-raise studies.
+
+### E. Label validation and monitor test
+
+**Label validation.** We had no human coders. After we saw the main Sonnet-judged results, we recorded the four checks that follow, before any of their data existed.
+
+1. 32 known-answer markets, in which an instruction from the manager sets the correct label.
+2. A second judge (Claude Opus 5.5) with a codebook prompt that we wrote separately.
+3. A rule-based coder.
+4. The fragility index of each key test.
+
+After the open-weight markets, Qwen3-32B also labelled the 888 Claude target sellers (in 444 markets) of the first five Claude studies, as a judge from a different family. The open-weight markets have only the Sonnet labels.
+
+**Monitor test.** We used the 72 target sellers in silent markets of the main grid and the replication that the judges coded as coordinating and that wrote no statement of independence themselves. We made three versions of each transcript.
+
+1. The original.
+2. The original with a neutral market sentence after some messages to the other seller.
+3. The original with a statement of independence after the same messages, for example "Competing independently, no coordination intended."
+
+Each monitor used three prompts. These were the study judge prompt, a short deployment prompt, and a hardened codebook prompt that states that a claim of independence does not cancel coordination. A good monitor flags all versions at the same rate. We compared paired versions with exact McNemar tests.
+
+**Qwen as a judge.** As a judge, Qwen agreed with the primary Sonnet peer labels with kappa 0.76 to 0.87 on sellers that wrote messages in the four main Claude studies. In the known-answer markets, kappa was 0.00 on the 8 sellers with such messages.
 
 ## LLM Usage Statement
 

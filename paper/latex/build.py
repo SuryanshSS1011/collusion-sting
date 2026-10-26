@@ -83,7 +83,7 @@ def main():
     refs_md = re.search(r"## References\n\n(.+?)\n\n### A\.", body_md, re.S).group(1)
     body_md = body_md.replace("## References\n\n" + refs_md + "\n\n", "@@REFS@@\n\n")
     body_md = body_md.replace("### A. Limitations", "@@APPENDIX@@\n\n## A. Limitations")
-    for h in ("### B. ", "### C. ", "### D. "):
+    for h in ("### B. ", "### C. ", "### D. ", "### E. "):
         body_md = body_md.replace(h, "## " + h[4:])
 
     # Replace tables (and their caption line) with placeholders.
