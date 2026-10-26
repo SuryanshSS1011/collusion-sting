@@ -32,6 +32,10 @@
       2,
       40
     ],
+    "followed_quiet": [
+      6,
+      40
+    ],
     "coord_silent_aware": [
       0,
       40
@@ -72,6 +76,10 @@
     ],
     "followed_cf": [
       2,
+      40
+    ],
+    "followed_quiet": [
+      18,
       40
     ],
     "coord_silent_aware": [
@@ -118,6 +126,10 @@
     ],
     "followed_cf": [
       5,
+      40
+    ],
+    "followed_quiet": [
+      15,
       40
     ],
     "coord_silent_aware": [

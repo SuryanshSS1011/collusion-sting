@@ -37,6 +37,12 @@ def load() -> dict:
             e = json.loads((A / ESC[m] / "escalation_tests.json").read_text())["E1_large_step"]
             d["followed_raise"], d["followed_cf"] = e["escalation"], e["control_counterfactual"]
         out[m] = d
+    q = A / "escalate_quiet" / "escalate_quiet_tests.json"
+    if q.exists():
+        qt = json.loads(q.read_text())
+        for m, _ in MODELS:
+            if isinstance(qt.get(m), dict):
+                out[m]["followed_quiet"] = qt[m]["Y1 followed escalate > quiet"]["b"]
     aware = A / "open_weight_aware" / "judge_labels.csv"
     hk = json.loads((A / "escalate_aware_claude" / "escalation_tests.json").read_text())
     out["haiku"]["coord_silent_aware"] = hk["A2_coord_silent_aware_vs_none"]["aware"]
@@ -83,8 +89,12 @@ def figure(d: dict, path: Path) -> None:
             ],
         ),
         (
-            "Held a +$2 raise (escalation)",
-            [("followed_raise", "escalation sting", c_def, True), ("followed_cf", "counterfactual", c_alt, False)],
+            "Followed a +$2 raise",
+            [
+                ("followed_raise", "raise with a request", c_def, True),
+                ("followed_quiet", "raise without a request", c_third, True),
+                ("followed_cf", "no raise (control)", c_alt, False),
+            ],
         ),
     ]
     fig, axes = plt.subplots(1, 4, figsize=(13, 4.3), sharey=True)
