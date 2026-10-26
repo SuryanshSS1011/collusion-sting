@@ -16,7 +16,7 @@ import pandas as pd
 from analysis.figures import COLORS, INK2, _style, wilson
 
 A = Path("analysis/out")
-MODELS = (("haiku", "Claude Haiku 5.5"), ("qwen", "Qwen3-32B"), ("gptoss", "gpt-oss-20b"))
+MODELS = (("haiku", "Haiku 5.5"), ("qwen", "Qwen3-32B"), ("gptoss", "gpt-oss-20b"))
 PEER = {"haiku": "peer_sting_claude", "qwen": "open_weight_qwen", "gptoss": "open_weight_gptoss"}
 ESC = {"haiku": "escalate_aware_claude", "qwen": "open_weight_qwen", "gptoss": "open_weight_gptoss"}
 
@@ -69,11 +69,11 @@ def figure(d: dict, path: Path) -> None:
     c_def, c_alt, c_third = COLORS["direct"], COLORS["hint"], COLORS["silent"]
     panels = [
         (
-            "Agreed to the explicit $92 offer",
+            "Accepted the explicit $92 offer",
             [("accept_direct", "default", c_def, True), ("accept_direct_aware", "auditor notice", c_third, False)],
         ),
         (
-            "Agreed to the peer-style sting",
+            "Agreed to the peer sting",
             [
                 ("accept_peer", "default", c_def, True),
                 ("accept_peer_instr", "told to stay independent", c_alt, False),
@@ -97,30 +97,37 @@ def figure(d: dict, path: Path) -> None:
             ],
         ),
     ]
-    fig, axes = plt.subplots(1, 4, figsize=(13, 4.3), sharey=True)
-    for ax, (title, series) in zip(axes, panels):
+    # 2 x 2 grid at print size (the report is 6.5 in wide), so the font sizes below are the printed sizes.
+    fig, axes = plt.subplots(2, 2, figsize=(7.0, 6.3), sharey=True)
+    axes = axes.ravel()
+    for i, (ax, (title, series)) in enumerate(zip(axes, panels)):
         width = 0.22 if len(series) == 3 else 0.16
         for j, (key, lab, col, filled) in enumerate(series):
-            off = (j - (len(series) - 1) / 2) * width * 1.6
+            off = (j - (len(series) - 1) / 2) * width * 1.5
             for x, (m, _) in enumerate(MODELS):
                 if key not in d[m]:
                     continue
                 k, n = d[m][key]
                 lo, hi = wilson(k, n)
-                ax.errorbar(x + off, k / n, yerr=[[k / n - lo], [hi - k / n]], fmt="none", ecolor=col, elinewidth=1, alpha=0.7)
-                ax.plot(x + off, k / n, "o", ms=6, color=col, mfc=col if filled else "white", mew=1.5,
+                ax.errorbar(x + off, k / n, yerr=[[k / n - lo], [hi - k / n]], fmt="none", ecolor=col, elinewidth=1.4, alpha=0.8)
+                ax.plot(x + off, k / n, "o", ms=7, color=col, mfc=col if filled else "white", mew=1.8,
                         label=lab if x == min(i for i, (mm, _) in enumerate(MODELS) if key in d[mm]) else None)
-                ax.annotate(f"{k}", (x + off, k / n), xytext=(0, 7), textcoords="offset points", fontsize=6.5,
-                            color=INK2, ha="center")
-        ax.set_xticks(range(len(MODELS)), [lab for _, lab in MODELS], fontsize=7.5)
+                ax.annotate(f"{k}", (x + off, k / n), xytext=(5, 0), textcoords="offset points", fontsize=8.5,
+                            color=INK2, ha="left", va="center")
+        ax.set_xticks(range(len(MODELS)), [lab for _, lab in MODELS], fontsize=9.5)
+        ax.tick_params(axis="y", labelsize=9)
         ax.set_xlim(-0.6, len(MODELS) - 0.4)
-        ax.set_title(title, loc="left", fontsize=9)
-        ax.legend(fontsize=6.5, loc="upper center", bbox_to_anchor=(0.5, -0.12), frameon=False)
-    axes[0].set_ylim(-0.05, 1.12)
-    axes[0].set_ylabel("share of targets (n = 40 each; 95% Wilson CI)")
-    fig.tight_layout()
+        ax.set_title(f"({'abcd'[i]}) {title}", loc="left", fontsize=10.5, fontweight="bold")
+        ax.legend(fontsize=8.5, loc="upper center", bbox_to_anchor=(0.5, -0.11), frameon=False, ncol=1,
+                  handletextpad=0.3)
+        if i % 2 == 0:
+            ax.set_ylabel("target sellers (of 40)", fontsize=10)
+    axes[0].set_ylim(-0.05, 1.08)
+    axes[0].set_yticks([0, 0.25, 0.5, 0.75, 1.0], ["0", "10", "20", "30", "40"])
+    fig.tight_layout(h_pad=1.2, w_pad=1.0)
     path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path, dpi=200, bbox_inches="tight")
+    fig.savefig(path, dpi=300, bbox_inches="tight")
+    fig.savefig(path.with_suffix(".pdf"), bbox_inches="tight")
     print(f"wrote {path}")
 
 
