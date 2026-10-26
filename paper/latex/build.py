@@ -13,10 +13,10 @@ MD = (HERE.parent / "draft_ste.md").read_text()
 
 # Column layouts for the four tables, in order of appearance.
 SPECS = [
-    (r">{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{3.0cm}X>{\raggedleft\arraybackslash}p{1.1cm}", r"\small", None, "!htb"),
-    (r">{\raggedright\arraybackslash}p{5.6cm}X>{\raggedright\arraybackslash}p{3.5cm}", r"\footnotesize", None, "!t"),
     (r">{\raggedright\arraybackslash}p{1.65cm}>{\raggedright\arraybackslash}p{6.0cm}XX", r"\scriptsize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.0}", "B1", "!htb"),
     (r">{\raggedright\arraybackslash}p{6.6cm}>{\raggedright\arraybackslash}p{3.2cm}XX", r"\scriptsize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.0}", "C1", "!htb"),
+    (r">{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{3.0cm}X>{\raggedleft\arraybackslash}p{1.1cm}", r"\footnotesize", "F1", "H"),
+    (r">{\raggedright\arraybackslash}p{5.6cm}X>{\raggedright\arraybackslash}p{3.5cm}", r"\footnotesize", "F2", "H"),
 ]
 
 
@@ -61,7 +61,7 @@ def table(rows, caption, k):
     lines.append(" & ".join(r"\textbf{" + cell(c) + "}" for c in head) + r" \\")
     lines.append(r"\midrule")
     for j, r in enumerate(body):
-        sep = r" \\ \addlinespace[1.5pt]" if k < 2 and j < len(body) - 1 else r" \\"
+        sep = r" \\ \addlinespace[1.5pt]" if label in ("F1", "F2") and j < len(body) - 1 else r" \\"
         lines.append(" & ".join(cell(c) for c in r) + sep)
     lines.append(r"\bottomrule")
     lines.append(r"\end{tabularx}")
@@ -84,7 +84,7 @@ def main():
     refs_md = re.search(r"## References\n\n(.+?)\n\n### A\.", body_md, re.S).group(1)
     body_md = body_md.replace("## References\n\n" + refs_md + "\n\n", "@@REFS@@\n\n")
     body_md = body_md.replace("### A. Limitations", "@@APPENDIX@@\n\n## A. Limitations")
-    for h in ("### B. ", "### C. ", "### D. ", "### E. "):
+    for h in ("### B. ", "### C. ", "### D. ", "### E. ", "### F. "):
         body_md = body_md.replace(h, "## " + h[4:])
 
     # Replace tables (and their caption line) with placeholders.

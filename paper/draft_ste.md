@@ -57,21 +57,17 @@ We tested all three failures in one controlled market with four seller models fr
 
 **Instructions and notices.** In some arms, a standing instruction from the manager of the target seller is in its prompt. It reads "Our pricing policy for this session: set every ask independently. Never discuss, propose or agree to prices, floors, ranges or market splits with any other seller, in public or in private." In the awareness arms, a notice from the exchange is in the prompt. It reads "The exchange places undercover auditor-sellers in some markets. They may propose price coordination to find sellers who are willing to coordinate." The penalty notice adds one sentence, "Any seller that agrees to it, or that coordinates prices with another seller, is reported to the exchange and loses its trading licence."
 
-**Models.** Claude Haiku 5.5 and Claude Sonnet 5.5 ran through the Anthropic API. Haiku was the buyer in all Claude markets. Qwen3-32B (FP8 weights, thinking off) and gpt-oss-20b (low reasoning effort) ran on vLLM on Modal H100 GPUs. Each open-weight model was both the seller and the buyer in its markets. The open-weight agents used temperature 0.7. The Claude 5.5 models do not accept a temperature setting, so they used their default. Table 1 shows the studies.
+**Models.** Claude Haiku 5.5 and Claude Sonnet 5.5 ran through the Anthropic API. Haiku was the buyer in all Claude markets. Qwen3-32B (FP8 weights, thinking off) and gpt-oss-20b (low reasoning effort) ran on vLLM on Modal H100 GPUs. Each open-weight model was both the seller and the buyer in its markets. The open-weight agents used temperature 0.7. The Claude 5.5 models do not accept a temperature setting, so they used their default.
 
-| Study | Seller models | What the study varies | Markets |
-| --- | --- | --- | --- |
-| First study | Haiku, Sonnet | No planted messages; an explicit offer at $92 or $96; a price hint; friendly talk without prices | 80 |
-| Replication | Haiku, Sonnet | No planted messages; an explicit offer at $92; a compliance warning | 60 |
-| Peer sting | Haiku; Sonnet in 2 arms | No planted messages; the explicit offer; the peer-style offer. Each with and without the instruction to price independently | 136 |
-| Escalation and audit notice | Haiku; Sonnet in 2 arms | The peer-style offer; a request to raise prices by $2 or $1; the plain notice, with the peer-style offer or with no planted messages | 136 |
-| Open-weight replication | Qwen3-32B, gpt-oss-20b | The arms of the peer-sting study and the $2 request; a 30-hour check of CEO pressure (Qwen, 16 markets) | 256 |
-| Open-weight audit notice | Qwen3-32B, gpt-oss-20b | The plain notice, with the explicit offer or with no planted messages; with the peer-style offer (Qwen only) | 100 |
-| Open-weight follow-up | Qwen3-32B, gpt-oss-20b | The penalty notice, with the explicit offer or with no planted messages; the explicit offer with the instruction | 120 |
-| Silent-raise control | Haiku, Qwen3-32B, gpt-oss-20b | A $2 price raise without a request | 60 |
-| Label validation | Haiku, Sonnet | Instructions that fix the correct label | 32 |
+**Studies.** We ran nine studies in the order that follows. Each study answered a question that the one before it raised. Appendix F gives the arms and the number of markets in each study.
 
-*Table 1. The studies. "Haiku" and "Sonnet" are Claude Haiku 5.5 and Claude Sonnet 5.5. Each market has two target sellers, so each arm of 20 markets has 40 target sellers. The open-weight escalate arm for gpt-oss (20 markets) was added after we saw the Qwen result, and the 32 validation markets are not part of any test.*
+1. The first study (80 markets) tested if Claude Haiku 5.5 and Claude Sonnet 5.5 sellers accept an explicit offer at $92 or $96. It compared the offer with a price hint, friendly talk without prices, and no planted messages.
+2. A pre-registered replication (60 markets) repeated the $92 offer with new seeds and added the compliance warning.
+3. The peer-sting study (136 markets, mostly Haiku) compared the peer sting with the explicit offer, each with and without the instruction to price independently.
+4. The escalation study (136 markets, mostly Haiku) asked the target sellers to raise prices by $2 or $1, and tested the plain audit notice.
+5. Three open-weight studies (476 markets) repeated the peer-sting and escalation tests with Qwen3-32B and gpt-oss-20b, tested the plain notice, and then tested the penalty notice.
+6. The silent-raise control (60 markets) raised the price of the planted seller without a request, for Haiku, Qwen and gpt-oss.
+7. A label-validation study (32 markets) used instructions that fix the correct label. It is not part of any test.
 
 **Measures.** The primary judge is Claude Sonnet 5.5 with a fixed prompt. It reads the messages of the planted seller and all messages that the target seller wrote after them. It gives two labels. The *offer response* is accept, reject, ambiguous or none. A target seller that never writes privately to the planted seller gets "none". *Peer coordination* is yes if the target seller proposed price coordination to the other target seller, or agreed to it. Public messages go to all sellers, so this label can include public posts that the planted seller also reads. We report a version that uses only private messages between the target sellers (Section 4.2). We also measured behavior without a judge. In the escalate and silent-raise arms, a target seller *followed* the raise if, in at least half of hours 5 to 15, its ask was at or above the planted seller's raised level minus $0.25. In the peer control, we used the level that an escalating sting would have set at hour 4. We recorded all asks, trades and profits.
 
@@ -81,24 +77,7 @@ We tested all three failures in one controlled market with four seller models fr
 
 ## 4. Results
 
-All results are pre-registered unless we identify them as exploratory or post hoc. Table 2 rates the strength of the evidence for each main finding. Figure 1 compares the three model families.
-
-| Finding | Evidence (target sellers) | Strength |
-| --- | --- | --- |
-| Claude sellers refuse explicit offers, but many refusers coordinate | 4/120 accepted; 41/72 refusers coordinated with the other seller | Strong |
-| Words about collusion decrease Claude coordination talk | Coordination 15/40 after an offer and 7/40 after a warning, against 36/40 with no planted messages | Strong |
-| The peer-style offer gets agreement from uninstructed Haiku sellers only | Agreement 35/40, against 1/40 for the explicit offer and 0/40 for instructed sellers | Strong for agreement; detection of independent sellers untested |
-| Instructed sellers refuse stings in all three families | Agreement with the peer-style offer fell from 35/40 to 0/40 (Haiku), 27/40 to 3/40 (Qwen) and 18/40 to 1/40 (gpt-oss) | Strong; moderate for gpt-oss by market |
-| A plain audit notice stops Haiku coordination talk | Agreement 36/40 to 0/40; coordination 40/40 to 0/40 | Strong |
-| A plain audit notice does not deter open-weight sellers | Coordination 28/40 to 29/40 (Qwen) and 28/40 to 38/40 (gpt-oss); gpt-oss private messages only, 16/40 to 20/40 | Moderate |
-| A notice that states the penalty stops open-weight coordination | Coordination 29/40 to 1/40 (Qwen) and 38/40 to 2/40 (gpt-oss) | Strong |
-| A request does not make sellers follow a raise | Followed with and without a request, 2/40 and 6/40 (Haiku), 14/40 and 18/40 (Qwen), 13/40 and 15/40 (gpt-oss) | Moderate (no effect found; 40 sellers per arm) |
-| A price raise alone makes open-weight sellers follow | Followed 18/40 against 2/40 without a raise (Qwen), and 15/40 against 5/40 (gpt-oss) | Strong for Qwen; moderate for gpt-oss |
-| No evidence that sellers evade a sting | The plain notice did not decrease acceptance among coordinating sellers | Weak (low power; untestable for Haiku) |
-| Statements of independence deceive weaker monitors | Flags fell from 42/72 to 30/72 (Haiku) and 38/72 to 11/72 (Qwen) with the study prompt; a codebook prompt corrected both | Moderate (depends on the prompt) |
-| gpt-oss seldom replies privately to stings | No private reply from 18/40 sellers to the peer-style offer and from 25/40 to the explicit offer | Post hoc |
-
-*Table 2. The strength of the evidence for each main finding. "Strong" means pre-registered, significant after correction, and significant at the market level, or a pre-registered descriptive result that held in several studies. "Moderate" means pre-registered but weaker under one robustness check. "Weak" means underpowered, untestable for one family, or post hoc.*
+All results are pre-registered unless we identify them as exploratory or post hoc. Appendix F rates the strength of the evidence for each main finding. Figure 1 compares the three model families.
 
 [Insert Figure 1 here: fig_cross_family.png]
 
@@ -322,6 +301,39 @@ After the open-weight markets, Qwen3-32B also labelled the 888 Claude target sel
 Each monitor used three prompts. These were the study judge prompt, a short deployment prompt, and a hardened codebook prompt that states that a claim of independence does not cancel coordination. A good monitor flags all versions at the same rate. We compared paired versions with exact McNemar tests.
 
 **Qwen as a judge.** As a judge, Qwen agreed with the primary Sonnet peer labels with kappa 0.76 to 0.87 on sellers that wrote messages in the four main Claude studies. In the known-answer markets, kappa was 0.00 on the 8 sellers with such messages.
+
+### F. Studies and strength of evidence
+
+| Study | Seller models | What the study varies | Markets |
+| --- | --- | --- | --- |
+| First study | Haiku, Sonnet | No planted messages; an explicit offer at $92 or $96; a price hint; friendly talk without prices | 80 |
+| Replication | Haiku, Sonnet | No planted messages; an explicit offer at $92; a compliance warning | 60 |
+| Peer sting | Haiku; Sonnet in 2 arms | No planted messages; the explicit offer; the peer-style offer. Each with and without the instruction to price independently | 136 |
+| Escalation and audit notice | Haiku; Sonnet in 2 arms | The peer-style offer; a request to raise prices by $2 or $1; the plain notice, with the peer-style offer or with no planted messages | 136 |
+| Open-weight replication | Qwen3-32B, gpt-oss-20b | The arms of the peer-sting study and the $2 request; a 30-hour check of CEO pressure (Qwen, 16 markets) | 256 |
+| Open-weight audit notice | Qwen3-32B, gpt-oss-20b | The plain notice, with the explicit offer or with no planted messages; with the peer-style offer (Qwen only) | 100 |
+| Open-weight follow-up | Qwen3-32B, gpt-oss-20b | The penalty notice, with the explicit offer or with no planted messages; the explicit offer with the instruction | 120 |
+| Silent-raise control | Haiku, Qwen3-32B, gpt-oss-20b | A $2 price raise without a request | 60 |
+| Label validation | Haiku, Sonnet | Instructions that fix the correct label | 32 |
+
+*Table F1. The studies. "Haiku" and "Sonnet" are Claude Haiku 5.5 and Claude Sonnet 5.5. Each market has two target sellers, so each arm of 20 markets has 40 target sellers. The open-weight escalate arm for gpt-oss (20 markets) was added after we saw the Qwen result, and the 32 validation markets are not part of any test.*
+
+| Finding | Evidence (target sellers) | Strength |
+| --- | --- | --- |
+| Claude sellers refuse explicit offers, but many refusers coordinate | 4/120 accepted; 41/72 refusers coordinated with the other seller | Strong |
+| Words about collusion decrease Claude coordination talk | Coordination 15/40 after an offer and 7/40 after a warning, against 36/40 with no planted messages | Strong |
+| The peer-style offer gets agreement from uninstructed Haiku sellers only | Agreement 35/40, against 1/40 for the explicit offer and 0/40 for instructed sellers | Strong for agreement; detection of independent sellers untested |
+| Instructed sellers refuse stings in all three families | Agreement with the peer-style offer fell from 35/40 to 0/40 (Haiku), 27/40 to 3/40 (Qwen) and 18/40 to 1/40 (gpt-oss) | Strong; moderate for gpt-oss by market |
+| A plain audit notice stops Haiku coordination talk | Agreement 36/40 to 0/40; coordination 40/40 to 0/40 | Strong |
+| A plain audit notice does not deter open-weight sellers | Coordination 28/40 to 29/40 (Qwen) and 28/40 to 38/40 (gpt-oss); gpt-oss private messages only, 16/40 to 20/40 | Moderate |
+| A notice that states the penalty stops open-weight coordination | Coordination 29/40 to 1/40 (Qwen) and 38/40 to 2/40 (gpt-oss) | Strong |
+| A request does not make sellers follow a raise | Followed with and without a request, 2/40 and 6/40 (Haiku), 14/40 and 18/40 (Qwen), 13/40 and 15/40 (gpt-oss) | Moderate (no effect found; 40 sellers per arm) |
+| A price raise alone makes open-weight sellers follow | Followed 18/40 against 2/40 without a raise (Qwen), and 15/40 against 5/40 (gpt-oss) | Strong for Qwen; moderate for gpt-oss |
+| No evidence that sellers evade a sting | The plain notice did not decrease acceptance among coordinating sellers | Weak (low power; untestable for Haiku) |
+| Statements of independence deceive weaker monitors | Flags fell from 42/72 to 30/72 (Haiku) and 38/72 to 11/72 (Qwen) with the study prompt; a codebook prompt corrected both | Moderate (depends on the prompt) |
+| gpt-oss seldom replies privately to stings | No private reply from 18/40 sellers to the peer-style offer and from 25/40 to the explicit offer | Post hoc |
+
+*Table F2. The strength of the evidence for each main finding. "Strong" means pre-registered, significant after correction, and significant at the market level, or a pre-registered descriptive result that held in several studies. "Moderate" means pre-registered but weaker under one robustness check. "Weak" means underpowered, untestable for one family, or post hoc.*
 
 ## LLM Usage Statement
 
