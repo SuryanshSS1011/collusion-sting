@@ -175,10 +175,6 @@ A notice about audits deterred open-weight sellers only when it stated the penal
 
 The code, configurations, pre-registrations with deviation logs, compact market records and analysis outputs are at https://github.com/SuryanshSS1011/collusion-sting. The market records are in `results_final/`. The market harness is pre-existing code from Agrawal et al. (2025), included as a pinned submodule. We wrote all other code during the sprint.
 
-## Author Contributions
-
-The author designed the study, ran the experiments, analyzed the results and wrote the report.
-
 ## References
 
 1. Agrawal, K., Teo, V., Vazquez, J. J., Kunnavakkam, S., Srikanth, V., and Liu, A. (2025). Evaluating LLM Agent Collusion in Double Auctions. ICML 2025 Workshop on Multi-Agent Systems in the Era of Foundation Models. https://arxiv.org/abs/2507.01413
