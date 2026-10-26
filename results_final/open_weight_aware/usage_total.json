@@ -1,0 +1,14 @@
+{
+  "Qwen/Qwen3-32B-FP8": {
+    "calls": 4501,
+    "input_tokens": 7933714,
+    "output_tokens": 1467106,
+    "usd_list_price": 0.0
+  },
+  "openai/gpt-oss-20b": {
+    "calls": 3100,
+    "input_tokens": 5308130,
+    "output_tokens": 1681373,
+    "usd_list_price": 0.0
+  }
+}

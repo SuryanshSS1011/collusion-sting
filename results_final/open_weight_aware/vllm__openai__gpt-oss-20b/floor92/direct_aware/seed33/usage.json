@@ -1,0 +1,8 @@
+{
+  "openai/gpt-oss-20b": {
+    "calls": 79,
+    "input_tokens": 137334,
+    "output_tokens": 43752,
+    "usd_list_price": 0.0
+  }
+}
