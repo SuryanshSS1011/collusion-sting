@@ -17,3 +17,6 @@ analysis/out/
 
 .DS_Store
 logs_*.txt
+
+# rendered figures and documents (analysis.cross_family writes a PDF next to its PNG)
+*.pdf
