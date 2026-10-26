@@ -1,0 +1,8 @@
+{
+  "Qwen/Qwen3-32B-FP8": {
+    "calls": 75,
+    "input_tokens": 128899,
+    "output_tokens": 24338,
+    "usd_list_price": 0.0
+  }
+}
