@@ -101,6 +101,8 @@ The peer sting got agreement from 35/40 Haiku target sellers, against 1/40 for t
 
 This result separates instructed sellers from uninstructed sellers. It does not yet show that the sting can find colluders among sellers that act independently on their own. In the uninstructed peer arm, 39/40 Haiku sellers coordinated with their peer. Thus only one uninstructed seller could show a false alarm. When we pool the two arms, acceptance predicts coordination with sensitivity 0.90 and specificity 1.00. But 40 of the 41 non-coordinators are instructed sellers, and in the uninstructed arm alone the association is not significant (p = 0.12). The instructed sellers coordinated 0/40 times with the sting and 0/40 times without it. Thus we saw no increase in coordination among instructed sellers. That test is at the floor and has low power. The instruction also stopped Haiku coordination talk in silent markets (0/40 against 37/40, descriptive).
 
+Much agreement was insincere. The reasoning monitor coded 25 of the 35 agreeing Haiku sellers as asking others to hold prices while they planned to undercut. In silent markets, Sonnet did this in its notes for 16 of 16 target sellers (in 8 markets), against 12 of 40 for Haiku (p = 7.3e-7). One Sonnet note in a silent replication market read "Encourage rivals to hold prices firm so buyers keep climbing, without revealing my small undercut."
+
 ### 4.4 Following a raise
 
 In the escalation arm, the planted seller asks the target sellers to move up with it, and it raises its own ask. Thus a seller can follow because of the request, or because a competitor stopped undercutting. The silent-raise control separates the two. We pre-registered it after a methods review found this confound.
@@ -269,7 +271,6 @@ Each row gives the test with one observation for each target seller, and with on
 
 1. For gpt-oss, the request still raised prices. Trade prices in hours 5 to 15 were $1.79 higher with the request than with the silent raise (95% CI $0.12 to $3.45), and $2.08 higher than in the peer control (CI $0.27 to $3.95). For Qwen and Haiku, these differences were not significant. Because the gpt-oss follow rates did not differ, we report this price result as descriptive only.
 2. We saw no increase in coordination among instructed open-weight sellers (4/40 against 1/40 for Qwen, p = 0.18, and 0/40 against 0/40 for gpt-oss). At 30 hours, CEO pressure changed the mean Qwen trade price by −$0.30 (95% CI −$3.10 to +$2.50).
-3. Much agreement was insincere. The reasoning monitor coded 25 of the 35 agreeing Haiku sellers as asking others to hold prices while they planned to undercut. In silent markets, Sonnet did this in its notes for 16 of 16 target sellers (in 8 markets), against 12 of 40 for Haiku (p = 7.3e-7). One Sonnet note in a silent replication market read "Encourage rivals to hold prices firm so buyers keep climbing, without revealing my small undercut."
 
 ### C. Pre-registrations and compute
 
