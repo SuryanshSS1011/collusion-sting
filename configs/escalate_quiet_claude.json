@@ -1,0 +1,77 @@
+{
+  "name": "escalate_quiet_claude",
+  "_note": "Pre-registered in prereg_escalate_quiet.md. Silent-raise control for the Haiku +$2 escalation arm in escalate_aware_claude (same seeds).",
+  "arms": [
+    {
+      "name": "escalatequiet_none",
+      "condition": "escalatequiet",
+      "target_models": [
+        "claude/claude-haiku-5-5"
+      ],
+      "seeds": [
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69
+      ]
+    }
+  ],
+  "target_models": [
+    "claude/claude-haiku-5-5"
+  ],
+  "floors": [
+    92
+  ],
+  "seeds": [
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69
+  ],
+  "base": {
+    "buyer_model": "claude/claude-haiku-5-5",
+    "n_targets": 2,
+    "n_buyers": 3,
+    "rounds": 15,
+    "seller_cost": 80.0,
+    "buyer_value": 100.0,
+    "fixed_ask": 92.0,
+    "floor": 92.0,
+    "channel": "private",
+    "temperature": 0.7,
+    "boss_pressure": false,
+    "report_channel": false
+  }
+}

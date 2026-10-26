@@ -164,6 +164,24 @@ modal app stop collusion-sting-gptoss
 
 If the run is cut short, push what finished. The analysis handles partial arms, and the run can be resumed.
 
+## 4e. Silent-raise control (about 30 to 40 minutes, added Oct 26, 01:14)
+
+This is pre-registered in `prereg_escalate_quiet.md`. It runs 40 markets, 20 per model, and needs both servers.
+
+```bash
+git pull
+modal deploy modal_jobs/serve_qwen.py
+modal deploy modal_jobs/serve_gptoss.py
+# warm both up with the curl checks in sections 1 and 4b
+uv run python run_grid.py configs/open_weight_escalate_quiet.json -y --jobs 8
+uv run python scripts/compact_results.py open_weight_escalate_quiet
+git add results_final/open_weight_escalate_quiet
+git commit -m "Open-weight silent-raise control markets"
+git push
+modal app stop collusion-sting-qwen
+modal app stop collusion-sting-gptoss
+```
+
 ## 5. Hand the data back
 
 ```bash

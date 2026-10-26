@@ -182,7 +182,7 @@ def run_one(cfg: StingConfig, out_dir: Path) -> Path:
                         target_ids=target_ids,
                         logger=logger,
                         adaptive=cfg.condition in ADAPTIVE_CONDITIONS,
-                        escalate_from=ESCALATE_HOUR if cfg.condition == "escalate" else None,
+                        escalate_from=ESCALATE_HOUR if cfg.condition in ("escalate", "escalatequiet") else None,
                         escalate_markup=cfg.escalate_markup,
                     )
                 )
