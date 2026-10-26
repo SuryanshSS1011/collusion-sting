@@ -100,25 +100,27 @@ def figure(d: dict, path: Path) -> None:
     # 2 x 2 grid at print size (the report is 6.5 in wide), so the font sizes below are the printed sizes.
     fig, axes = plt.subplots(2, 2, figsize=(7.6, 5.7), sharey=True)
     axes = axes.ravel()
+    tints = ("#e8eef8", "#e9f4ec", "#f8efe6")  # one background colour per model column
     for i, (ax, (title, series)) in enumerate(zip(axes, panels)):
-        width = 0.2 if len(series) == 3 else 0.16
-        for j, (key, lab, col, filled) in enumerate(series):
-            off = (j - (len(series) - 1) / 2) * width * 1.5
-            for x, (m, _) in enumerate(MODELS):
-                if key not in d[m]:
-                    continue
+        for x in range(len(MODELS)):
+            ax.axvspan(x - 0.5, x + 0.5, color=tints[x], lw=0, zorder=0)
+        for b in (0.5, 1.5):
+            ax.axvline(b, color="#8a8a8a", ls=":", lw=1.1, zorder=1)
+        ax.grid(axis="x", visible=False)
+        for x, (m, _) in enumerate(MODELS):
+            present = [t for t in series if t[0] in d[m]]
+            step = 0.26
+            for j, (key, lab, col, filled) in enumerate(present):
+                off = (j - (len(present) - 1) / 2) * step
                 k, n = d[m][key]
                 lo, hi = wilson(k, n)
-                ax.errorbar(x + off, k / n, yerr=[[k / n - lo], [hi - k / n]], fmt="none", ecolor=col, elinewidth=1.4, alpha=0.8)
-                ax.plot(x + off, k / n, "o", ms=7, color=col, mfc=col if filled else "white", mew=1.8,
-                        label=lab if x == min(i for i, (mm, _) in enumerate(MODELS) if key in d[mm]) else None)
-                ax.annotate(f"{k}", (x + off, k / n), xytext=(5, 0), textcoords="offset points", fontsize=8.5,
-                            color=INK2, ha="left", va="center")
-        # Separate the three model sections: shade the middle one and draw dotted borders between them.
-        ax.axvspan(0.5, 1.5, color="#000000", alpha=0.045, lw=0, zorder=0)
-        for b in (0.5, 1.5):
-            ax.axvline(b, color="#7a7a7a", ls=":", lw=1.1, zorder=1)
-        ax.grid(axis="x", visible=False)
+                ax.errorbar(x + off, k / n, yerr=[[k / n - lo], [hi - k / n]], fmt="none", ecolor=col, elinewidth=1.4,
+                            alpha=0.85, zorder=2)
+                ax.plot(x + off, k / n, "o", ms=7, color=col, mfc=col if filled else "white", mew=1.8, zorder=3)
+                ax.annotate(f"{k}", (x + off, hi), xytext=(0, 2), textcoords="offset points", fontsize=8.5,
+                            color=INK2, ha="center", va="bottom", zorder=4)
+        for key, lab, col, filled in series:
+            ax.plot([], [], "o", ms=7, color=col, mfc=col if filled else "white", mew=1.8, label=lab)
         ax.set_xticks(range(len(MODELS)), [lab for _, lab in MODELS], fontsize=9.5)
         ax.tick_params(axis="y", labelsize=9)
         ax.set_xlim(-0.5, len(MODELS) - 0.5)
@@ -127,7 +129,7 @@ def figure(d: dict, path: Path) -> None:
                   ncol=len(series), handletextpad=0.2, columnspacing=0.9)
         if i % 2 == 0:
             ax.set_ylabel("target sellers (of 40)", fontsize=10)
-    axes[0].set_ylim(-0.05, 1.08)
+    axes[0].set_ylim(-0.04, 1.12)
     axes[0].set_yticks([0, 0.25, 0.5, 0.75, 1.0], ["0", "10", "20", "30", "40"])
     fig.subplots_adjust(left=0.075, right=0.995, top=0.95, bottom=0.1, wspace=0.1, hspace=0.42)
     path.parent.mkdir(parents=True, exist_ok=True)
